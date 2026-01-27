@@ -22,26 +22,60 @@ This document guides the staged creation of a complete location for AI Aliens co
 
 ## Stage 2: Location Description
 
+### Purpose
+
+The description is the **visual DNA** of the location — it defines architectural style, materials, and ambient details that maintain consistency across all generated images. It is NOT a compositional shot.
+
+The same description gets combined with different spot descriptions, so it must:
+- Establish the look and feel without dictating what's in frame
+- Provide enough detail for visual consistency
+- Avoid locking camera angles or specific elements that would repeat in every image
+
+### Style Image
+
+The style image is a **wide establishing shot** of the location — not street level. Think postcard or aerial view that shows the character of the place. No characters in the style image.
+
 ### Field Rules:
 
 | Field | Purpose | Rule |
 |-------|---------|------|
-| **Description** | What makes this place unique — flora, fauna, vibe, distinctive features | No sky, no lighting, no weather. Focus on what you'd see at eye level and the overall feel. |
+| **Description** | Visual DNA — architecture, materials, ambient details | No sky, no lighting, no weather. No compositional directives. |
 
 ### Questions to ask:
 
-1. **Density/layout?** (Cramped and narrow vs. open and sprawling)
-2. **Materials?** (Stone, metal, wood, organic, etc.)
-3. **Any specific architectural style?** (Victorian, brutalist, organic curves, etc.)
-4. **Active/kinetic elements?** (Moving parts, steam, water, creatures)
+1. **Era/genre?** (Victorian steampunk, tropical resort, ancient ruins, etc.)
+2. **Architecture?** (Building style, materials, density)
+3. **Ambient details?** (What exists in this world — street materials, lighting fixtures, vehicles, flora)
+4. **Landmark?** (One defining feature that can appear but isn't forced into every shot)
 
 ### Writing rules:
 
-- No sky references (belongs in Sky_Day/Sky_Night)
-- No weather references (belongs in Weather)
-- No lighting quality (belongs in Lighting fields)
-- Focus on what you'd see at eye level
-- Include texture and vibe, not just structure
+**DO include:**
+- Architectural style (half-timbered, brutalist, organic curves)
+- Materials (copper, brass, stone, glass, wood)
+- World-building facts ("streets made of cobblestone" not "crowded cobblestone streets")
+- Ambient elements that define the aesthetic (gas lamps, airships, floating lanterns)
+- Landmark existence ("a giant clock tower rising above the city")
+
+**DO NOT include:**
+- Sky references (belongs in Sky_Day/Sky_Night)
+- Weather references (belongs in Weather)
+- Lighting quality (belongs in Lighting fields)
+- Compositional directives ("dominates the skyline", "in the foreground")
+- Specific named elements that would repeat (shop names, specific storefronts)
+- Crowd/activity descriptions (let spot descriptions handle this)
+- Vague genre shorthand ("spinning brass gears", "mechanical wares") — be specific or omit
+
+### Example:
+
+**Too specific (causes repetition):**
+> "A bustling Victorian market with clock towers, vendor carts, a lens grinder's shop, a locksmith, spinning brass gears everywhere"
+
+**Too vague (loses consistency):**
+> "A steampunk city"
+
+**Right balance (visual DNA):**
+> "A Victorian steampunk city with cramped half-timbered buildings, exposed copper pipes and fittings accenting the architecture, streets made of cobblestone, ornate wrought-iron gas lamp posts, airships drifting overhead, and one giant clock tower rising above the city."
 
 ### After description is complete:
 
@@ -171,7 +205,7 @@ Each location needs dialogue for arrival and review.
 When building image prompts, layer the information in this order:
 
 ```
-1. [Location Description] — sets the world
+1. [Location Description] — sets the world (visual DNA)
 2. [Spot Description] — places them with perspective
 3. [Characters + Activity] — minimal ID + what they're doing + camera
 4. [Sky + Lighting] — atmosphere
