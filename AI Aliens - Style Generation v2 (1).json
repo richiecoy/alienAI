@@ -1,0 +1,1106 @@
+{
+  "name": "AI Aliens - Style Generation v2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -22576,
+        -1584
+      ],
+      "id": "d7ca3264-15ee-465e-87e8-66fd8429a366",
+      "name": "Manual Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 143205348,
+          "mode": "list",
+          "cachedResultName": "Locations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=143205348"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -22368,
+        -1584
+      ],
+      "id": "4efb4542-ca72-4c34-84c6-6920267198cd",
+      "name": "Get All Locations",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Filter for Status = 'New' or 'Style_Redo'\nconst locations = $input.all();\nconst eligible = locations.filter(item => \n  item.json.Status === 'New' || item.json.Status === 'Style_Redo'\n);\n\nif (eligible.length === 0) {\n  return [{ json: { found: false } }];\n}\n\n// Return first eligible location with found flag\nreturn [{ json: { ...eligible[0].json, found: true } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -22160,
+        -1584
+      ],
+      "id": "b157bd13-c622-4710-8631-177cc26a1a3c",
+      "name": "Filter Eligible Location"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "check-found",
+              "leftValue": "={{ $json.found }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -21952,
+        -1584
+      ],
+      "id": "80dd777f-e439-42b9-b58b-794a2a260e28",
+      "name": "IF (Location Found)"
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "AI Aliens Style Generation - No Locations Available",
+        "html": "No locations with Status = 'New' or 'Style_Redo' were found.<br><br>Add new locations or mark existing ones for redo to generate style images.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -21744,
+        -1440
+      ],
+      "id": "7f1d47b1-4dd3-40c1-968f-0f085f8ad98c",
+      "name": "Email - No Locations",
+      "webhookId": "df60bd56-bb4d-4543-9179-7f057dbffcab",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// ==== INPUTS ====\nconst loc = $input.first().json;\n\n// ==== IMAGE PROMPT ====\nconst imagePrompt = `Photorealistic 3D CGI render, cinematic wide establishing shot. ${loc.Description}. ${loc.Sky_Day}. ${loc.Lighting_Day}. Weather: ${loc.Weather}. Color palette: ${loc.Color_Palette}. ${loc.Camera_Angle}. No characters. Horizontal 16:9 composition.`;\n\n// ==== NANO BANANA PAYLOAD ====\nconst nanoBananaPayload = {\n  model: \"nano-banana-pro\",\n  input: {\n    prompt: imagePrompt,\n    aspect_ratio: \"16:9\",\n    resolution: \"1K\",\n    output_format: \"png\"\n  }\n};\n\nreturn [{\n  json: {\n    locationName: loc.Name,\n    locationId: loc.Location_ID,\n    originalStatus: loc.Status,\n    imagePrompt,\n    nanoBananaPayload,\n    startTime: Date.now()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -21744,
+        -1584
+      ],
+      "id": "7c4714de-f947-4486-a620-3d7b3af97c64",
+      "name": "Generate Prompt"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/jobs/createTask",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.nanoBananaPayload }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -21536,
+        -1584
+      ],
+      "id": "f3948ca9-476f-49f1-ad45-b6a257b2012f",
+      "name": "Generate Image",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cvwEzZ8bMz0qcuom",
+          "name": "Kie.api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$('Generate Image').first().json,\n    ...$('Generate Prompt').first().json,\n    imageStartTime: Date.now()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -21328,
+        -1584
+      ],
+      "id": "09879138-1b95-4f52-ad8a-ec113350ea63",
+      "name": "Set Image Start Time"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/jobs/recordInfo?taskId={{ $('Generate Image').first().json.data.taskId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -21120,
+        -1584
+      ],
+      "id": "cbe137dc-5594-4b7f-93b0-e74fa11f7c8a",
+      "name": "Check Image Status",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cvwEzZ8bMz0qcuom",
+          "name": "Kie.api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "check-success",
+              "leftValue": "={{ $json.data.state }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -20912,
+        -1584
+      ],
+      "id": "bbbb32e8-38a7-44d0-b275-5e94824563d3",
+      "name": "IF (Image Success)"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "check-failed",
+              "leftValue": "={{ $json.data.state }}",
+              "rightValue": "failed",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -20704,
+        -1440
+      ],
+      "id": "400bf75c-aad2-4d4b-95c0-7f00fa487176",
+      "name": "IF (Image Failed)"
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=AI Aliens Style Generation Failed - {{ $('Generate Prompt').first().json.locationName }}",
+        "html": "=Style image generation failed for {{ $('Generate Prompt').first().json.locationName }}.<br><br>Location ID: {{ $('Generate Prompt').first().json.locationId }}<br>Task ID: {{ $('Generate Image').first().json.data.taskId }}<br>Error: {{ $json.data.state }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -20496,
+        -1456
+      ],
+      "id": "b99956f8-c2cb-4c2b-a3d8-9297c02fdfab",
+      "name": "Email - Image Generation Error",
+      "webhookId": "60b4a4a9-0ca2-4951-9f9d-4381ae27cc50",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const startTime = $('Set Image Start Time').first().json.imageStartTime;\nconst elapsed = Date.now() - startTime;\nconst fiveMinutes = 5 * 60 * 1000;\n\nreturn [{\n  json: {\n    elapsed,\n    timedOut: elapsed > fiveMinutes\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -20496,
+        -1280
+      ],
+      "id": "93869ccf-7c49-43cb-96eb-5c022a4d5ffa",
+      "name": "Check Time Elapsed"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "check-timeout",
+              "leftValue": "={{ $json.timedOut }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -20288,
+        -1280
+      ],
+      "id": "0d98ce07-8f32-4263-9f44-f692face3ad8",
+      "name": "IF (Image Timeout)"
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=AI Aliens Style Generation Timeout - {{ $('Generate Prompt').first().json.locationName }}",
+        "html": "=Style image generation timed out for {{ $('Generate Prompt').first().json.locationName }}.<br><br>Location ID: {{ $('Generate Prompt').first().json.locationId }}<br>Task ID: {{ $('Generate Image').first().json.data.taskId }}<br>Waited over 5 minutes.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -20080,
+        -1376
+      ],
+      "id": "509222d6-c5f4-492d-b8d0-e0306334c0f0",
+      "name": "Email - Image Timeout Error",
+      "webhookId": "b7d044f9-dd34-4372-bd67-23307ee73013",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -20080,
+        -1200
+      ],
+      "id": "ebd6a4c1-218b-4b78-af6c-28db378445a6",
+      "name": "Wait - Image",
+      "webhookId": "style-wait-v2"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $('Generate Prompt').first().json.locationId.replace('LOC', 'LOC_') }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1Hjo2EeYM8Y6Q2T2QA3cUjDcmhziQTncE",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -20704,
+        -1600
+      ],
+      "id": "98fb4fde-8764-48d0-be44-e1acad443780",
+      "name": "Search for Location Folder",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "folder-exists",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -20496,
+        -1600
+      ],
+      "id": "1cdcbd77-ab13-4a4f-a9ff-846a28bc011b",
+      "name": "IF (Folder Exists)"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $('Generate Prompt').first().json.locationId.replace('LOC', 'LOC_') }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1Hjo2EeYM8Y6Q2T2QA3cUjDcmhziQTncE",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -20288,
+        -1520
+      ],
+      "id": "805ef0a1-e90f-41a0-acfa-0f9f752600bc",
+      "name": "Create Location Folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ JSON.parse($('Check Image Status').first().json.data.resultJson).resultUrls[0] }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -20080,
+        -1616
+      ],
+      "id": "29f8fd8c-5120-4525-b84d-0ed4b9a7f00b",
+      "name": "Download Image"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Generate Prompt').first().json.locationName }}_style.png",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Search for Location Folder').first().json.id || $('Create Location Folder').first().json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -19872,
+        -1616
+      ],
+      "id": "986d57f2-c616-4fdd-b368-c947ce1cfdb2",
+      "name": "Upload Image to Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "check-new-status",
+              "leftValue": "={{ $('Generate Prompt').first().json.originalStatus }}",
+              "rightValue": "New",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -19664,
+        -1616
+      ],
+      "id": "3c4fe3e0-6e14-4aed-827b-bf2f2a61ad92",
+      "name": "IF (New Location)"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1192648937,
+          "mode": "list",
+          "cachedResultName": "Content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=1192648937"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Content_ID": "={{ $('Generate Prompt').first().json.locationId }}_style",
+            "Location_ID": "={{ $('Generate Prompt').first().json.locationId }}",
+            "Content_Type": "style",
+            "Video_Status": "N/A",
+            "Image_Status": "Review"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Content_ID",
+              "displayName": "Content_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location_ID",
+              "displayName": "Location_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Content_Type",
+              "displayName": "Content_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Spot_ID",
+              "displayName": "Spot_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Food_ID",
+              "displayName": "Food_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Joke_ID",
+              "displayName": "Joke_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Caption",
+              "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Polaroid_Caption",
+              "displayName": "Polaroid_Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt_1",
+              "displayName": "Video_Prompt_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt_2",
+              "displayName": "Video_Prompt_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Image_Status",
+              "displayName": "Image_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Video_Status",
+              "displayName": "Video_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -19456,
+        -1696
+      ],
+      "id": "2e176653-2000-41c3-a6a2-a525847c674d",
+      "name": "Create Content Row",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 143205348,
+          "mode": "list",
+          "cachedResultName": "Locations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=143205348"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Location_ID": "={{ $('Generate Prompt').first().json.locationId }}",
+            "Status": "Style_Pending"
+          },
+          "matchingColumns": [
+            "Location_ID"
+          ],
+          "schema": [
+            {
+              "id": "Location_ID",
+              "displayName": "Location_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -19248,
+        -1600
+      ],
+      "id": "da858230-be60-40df-bbe8-f27a29cfb65e",
+      "name": "Mark Location Style_Pending",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=AI Aliens Style Ready for Review - {{ $('Generate Prompt').first().json.locationName }}",
+        "html": "=Style image for <strong>{{ $('Generate Prompt').first().json.locationName }}</strong> is ready for review.<br><br>Location ID: {{ $('Generate Prompt').first().json.locationId }}<br>Original Status: {{ $('Generate Prompt').first().json.originalStatus }}<br><br>View folder: <a href=\"https://drive.google.com/drive/folders/{{ $('Search for Location Folder').first().json.id || $('Create Location Folder').first().json.id }}\">{{ $('Generate Prompt').first().json.locationId }}</a><br><br>If approved, update the Location Status to 'Style_Approved' in the spreadsheet.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -19040,
+        -1600
+      ],
+      "id": "ecc4d2c6-3008-463d-9f6d-99d00fdfbab8",
+      "name": "Email - Style Ready",
+      "webhookId": "667d66b1-f248-44e1-be99-557489699983",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get All Locations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Locations": {
+      "main": [
+        [
+          {
+            "node": "Filter Eligible Location",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Eligible Location": {
+      "main": [
+        [
+          {
+            "node": "IF (Location Found)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Location Found)": {
+      "main": [
+        [
+          {
+            "node": "Generate Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Email - No Locations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Prompt": {
+      "main": [
+        [
+          {
+            "node": "Generate Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Image": {
+      "main": [
+        [
+          {
+            "node": "Set Image Start Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Image Start Time": {
+      "main": [
+        [
+          {
+            "node": "Check Image Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Image Status": {
+      "main": [
+        [
+          {
+            "node": "IF (Image Success)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Image Success)": {
+      "main": [
+        [
+          {
+            "node": "Search for Location Folder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF (Image Failed)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Image Failed)": {
+      "main": [
+        [
+          {
+            "node": "Email - Image Generation Error",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check Time Elapsed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Time Elapsed": {
+      "main": [
+        [
+          {
+            "node": "IF (Image Timeout)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Image Timeout)": {
+      "main": [
+        [
+          {
+            "node": "Email - Image Timeout Error",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait - Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait - Image": {
+      "main": [
+        [
+          {
+            "node": "Check Image Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search for Location Folder": {
+      "main": [
+        [
+          {
+            "node": "IF (Folder Exists)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Folder Exists)": {
+      "main": [
+        [
+          {
+            "node": "Download Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Location Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Location Folder": {
+      "main": [
+        [
+          {
+            "node": "Download Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Image": {
+      "main": [
+        [
+          {
+            "node": "Upload Image to Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Image to Google Drive": {
+      "main": [
+        [
+          {
+            "node": "IF (New Location)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (New Location)": {
+      "main": [
+        [
+          {
+            "node": "Create Content Row",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Location Style_Pending",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Content Row": {
+      "main": [
+        [
+          {
+            "node": "Mark Location Style_Pending",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Location Style_Pending": {
+      "main": [
+        [
+          {
+            "node": "Email - Style Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "74df8bab-d38f-49e7-b9b4-366bbf20b60a",
+  "meta": {
+    "instanceId": "daba14a88550d0304eb819e927ffe087dff267675394753b32278f2dd7342718"
+  },
+  "id": "wfqIROPzRG2stMYkqPk9p",
+  "tags": [
+    {
+      "updatedAt": "2026-01-26T00:07:29.173Z",
+      "createdAt": "2026-01-26T00:07:29.173Z",
+      "id": "37EoA9uWEU2xtfjr",
+      "name": "V2"
+    },
+    {
+      "updatedAt": "2026-01-21T17:38:45.151Z",
+      "createdAt": "2026-01-21T17:38:45.151Z",
+      "id": "CEWpWHWat0OoEcmi",
+      "name": "Gorb & Pleck"
+    }
+  ]
+}
