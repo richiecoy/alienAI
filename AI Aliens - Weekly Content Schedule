@@ -1,0 +1,89 @@
+# AI Aliens - Weekly Content Schedule
+
+## Overview
+
+Each location runs for **1 week** (Sunday to Friday), with Saturday off. New location starts every Sunday.
+
+**Annual capacity:** 52 locations/year
+
+---
+
+## Weekly Schedule
+
+| Day | Content | Time | Platforms | Workflow |
+|-----|---------|------|-----------|----------|
+| **Sun** | Intro Video | 8pm | Instagram, TikTok, YouTube | AI Aliens - Intro |
+| **Mon** | Photos 1-5 | 5pm | Instagram (carousel + stories), TikTok, YouTube (slideshow) | AI Aliens - Snapshots |
+| **Tue** | Dad Joke 1 | 5pm | Instagram, TikTok, YouTube | AI Aliens - Dad Jokes |
+| **Wed** | Photos 6-10 | 5pm | Instagram (carousel + stories), TikTok, YouTube (slideshow) | AI Aliens - Snapshots |
+| **Thu** | Dad Joke 2 | 5pm | Instagram, TikTok, YouTube | AI Aliens - Dad Jokes |
+| **Fri** | Review Video | 5pm | Instagram, TikTok, YouTube | AI Aliens - Review |
+| **Sat** | â€” | â€” | â€” | â€” |
+
+---
+
+## Content Per Location
+
+| Content Type | Count | Notes |
+|--------------|-------|-------|
+| Intro Video | 1 | Landing zone spot |
+| Photo Carousels | 2 | 5 photos each (4 generic + 1 food per carousel) |
+| Dad Jokes | 2 | Pulled from global jokes pool |
+| Review Video | 1 | Generic spot |
+
+---
+
+## Spots Required Per Location
+
+| Spot Type | Count | Used By |
+|-----------|-------|---------|
+| landing_zone | 1 | Intro |
+| food_vendor | 2 | Snapshots (1 Mon, 1 Wed) |
+| generic | 12 | Dad Jokes (2) + Snapshots (8) + Review (1) + buffer |
+
+**Total: 15 spots per location**
+
+---
+
+## Other Requirements Per Location
+
+| Tab | Count | Notes |
+|-----|-------|-------|
+| Foods | 2 | 1 per snapshot day |
+| Dialogue | 1 row | Intro + Review dialogue |
+
+---
+
+## Global Pools (Shared Across Locations)
+
+| Pool | Current Count | Weekly Usage | Runway |
+|------|---------------|--------------|--------|
+| Jokes | 89 | 2 | ~44 weeks |
+| Photo Activities (general) | ~20 | 8 | Reusable |
+| Photo Activities (food) | ~5 | 2 | Reusable |
+| Positions | 6 | Varies | Reusable |
+| Poses | 6 | Varies | Reusable |
+| Actions | 6 | Varies | Reusable |
+| Laugh Styles | 5 | Varies | Reusable |
+
+---
+
+## Weekly Platform Totals
+
+| Platform | Posts/Week | Recommended Range |
+|----------|------------|-------------------|
+| Instagram Feed | 6 | 3-7 âœ“ |
+| Instagram Stories | 6 days | Daily âœ“ |
+| TikTok | 6 videos | 2-5 (slightly over) âœ“ |
+| YouTube | 6 videos | 2-5 (slightly over) âœ“ |
+
+---
+
+## Workflow Status
+
+| Workflow | Status |
+|----------|--------|
+| AI Aliens - Intro | âœ… Built |
+| AI Aliens - Dad Jokes | âœ… Built |
+| AI Aliens - Snapshots | ðŸ”¨ In Progress |
+| AI Aliens - Review | â³ Not Started |
