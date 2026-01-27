@@ -235,7 +235,7 @@
           "conditions": [
             {
               "id": "is-initial",
-              "leftValue": "={{ $json.isInitialRun }}",
+              "leftValue": "={{ $('Determine Run Type').first().json.isInitialRun }}",
               "rightValue": true,
               "operator": {
                 "type": "boolean",
@@ -2367,7 +2367,7 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const item = $input.item.json;\nconst originalData = $('Split Clip 2 Results').item.json;\n\nreturn {\n  json: {\n    ...item,\n    contentType: originalData.contentType,\n    contentId: originalData.contentId\n    filename: originalData.filename\n  },\n  binary: $input.item.binary\n};"
+        "jsCode": "const item = $input.item.json;\nconst originalData = $('Split Clip 2 Results').item.json;\n\nreturn {\n  json: {\n    ...item,\n    contentType: originalData.contentType,\n    contentId: originalData.contentId,\n    filename: `${sanitizedName}_${originalData.contentType}.mp4`\n  },\n  binary: $input.item.binary\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2804,7 +2804,1332 @@
       "name": "Prepare Video Redos"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Stitch Clips": [
+      {
+        "json": {
+          "exitCode": 0,
+          "stderr": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers\n  built with gcc 13 (Ubuntu 13.2.0-23ubuntu3)\n  configuration: --prefix=/usr --extra-version=3ubuntu5 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --disable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared\n  libavutil      58. 29.100 / 58. 29.100\n  libavcodec     60. 31.102 / 60. 31.102\n  libavformat    60. 16.100 / 60. 16.100\n  libavdevice    60.  3.100 / 60.  3.100\n  libavfilter     9. 12.100 /  9. 12.100\n  libswscale      7.  5.100 /  7.  5.100\n  libswresample   4. 12.100 /  4. 12.100\n  libpostproc    57.  3.100 / 57.  3.100\nInput #0, mov,mp4,m4a,3gp,3g2,mj2, from '/mnt/data/tmp/clip1_intro.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Google\n  Duration: 00:00:08.00, start: 0.000000, bitrate: 5228 kb/s\n  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 720x1280, 5074 kb/s, 24 fps, 24 tbr, 12288 tbn (default)\n    Metadata:\n      handler_name    : VideoHandler\n      vendor_id       : [0][0][0][0]\n  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 139 kb/s (default)\n    Metadata:\n      handler_name    : SoundHandler\n      vendor_id       : [0][0][0][0]\nInput #1, mov,mp4,m4a,3gp,3g2,mj2, from '/mnt/data/tmp/clip2_intro.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Google\n  Duration: 00:00:08.00, start: 0.000000, bitrate: 4296 kb/s\n  Stream #1:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 720x1280, 4134 kb/s, 24 fps, 24 tbr, 12288 tbn (default)\n    Metadata:\n      handler_name    : VideoHandler\n      vendor_id       : [0][0][0][0]\n  Stream #1:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 140 kb/s (default)\n    Metadata:\n      handler_name    : SoundHandler\n      vendor_id       : [0][0][0][0]\nStream mapping:\n  Stream #0:0 (h264) -> concat\n  Stream #0:1 (aac) -> concat\n  Stream #1:0 (h264) -> trim:default\n  Stream #1:1 (aac) -> atrim:default\n  concat -> Stream #0:0 (libx264)\n  concat -> Stream #0:1 (aac)\nPress [q] to stop, [?] for help\n[libx264 @ 0x568c609d4300] using cpu capabilities: MMX2 SSE2 SSE3 Cache64\n[libx264 @ 0x568c609d4300] profile High, level 3.1, 4:2:0, 8-bit\n[libx264 @ 0x568c609d4300] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=3 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=24 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00\nOutput #0, mp4, to '/mnt/data/tmp/stitched_intro.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Lavf60.16.100\n  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(progressive), 720x1280, q=2-31, 24 fps, 12288 tbn\n    Metadata:\n      encoder         : Lavc60.31.102 libx264\n    Side data:\n      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A\n  Stream #0:1: Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 128 kb/s\n    Metadata:\n      encoder         : Lavc60.31.102 aac\nframe=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.02 bitrate=  18.0kbits/s speed=0.172x    \rframe=    0 fps=0.0 q=0.0 size=       0kB time=00:00:01.38 bitrate=   0.3kbits/s speed= 2.2x    \rframe=    0 fps=0.0 q=0.0 size=       0kB time=00:00:01.92 bitrate=   0.2kbits/s speed=1.46x    \rframe=    6 fps=3.3 q=28.0 size=       0kB time=00:00:02.21 bitrate=   0.2kbits/s speed= 1.2x    \rframe=   14 fps=6.0 q=28.0 size=     256kB time=00:00:02.56 bitrate= 819.4kbits/s speed=1.09x    \rframe=   20 fps=6.9 q=28.0 size=     256kB time=00:00:02.79 bitrate= 750.5kbits/s speed=0.966x    \rframe=   28 fps=8.2 q=28.0 size=     512kB time=00:00:03.13 bitrate=1337.6kbits/s speed=0.913x    \rframe=   36 fps=9.1 q=28.0 size=     512kB time=00:00:03.47 bitrate=1206.3kbits/s speed=0.875x    \rframe=   42 fps=9.4 q=28.0 size=     768kB time=00:00:03.71 bitrate=1695.0kbits/s speed=0.828x    \rframe=   51 fps= 10 q=28.0 size=     768kB time=00:00:04.09 bitrate=1536.1kbits/s speed=0.813x    \rframe=   59 fps= 11 q=28.0 size=    1024kB time=00:00:04.41 bitrate=1899.7kbits/s speed=0.794x    \rframe=   67 fps= 11 q=28.0 size=    1024kB time=00:00:04.75 bitrate=1763.4kbits/s speed=0.782x    \rframe=   75 fps= 11 q=28.0 size=    1280kB time=00:00:05.09 bitrate=2056.6kbits/s speed=0.771x    \rframe=   83 fps= 12 q=28.0 size=    1536kB time=00:00:05.41 bitrate=2322.2kbits/s speed=0.758x    \rframe=   91 fps= 12 q=28.0 size=    1536kB time=00:00:05.76 bitrate=2184.6kbits/s speed=0.751x    \rframe=  100 fps= 12 q=28.0 size=    1792kB time=00:00:06.14 bitrate=2389.4kbits/s speed=0.742x    \rframe=  108 fps= 12 q=28.0 size=    1792kB time=00:00:06.46 bitrate=2271.1kbits/s speed=0.733x    \rframe=  116 fps= 12 q=28.0 size=    2048kB time=00:00:06.80 bitrate=2465.4kbits/s speed=0.728x    \rframe=  124 fps= 13 q=28.0 size=    2048kB time=00:00:07.12 bitrate=2354.6kbits/s speed=0.722x    \rframe=  132 fps= 13 q=28.0 size=    2304kB time=00:00:07.46 bitrate=2527.9kbits/s speed=0.72x    \rframe=  140 fps= 13 q=28.0 size=    2560kB time=00:00:07.80 bitrate=2686.0kbits/s speed=0.718x    \rframe=  148 fps= 13 q=28.0 size=    2560kB time=00:00:08.12 bitrate=2580.2kbits/s speed=0.71x    \rframe=  155 fps= 13 q=28.0 size=    2560kB time=00:00:08.42 bitrate=2488.8kbits/s speed=0.704x    \rframe=  164 fps= 13 q=28.0 size=    2816kB time=00:00:08.78 bitrate=2624.7kbits/s speed= 0.7x    \rframe=  174 fps= 13 q=28.0 size=    2816kB time=00:00:09.21 bitrate=2503.2kbits/s speed=0.706x    \rframe=  183 fps= 13 q=28.0 size=    3072kB time=00:00:09.60 bitrate=2621.5kbits/s speed=0.706x    \rframe=  192 fps= 14 q=28.0 size=    3072kB time=00:00:09.96 bitrate=2526.1kbits/s speed=0.703x    \rframe=  200 fps= 14 q=28.0 size=    3328kB time=00:00:10.30 bitrate=2645.9kbits/s speed= 0.7x    \rframe=  208 fps= 14 q=28.0 size=    3328kB time=00:00:10.62 bitrate=2566.2kbits/s speed=0.697x    \rframe=  220 fps= 14 q=28.0 size=    3584kB time=00:00:11.13 bitrate=2636.5kbits/s speed=0.704x    \rframe=  231 fps= 14 q=28.0 size=    3584kB time=00:00:11.58 bitrate=2534.6kbits/s speed=0.71x    \rframe=  238 fps= 14 q=28.0 size=    3840kB time=00:00:11.88 bitrate=2647.4kbits/s speed=0.703x    \rframe=  248 fps= 14 q=28.0 size=    3840kB time=00:00:12.28 bitrate=2560.0kbits/s speed=0.705x    \rframe=  260 fps= 14 q=28.0 size=    4096kB time=00:00:12.80 bitrate=2621.5kbits/s speed=0.711x    \rframe=  271 fps= 15 q=28.0 size=    4352kB time=00:00:13.24 bitrate=2691.1kbits/s speed=0.716x    \rframe=  282 fps= 15 q=28.0 size=    4352kB time=00:00:13.71 bitrate=2599.0kbits/s speed=0.721x    \rframe=  291 fps= 15 q=28.0 size=    4608kB time=00:00:14.08 bitrate=2681.0kbits/s speed=0.721x    \rframe=  297 fps= 15 q=28.0 size=    4608kB time=00:00:14.37 bitrate=2625.4kbits/s speed=0.718x    \rframe=  305 fps= 15 q=28.0 size=    4864kB time=00:00:14.67 bitrate=2714.8kbits/s speed=0.714x    \rframe=  312 fps= 15 q=28.0 size=    4864kB time=00:00:14.93 bitrate=2668.3kbits/s speed=0.702x    \r[out#0/mp4 @ 0x568c609d31c0] video:5595kB audio:238kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.198377%\nframe=  360 fps= 15 q=-1.0 Lsize=    5845kB time=00:00:14.99 bitrate=3192.5kbits/s speed=0.623x    \n[libx264 @ 0x568c609d4300] frame I:2     Avg QP:20.82  size:183362\n[libx264 @ 0x568c609d4300] frame P:106   Avg QP:23.42  size: 36820\n[libx264 @ 0x568c609d4300] frame B:252   Avg QP:28.71  size:  5788\n[libx264 @ 0x568c609d4300] consecutive B-frames:  1.1% 16.7%  0.0% 82.2%\n[libx264 @ 0x568c609d4300] mb I  I16..4:  4.8% 44.0% 51.3%\n[libx264 @ 0x568c609d4300] mb P  I16..4:  0.4%  3.6%  1.6%  P16..4: 36.7% 21.9% 17.6%  0.0%  0.0%    skip:18.2%\n[libx264 @ 0x568c609d4300] mb B  I16..4:  0.0%  0.5%  0.2%  B16..8: 29.3%  5.6%  1.9%  direct: 2.0%  skip:60.4%  L0:34.6% L1:47.8% BI:17.6%\n[libx264 @ 0x568c609d4300] 8x8 transform intra:60.7% inter:59.7%\n[libx264 @ 0x568c609d4300] coded y,uvDC,uvAC intra: 83.7% 79.3% 36.4% inter: 17.9% 11.5% 0.2%\n[libx264 @ 0x568c609d4300] i16 v,h,dc,p: 20% 21%  9% 50%\n[libx264 @ 0x568c609d4300] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 20% 19% 10%  6%  8%  9%  9% 10%  9%\n[libx264 @ 0x568c609d4300] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 24% 17% 10%  6% 11%  9%  8%  8%  6%\n[libx264 @ 0x568c609d4300] i8c dc,h,v,p: 42% 17% 29% 12%\n[libx264 @ 0x568c609d4300] Weighted P-Frames: Y:0.0% UV:0.0%\n[libx264 @ 0x568c609d4300] ref P L0: 65.5% 17.3% 13.3%  3.8%\n[libx264 @ 0x568c609d4300] ref B L0: 94.5%  4.1%  1.4%\n[libx264 @ 0x568c609d4300] ref B L1: 98.6%  1.4%\n[libx264 @ 0x568c609d4300] kb/s:3055.01\n[aac @ 0x568c609d5e40] Qavg: 720.754",
+          "stdout": ""
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "exitCode": 0,
+          "stderr": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers\n  built with gcc 13 (Ubuntu 13.2.0-23ubuntu3)\n  configuration: --prefix=/usr --extra-version=3ubuntu5 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --disable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared\n  libavutil      58. 29.100 / 58. 29.100\n  libavcodec     60. 31.102 / 60. 31.102\n  libavformat    60. 16.100 / 60. 16.100\n  libavdevice    60.  3.100 / 60.  3.100\n  libavfilter     9. 12.100 /  9. 12.100\n  libswscale      7.  5.100 /  7.  5.100\n  libswresample   4. 12.100 /  4. 12.100\n  libpostproc    57.  3.100 / 57.  3.100\nInput #0, mov,mp4,m4a,3gp,3g2,mj2, from '/mnt/data/tmp/clip1_review.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Google\n  Duration: 00:00:08.00, start: 0.000000, bitrate: 5233 kb/s\n  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 720x1280, 5079 kb/s, 24 fps, 24 tbr, 12288 tbn (default)\n    Metadata:\n      handler_name    : VideoHandler\n      vendor_id       : [0][0][0][0]\n  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 139 kb/s (default)\n    Metadata:\n      handler_name    : SoundHandler\n      vendor_id       : [0][0][0][0]\nInput #1, mov,mp4,m4a,3gp,3g2,mj2, from '/mnt/data/tmp/clip2_review.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Google\n  Duration: 00:00:08.00, start: 0.000000, bitrate: 4085 kb/s\n  Stream #1:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 720x1280, 3924 kb/s, 24 fps, 24 tbr, 12288 tbn (default)\n    Metadata:\n      handler_name    : VideoHandler\n      vendor_id       : [0][0][0][0]\n  Stream #1:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 139 kb/s (default)\n    Metadata:\n      handler_name    : SoundHandler\n      vendor_id       : [0][0][0][0]\nStream mapping:\n  Stream #0:0 (h264) -> concat\n  Stream #0:1 (aac) -> concat\n  Stream #1:0 (h264) -> trim:default\n  Stream #1:1 (aac) -> atrim:default\n  concat -> Stream #0:0 (libx264)\n  concat -> Stream #0:1 (aac)\nPress [q] to stop, [?] for help\n[libx264 @ 0x594cf78ba8c0] using cpu capabilities: MMX2 SSE2 SSE3 Cache64\n[libx264 @ 0x594cf78ba8c0] profile High, level 3.1, 4:2:0, 8-bit\n[libx264 @ 0x594cf78ba8c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=3 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=24 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00\nOutput #0, mp4, to '/mnt/data/tmp/stitched_review.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Lavf60.16.100\n  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(progressive), 720x1280, q=2-31, 24 fps, 12288 tbn\n    Metadata:\n      encoder         : Lavc60.31.102 libx264\n    Side data:\n      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A\n  Stream #0:1: Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 128 kb/s\n    Metadata:\n      encoder         : Lavc60.31.102 aac\nframe=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.02 bitrate=  18.0kbits/s speed=0.288x    \rframe=    0 fps=0.0 q=0.0 size=       0kB time=00:00:01.92 bitrate=   0.2kbits/s speed=2.02x    \rframe=    7 fps=4.8 q=28.0 size=       0kB time=00:00:02.28 bitrate=   0.2kbits/s speed=1.57x    \rframe=   15 fps=7.5 q=28.0 size=     256kB time=00:00:02.60 bitrate= 805.9kbits/s speed=1.31x    \rframe=   22 fps=8.8 q=28.0 size=     256kB time=00:00:02.90 bitrate= 723.0kbits/s speed=1.16x    \rframe=   30 fps=9.8 q=28.0 size=     512kB time=00:00:03.22 bitrate=1302.2kbits/s speed=1.05x    \rframe=   38 fps= 10 q=28.0 size=     512kB time=00:00:03.54 bitrate=1184.5kbits/s speed=0.974x    \rframe=   46 fps= 11 q=28.0 size=     768kB time=00:00:03.88 bitrate=1620.5kbits/s speed=0.931x    \rframe=   54 fps= 11 q=28.0 size=    1024kB time=00:00:04.22 bitrate=1986.0kbits/s speed=0.885x    \rframe=   59 fps= 11 q=28.0 size=    1024kB time=00:00:04.41 bitrate=1899.7kbits/s speed=0.832x    \rframe=   66 fps= 11 q=28.0 size=    1280kB time=00:00:04.71 bitrate=2224.2kbits/s speed=0.795x    \rframe=   74 fps= 11 q=28.0 size=    1280kB time=00:00:05.05 bitrate=2074.0kbits/s speed=0.785x    \rframe=   82 fps= 12 q=28.0 size=    1536kB time=00:00:05.37 bitrate=2340.6kbits/s speed=0.772x    \rframe=   90 fps= 12 q=28.0 size=    1536kB time=00:00:05.71 bitrate=2200.9kbits/s speed=0.764x    \rframe=   98 fps= 12 q=28.0 size=    1792kB time=00:00:06.05 bitrate=2423.0kbits/s speed=0.756x    \rframe=  107 fps= 13 q=28.0 size=    1792kB time=00:00:06.42 bitrate=2286.2kbits/s speed=0.752x    \rframe=  114 fps= 13 q=28.0 size=    2048kB time=00:00:06.76 bitrate=2480.9kbits/s speed=0.745x    \rframe=  122 fps= 13 q=28.0 size=    2048kB time=00:00:07.06 bitrate=2376.0kbits/s speed=0.737x    \rframe=  129 fps= 13 q=28.0 size=    2304kB time=00:00:07.33 bitrate=2572.0kbits/s speed=0.724x    \rframe=  138 fps= 13 q=28.0 size=    2304kB time=00:00:07.72 bitrate=2444.1kbits/s speed=0.717x    \rframe=  145 fps= 13 q=28.0 size=    2560kB time=00:00:07.93 bitrate=2642.6kbits/s speed=0.703x    \rframe=  154 fps= 13 q=28.0 size=    2560kB time=00:00:08.38 bitrate=2501.4kbits/s speed=0.706x    \rframe=  162 fps= 13 q=28.0 size=    2560kB time=00:00:08.72 bitrate=2403.6kbits/s speed=0.705x    \rframe=  170 fps= 13 q=28.0 size=    2816kB time=00:00:09.06 bitrate=2544.4kbits/s speed=0.704x    \rframe=  181 fps= 13 q=28.0 size=    3072kB time=00:00:09.51 bitrate=2645.0kbits/s speed=0.709x    \rframe=  189 fps= 14 q=28.0 size=    3072kB time=00:00:09.83 bitrate=2558.9kbits/s speed=0.704x    \rframe=  193 fps= 13 q=28.0 size=    3072kB time=00:00:10.04 bitrate=2504.6kbits/s speed=0.694x    \rframe=  202 fps= 13 q=28.0 size=    3328kB time=00:00:10.38 bitrate=2624.2kbits/s speed=0.69x    \rframe=  211 fps= 14 q=28.0 size=    3328kB time=00:00:10.75 bitrate=2535.7kbits/s speed=0.69x    \rframe=  222 fps= 14 q=28.0 size=    3584kB time=00:00:11.22 bitrate=2616.5kbits/s speed=0.693x    \rframe=  231 fps= 14 q=28.0 size=    3584kB time=00:00:11.62 bitrate=2525.3kbits/s speed=0.697x    \rframe=  238 fps= 14 q=28.0 size=    3840kB time=00:00:11.88 bitrate=2647.4kbits/s speed=0.686x    \rframe=  246 fps= 14 q=28.0 size=    3840kB time=00:00:12.22 bitrate=2573.4kbits/s speed=0.685x    \rframe=  255 fps= 14 q=28.0 size=    4096kB time=00:00:12.58 bitrate=2665.9kbits/s speed=0.686x    \rframe=  265 fps= 14 q=28.0 size=    4352kB time=00:00:13.01 bitrate=2739.6kbits/s speed=0.687x    \rframe=  277 fps= 14 q=28.0 size=    4608kB time=00:00:13.50 bitrate=2795.4kbits/s speed=0.69x    \rframe=  285 fps= 14 q=28.0 size=    4608kB time=00:00:13.84 bitrate=2726.5kbits/s speed=0.685x    \rframe=  293 fps= 14 q=28.0 size=    4608kB time=00:00:14.16 bitrate=2664.9kbits/s speed=0.68x    \rframe=  301 fps= 14 q=28.0 size=    4864kB time=00:00:14.50 bitrate=2746.8kbits/s speed=0.678x    \rframe=  313 fps= 14 q=28.0 size=    4864kB time=00:00:14.93 bitrate=2668.3kbits/s speed=0.677x    \r[out#0/mp4 @ 0x594cf78b9780] video:5332kB audio:235kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.206158%\nframe=  360 fps= 15 q=-1.0 Lsize=    5579kB time=00:00:14.99 bitrate=3047.3kbits/s speed=0.614x    \n[libx264 @ 0x594cf78ba8c0] frame I:2     Avg QP:21.71  size:200094\n[libx264 @ 0x594cf78ba8c0] frame P:102   Avg QP:23.75  size: 40447\n[libx264 @ 0x594cf78ba8c0] frame B:256   Avg QP:29.47  size:  3647\n[libx264 @ 0x594cf78ba8c0] consecutive B-frames:  4.4%  2.2%  0.0% 93.3%\n[libx264 @ 0x594cf78ba8c0] mb I  I16..4:  1.1% 46.5% 52.4%\n[libx264 @ 0x594cf78ba8c0] mb P  I16..4:  0.1%  2.1%  1.2%  P16..4: 38.8% 25.5% 20.5%  0.0%  0.0%    skip:11.8%\n[libx264 @ 0x594cf78ba8c0] mb B  I16..4:  0.0%  0.2%  0.1%  B16..8: 31.8%  3.8%  1.0%  direct: 0.9%  skip:62.2%  L0:32.9% L1:47.6% BI:19.5%\n[libx264 @ 0x594cf78ba8c0] 8x8 transform intra:59.1% inter:56.7%\n[libx264 @ 0x594cf78ba8c0] coded y,uvDC,uvAC intra: 91.4% 87.8% 51.9% inter: 16.7% 12.2% 0.4%\n[libx264 @ 0x594cf78ba8c0] i16 v,h,dc,p: 26% 13%  4% 57%\n[libx264 @ 0x594cf78ba8c0] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 18% 18%  7%  5% 11% 11% 13%  7%  9%\n[libx264 @ 0x594cf78ba8c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 23% 15%  9%  6% 11% 11% 11%  7%  7%\n[libx264 @ 0x594cf78ba8c0] i8c dc,h,v,p: 42% 19% 27% 12%\n[libx264 @ 0x594cf78ba8c0] Weighted P-Frames: Y:0.0% UV:0.0%\n[libx264 @ 0x594cf78ba8c0] ref P L0: 63.9% 15.9% 16.2%  4.1%\n[libx264 @ 0x594cf78ba8c0] ref B L0: 93.2%  5.9%  0.9%\n[libx264 @ 0x594cf78ba8c0] ref B L1: 95.5%  4.5%\n[libx264 @ 0x594cf78ba8c0] kb/s:2911.69\n[aac @ 0x594cf78bc3c0] Qavg: 801.739",
+          "stdout": ""
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      }
+    ],
+    "Download Clip 1": [
+      {
+        "json": {
+          "contentType": "intro",
+          "contentId": "Coppervale_intro",
+          "imageFilename": "Coppervale_intro.png",
+          "videoFilename": "Coppervale_intro.mp4",
+          "videoPrompt1": "Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Silent this clip. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb taking a deep breath of the air, Pleck looking skeptical Gorb says: \"I can't believe we made it to Coppervale! Look at this place!\" Pleck stands beside, observing silently.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "videoPrompt2": "Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nPleck says: \"It's too high.\" Gorb looks concerned, then reassuring and says: \"Don't look down! Let's explore!\" Pleck sighs, reluctantly follows.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "needsStitch": true,
+          "imageUrl": "https://drive.google.com/uc?export=view&id=1oZhmKpN93CjCHVGtTuaIBW1zvKpN2uCT",
+          "clip1TaskId": "b48c92c820007ef82cbf64a4eb2c1efc",
+          "clip1StartTime": 1769543161624,
+          "status": "success",
+          "elapsed": 122163,
+          "isTimedOut": false,
+          "isFailed": false,
+          "isSuccess": true,
+          "videoUrl": "https://tempfile.aiquickdraw.com/v/b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+          "statusResponse": {
+            "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+            "paramJson": "{\"model\":\"fast\",\"prompt\":\"Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \\\"I love humans\\\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\\n\\nPleck says: \\\"It's too high.\\\" Gorb looks concerned, then reassuring and says: \\\"Don't look down! Let's explore!\\\" Pleck sighs, reluctantly follows.\\n\\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.\",\"taskId\":\"b48c92c820007ef82cbf64a4eb2c1efc\"}",
+            "response": {
+              "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+              "resolution": "720p",
+              "originUrls": null,
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4"
+              ],
+              "hasAudioList": [
+                true
+              ],
+              "seeds": [
+                76472
+              ]
+            },
+            "successFlag": 1,
+            "fallbackFlag": false,
+            "completeTime": 1769543401000,
+            "createTime": 1769543284000,
+            "errorCode": null,
+            "errorMessage": null
+          },
+          "clip2TaskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+          "clip2StartTime": 1769543284567,
+          "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+          "clip2VideoUrl": "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4"
+        },
+        "binary": {
+          "clip1": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+            "fileName": "b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/73a0cdd8-0a58-4e81-babf-b3a659c591a7",
+            "fileSize": "5.23 MB"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "contentType": "review",
+          "contentId": "Coppervale_review",
+          "imageFilename": "Coppervale_review.png",
+          "videoFilename": "Coppervale_review.mp4",
+          "videoPrompt1": "Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Silent this clip. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb looks at camera enthusiastically and says: \"Coppervale was amazing! The views, the food, everything! Five out of five probes!\" Pleck stands beside with arms crossed, rolling eyes.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "videoPrompt2": "Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Silent this clip. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nPleck looks at camera with deadpan expression and says: \"It's still too high. One probe.\" Gorb stands beside, looking disappointed at Pleck's review.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "needsStitch": true,
+          "imageUrl": "https://drive.google.com/uc?export=view&id=1qiR61fMsh82-TxBe44680RCBDMWb68ZM",
+          "clip1TaskId": "a2fc425039e46b6d6ac33a301f78a90e",
+          "clip1StartTime": 1769543161632,
+          "status": "success",
+          "elapsed": 122159,
+          "isTimedOut": false,
+          "isFailed": false,
+          "isSuccess": true,
+          "videoUrl": "https://tempfile.aiquickdraw.com/v/a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+          "statusResponse": {
+            "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+            "paramJson": "{\"model\":\"fast\",\"prompt\":\"Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \\\"I love humans\\\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Silent this clip. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\\n\\nPleck looks at camera with deadpan expression and says: \\\"It's still too high. One probe.\\\" Gorb stands beside, looking disappointed at Pleck's review.\\n\\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.\",\"taskId\":\"a2fc425039e46b6d6ac33a301f78a90e\"}",
+            "response": {
+              "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+              "resolution": "720p",
+              "originUrls": null,
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4"
+              ],
+              "hasAudioList": [
+                true
+              ],
+              "seeds": [
+                84236
+              ]
+            },
+            "successFlag": 1,
+            "fallbackFlag": false,
+            "completeTime": 1769543370000,
+            "createTime": 1769543284000,
+            "errorCode": null,
+            "errorMessage": null
+          },
+          "clip2TaskId": "4f65d5e371d8bde027bf8082e5f4587b",
+          "clip2StartTime": 1769543284571,
+          "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+          "clip2VideoUrl": "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4"
+        },
+        "binary": {
+          "clip1": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+            "fileName": "a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/4cfd2ab5-dbad-4f58-9837-f2003e657bd2",
+            "fileSize": "5.23 MB"
+          }
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      }
+    ],
+    "Download Clip 2": [
+      {
+        "json": {
+          "contentType": "intro",
+          "contentId": "Coppervale_intro",
+          "imageFilename": "Coppervale_intro.png",
+          "videoFilename": "Coppervale_intro.mp4",
+          "videoPrompt1": "Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Silent this clip. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb taking a deep breath of the air, Pleck looking skeptical Gorb says: \"I can't believe we made it to Coppervale! Look at this place!\" Pleck stands beside, observing silently.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "videoPrompt2": "Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nPleck says: \"It's too high.\" Gorb looks concerned, then reassuring and says: \"Don't look down! Let's explore!\" Pleck sighs, reluctantly follows.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "needsStitch": true,
+          "imageUrl": "https://drive.google.com/uc?export=view&id=1oZhmKpN93CjCHVGtTuaIBW1zvKpN2uCT",
+          "clip1TaskId": "b48c92c820007ef82cbf64a4eb2c1efc",
+          "clip1StartTime": 1769543161624,
+          "status": "success",
+          "elapsed": 122163,
+          "isTimedOut": false,
+          "isFailed": false,
+          "isSuccess": true,
+          "videoUrl": "https://tempfile.aiquickdraw.com/v/b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+          "statusResponse": {
+            "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+            "paramJson": "{\"model\":\"fast\",\"prompt\":\"Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \\\"I love humans\\\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\\n\\nPleck says: \\\"It's too high.\\\" Gorb looks concerned, then reassuring and says: \\\"Don't look down! Let's explore!\\\" Pleck sighs, reluctantly follows.\\n\\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.\",\"taskId\":\"b48c92c820007ef82cbf64a4eb2c1efc\"}",
+            "response": {
+              "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+              "resolution": "720p",
+              "originUrls": null,
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4"
+              ],
+              "hasAudioList": [
+                true
+              ],
+              "seeds": [
+                76472
+              ]
+            },
+            "successFlag": 1,
+            "fallbackFlag": false,
+            "completeTime": 1769543401000,
+            "createTime": 1769543284000,
+            "errorCode": null,
+            "errorMessage": null
+          },
+          "clip2TaskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+          "clip2StartTime": 1769543284567,
+          "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+          "clip2VideoUrl": "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4"
+        },
+        "binary": {
+          "clip1": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+            "fileName": "b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/73a0cdd8-0a58-4e81-babf-b3a659c591a7",
+            "fileSize": "5.23 MB"
+          },
+          "clip2": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4",
+            "fileName": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/3434a041-c3ce-442f-9d81-7908f6ec888c",
+            "fileSize": "4.3 MB"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "contentType": "review",
+          "contentId": "Coppervale_review",
+          "imageFilename": "Coppervale_review.png",
+          "videoFilename": "Coppervale_review.mp4",
+          "videoPrompt1": "Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Silent this clip. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb looks at camera enthusiastically and says: \"Coppervale was amazing! The views, the food, everything! Five out of five probes!\" Pleck stands beside with arms crossed, rolling eyes.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "videoPrompt2": "Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Silent this clip. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nPleck looks at camera with deadpan expression and says: \"It's still too high. One probe.\" Gorb stands beside, looking disappointed at Pleck's review.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "needsStitch": true,
+          "imageUrl": "https://drive.google.com/uc?export=view&id=1qiR61fMsh82-TxBe44680RCBDMWb68ZM",
+          "clip1TaskId": "a2fc425039e46b6d6ac33a301f78a90e",
+          "clip1StartTime": 1769543161632,
+          "status": "success",
+          "elapsed": 122159,
+          "isTimedOut": false,
+          "isFailed": false,
+          "isSuccess": true,
+          "videoUrl": "https://tempfile.aiquickdraw.com/v/a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+          "statusResponse": {
+            "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+            "paramJson": "{\"model\":\"fast\",\"prompt\":\"Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \\\"I love humans\\\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Silent this clip. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\\n\\nPleck looks at camera with deadpan expression and says: \\\"It's still too high. One probe.\\\" Gorb stands beside, looking disappointed at Pleck's review.\\n\\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.\",\"taskId\":\"a2fc425039e46b6d6ac33a301f78a90e\"}",
+            "response": {
+              "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+              "resolution": "720p",
+              "originUrls": null,
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4"
+              ],
+              "hasAudioList": [
+                true
+              ],
+              "seeds": [
+                84236
+              ]
+            },
+            "successFlag": 1,
+            "fallbackFlag": false,
+            "completeTime": 1769543370000,
+            "createTime": 1769543284000,
+            "errorCode": null,
+            "errorMessage": null
+          },
+          "clip2TaskId": "4f65d5e371d8bde027bf8082e5f4587b",
+          "clip2StartTime": 1769543284571,
+          "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+          "clip2VideoUrl": "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4"
+        },
+        "binary": {
+          "clip1": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+            "fileName": "a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/4cfd2ab5-dbad-4f58-9837-f2003e657bd2",
+            "fileSize": "5.23 MB"
+          },
+          "clip2": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4",
+            "fileName": "4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/19fac5eb-f340-42dd-b2bf-140735c8fc63",
+            "fileSize": "4.09 MB"
+          }
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      }
+    ],
+    "Save Clip 1 to Disk": [
+      {
+        "json": {
+          "contentType": "intro",
+          "contentId": "Coppervale_intro",
+          "imageFilename": "Coppervale_intro.png",
+          "videoFilename": "Coppervale_intro.mp4",
+          "videoPrompt1": "Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Silent this clip. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb taking a deep breath of the air, Pleck looking skeptical Gorb says: \"I can't believe we made it to Coppervale! Look at this place!\" Pleck stands beside, observing silently.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "videoPrompt2": "Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nPleck says: \"It's too high.\" Gorb looks concerned, then reassuring and says: \"Don't look down! Let's explore!\" Pleck sighs, reluctantly follows.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "needsStitch": true,
+          "imageUrl": "https://drive.google.com/uc?export=view&id=1oZhmKpN93CjCHVGtTuaIBW1zvKpN2uCT",
+          "clip1TaskId": "b48c92c820007ef82cbf64a4eb2c1efc",
+          "clip1StartTime": 1769543161624,
+          "status": "success",
+          "elapsed": 122163,
+          "isTimedOut": false,
+          "isFailed": false,
+          "isSuccess": true,
+          "videoUrl": "https://tempfile.aiquickdraw.com/v/b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+          "statusResponse": {
+            "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+            "paramJson": "{\"model\":\"fast\",\"prompt\":\"Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \\\"I love humans\\\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\\n\\nPleck says: \\\"It's too high.\\\" Gorb looks concerned, then reassuring and says: \\\"Don't look down! Let's explore!\\\" Pleck sighs, reluctantly follows.\\n\\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.\",\"taskId\":\"b48c92c820007ef82cbf64a4eb2c1efc\"}",
+            "response": {
+              "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+              "resolution": "720p",
+              "originUrls": null,
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4"
+              ],
+              "hasAudioList": [
+                true
+              ],
+              "seeds": [
+                76472
+              ]
+            },
+            "successFlag": 1,
+            "fallbackFlag": false,
+            "completeTime": 1769543401000,
+            "createTime": 1769543284000,
+            "errorCode": null,
+            "errorMessage": null
+          },
+          "clip2TaskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+          "clip2StartTime": 1769543284567,
+          "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+          "clip2VideoUrl": "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4",
+          "fileName": "/mnt/data/tmp/clip1_intro.mp4"
+        },
+        "binary": {
+          "clip1": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+            "fileName": "b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/73a0cdd8-0a58-4e81-babf-b3a659c591a7",
+            "fileSize": "5.23 MB"
+          },
+          "clip2": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4",
+            "fileName": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/3434a041-c3ce-442f-9d81-7908f6ec888c",
+            "fileSize": "4.3 MB"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "contentType": "review",
+          "contentId": "Coppervale_review",
+          "imageFilename": "Coppervale_review.png",
+          "videoFilename": "Coppervale_review.mp4",
+          "videoPrompt1": "Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Silent this clip. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb looks at camera enthusiastically and says: \"Coppervale was amazing! The views, the food, everything! Five out of five probes!\" Pleck stands beside with arms crossed, rolling eyes.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "videoPrompt2": "Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Silent this clip. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nPleck looks at camera with deadpan expression and says: \"It's still too high. One probe.\" Gorb stands beside, looking disappointed at Pleck's review.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "needsStitch": true,
+          "imageUrl": "https://drive.google.com/uc?export=view&id=1qiR61fMsh82-TxBe44680RCBDMWb68ZM",
+          "clip1TaskId": "a2fc425039e46b6d6ac33a301f78a90e",
+          "clip1StartTime": 1769543161632,
+          "status": "success",
+          "elapsed": 122159,
+          "isTimedOut": false,
+          "isFailed": false,
+          "isSuccess": true,
+          "videoUrl": "https://tempfile.aiquickdraw.com/v/a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+          "statusResponse": {
+            "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+            "paramJson": "{\"model\":\"fast\",\"prompt\":\"Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \\\"I love humans\\\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Silent this clip. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\\n\\nPleck looks at camera with deadpan expression and says: \\\"It's still too high. One probe.\\\" Gorb stands beside, looking disappointed at Pleck's review.\\n\\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.\",\"taskId\":\"a2fc425039e46b6d6ac33a301f78a90e\"}",
+            "response": {
+              "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+              "resolution": "720p",
+              "originUrls": null,
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4"
+              ],
+              "hasAudioList": [
+                true
+              ],
+              "seeds": [
+                84236
+              ]
+            },
+            "successFlag": 1,
+            "fallbackFlag": false,
+            "completeTime": 1769543370000,
+            "createTime": 1769543284000,
+            "errorCode": null,
+            "errorMessage": null
+          },
+          "clip2TaskId": "4f65d5e371d8bde027bf8082e5f4587b",
+          "clip2StartTime": 1769543284571,
+          "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+          "clip2VideoUrl": "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4",
+          "fileName": "/mnt/data/tmp/clip1_review.mp4"
+        },
+        "binary": {
+          "clip1": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+            "fileName": "a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/4cfd2ab5-dbad-4f58-9837-f2003e657bd2",
+            "fileSize": "5.23 MB"
+          },
+          "clip2": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4",
+            "fileName": "4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/19fac5eb-f340-42dd-b2bf-140735c8fc63",
+            "fileSize": "4.09 MB"
+          }
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      }
+    ],
+    "Save Clip 2 to Disk": [
+      {
+        "json": {
+          "contentType": "intro",
+          "contentId": "Coppervale_intro",
+          "imageFilename": "Coppervale_intro.png",
+          "videoFilename": "Coppervale_intro.mp4",
+          "videoPrompt1": "Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Silent this clip. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb taking a deep breath of the air, Pleck looking skeptical Gorb says: \"I can't believe we made it to Coppervale! Look at this place!\" Pleck stands beside, observing silently.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "videoPrompt2": "Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nPleck says: \"It's too high.\" Gorb looks concerned, then reassuring and says: \"Don't look down! Let's explore!\" Pleck sighs, reluctantly follows.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "needsStitch": true,
+          "imageUrl": "https://drive.google.com/uc?export=view&id=1oZhmKpN93CjCHVGtTuaIBW1zvKpN2uCT",
+          "clip1TaskId": "b48c92c820007ef82cbf64a4eb2c1efc",
+          "clip1StartTime": 1769543161624,
+          "status": "success",
+          "elapsed": 122163,
+          "isTimedOut": false,
+          "isFailed": false,
+          "isSuccess": true,
+          "videoUrl": "https://tempfile.aiquickdraw.com/v/b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+          "statusResponse": {
+            "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+            "paramJson": "{\"model\":\"fast\",\"prompt\":\"Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \\\"I love humans\\\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\\n\\nPleck says: \\\"It's too high.\\\" Gorb looks concerned, then reassuring and says: \\\"Don't look down! Let's explore!\\\" Pleck sighs, reluctantly follows.\\n\\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.\",\"taskId\":\"b48c92c820007ef82cbf64a4eb2c1efc\"}",
+            "response": {
+              "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+              "resolution": "720p",
+              "originUrls": null,
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4"
+              ],
+              "hasAudioList": [
+                true
+              ],
+              "seeds": [
+                76472
+              ]
+            },
+            "successFlag": 1,
+            "fallbackFlag": false,
+            "completeTime": 1769543401000,
+            "createTime": 1769543284000,
+            "errorCode": null,
+            "errorMessage": null
+          },
+          "clip2TaskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+          "clip2StartTime": 1769543284567,
+          "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9",
+          "clip2VideoUrl": "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4",
+          "fileName": "/mnt/data/tmp/clip2_intro.mp4"
+        },
+        "binary": {
+          "clip1": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+            "fileName": "b48c92c820007ef82cbf64a4eb2c1efc_1769543257.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/73a0cdd8-0a58-4e81-babf-b3a659c591a7",
+            "fileSize": "5.23 MB"
+          },
+          "clip2": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4",
+            "fileName": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9_1769543398.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/3434a041-c3ce-442f-9d81-7908f6ec888c",
+            "fileSize": "4.3 MB"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "contentType": "review",
+          "contentId": "Coppervale_review",
+          "imageFilename": "Coppervale_review.png",
+          "videoFilename": "Coppervale_review.mp4",
+          "videoPrompt1": "Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Silent this clip. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb looks at camera enthusiastically and says: \"Coppervale was amazing! The views, the food, everything! Five out of five probes!\" Pleck stands beside with arms crossed, rolling eyes.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "videoPrompt2": "Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Silent this clip. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nPleck looks at camera with deadpan expression and says: \"It's still too high. One probe.\" Gorb stands beside, looking disappointed at Pleck's review.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+          "needsStitch": true,
+          "imageUrl": "https://drive.google.com/uc?export=view&id=1qiR61fMsh82-TxBe44680RCBDMWb68ZM",
+          "clip1TaskId": "a2fc425039e46b6d6ac33a301f78a90e",
+          "clip1StartTime": 1769543161632,
+          "status": "success",
+          "elapsed": 122159,
+          "isTimedOut": false,
+          "isFailed": false,
+          "isSuccess": true,
+          "videoUrl": "https://tempfile.aiquickdraw.com/v/a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+          "statusResponse": {
+            "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+            "paramJson": "{\"model\":\"fast\",\"prompt\":\"Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \\\"I love humans\\\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Silent this clip. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\\n\\nPleck looks at camera with deadpan expression and says: \\\"It's still too high. One probe.\\\" Gorb stands beside, looking disappointed at Pleck's review.\\n\\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.\",\"taskId\":\"a2fc425039e46b6d6ac33a301f78a90e\"}",
+            "response": {
+              "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+              "resolution": "720p",
+              "originUrls": null,
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4"
+              ],
+              "hasAudioList": [
+                true
+              ],
+              "seeds": [
+                84236
+              ]
+            },
+            "successFlag": 1,
+            "fallbackFlag": false,
+            "completeTime": 1769543370000,
+            "createTime": 1769543284000,
+            "errorCode": null,
+            "errorMessage": null
+          },
+          "clip2TaskId": "4f65d5e371d8bde027bf8082e5f4587b",
+          "clip2StartTime": 1769543284571,
+          "taskId": "4f65d5e371d8bde027bf8082e5f4587b",
+          "clip2VideoUrl": "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4",
+          "fileName": "/mnt/data/tmp/clip2_review.mp4"
+        },
+        "binary": {
+          "clip1": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+            "fileName": "a2fc425039e46b6d6ac33a301f78a90e_1769543277.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/4cfd2ab5-dbad-4f58-9837-f2003e657bd2",
+            "fileSize": "5.23 MB"
+          },
+          "clip2": {
+            "mimeType": "video/mp4",
+            "fileType": "video",
+            "fileExtension": "mp4",
+            "data": "filesystem-v2",
+            "directory": "https://tempfile.aiquickdraw.com/v/4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4",
+            "fileName": "4f65d5e371d8bde027bf8082e5f4587b_1769543367.mp4",
+            "id": "filesystem-v2:workflows/z9P5cqcd8r-pPTOB7qgmJ/executions/567/binary_data/19fac5eb-f340-42dd-b2bf-140735c8fc63",
+            "fileSize": "4.09 MB"
+          }
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      }
+    ],
+    "Generate Video Clip 2": [
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "9fbbe5a72fd1ecb8e0482ef0d75a1cc9"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "4f65d5e371d8bde027bf8082e5f4587b"
+          }
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      }
+    ],
+    "Generate Video Clip 1": [
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "b48c92c820007ef82cbf64a4eb2c1efc"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "48128909b780fb14ae13bb0e0b86c4c9"
+          }
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      },
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "42d562513aeec61de40ce4ea4862dfdb"
+          }
+        },
+        "pairedItem": {
+          "item": 2
+        }
+      },
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "a2fc425039e46b6d6ac33a301f78a90e"
+          }
+        },
+        "pairedItem": {
+          "item": 3
+        }
+      }
+    ],
+    "Upload Slideshow to Drive": [
+      {
+        "json": {
+          "kind": "drive#file",
+          "id": "1YhgAybBtgjRFb9INbE2KFr42yCMRgd_8",
+          "name": "Coppervale_slideshow_01.mp4",
+          "mimeType": "video/mp4",
+          "starred": false,
+          "trashed": false,
+          "explicitlyTrashed": false,
+          "parents": [
+            "19HkaRaJM7YGPargkUbBv-MZDbORBt9LS"
+          ],
+          "spaces": [
+            "drive"
+          ],
+          "version": "3",
+          "webContentLink": "https://drive.google.com/uc?id=1YhgAybBtgjRFb9INbE2KFr42yCMRgd_8&export=download",
+          "webViewLink": "https://drive.google.com/file/d/1YhgAybBtgjRFb9INbE2KFr42yCMRgd_8/view?usp=drivesdk",
+          "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/video/mp4",
+          "hasThumbnail": false,
+          "thumbnailVersion": "0",
+          "viewedByMe": false,
+          "createdTime": "2026-01-27T19:45:54.176Z",
+          "modifiedTime": "2026-01-27T19:45:54.908Z",
+          "modifiedByMeTime": "2026-01-27T19:45:54.908Z",
+          "modifiedByMe": true,
+          "owners": [
+            {
+              "kind": "drive#user",
+              "displayName": "Richie Coy",
+              "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocLZRBotJrCkJqAIqcqbbYgdcgczdt2PdVO2VQTTUL0DbkcWTG-_9w=s64",
+              "me": true,
+              "permissionId": "00302079348347854402",
+              "emailAddress": "richiecoy@gmail.com"
+            }
+          ],
+          "lastModifyingUser": {
+            "kind": "drive#user",
+            "displayName": "Richie Coy",
+            "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocLZRBotJrCkJqAIqcqbbYgdcgczdt2PdVO2VQTTUL0DbkcWTG-_9w=s64",
+            "me": true,
+            "permissionId": "00302079348347854402",
+            "emailAddress": "richiecoy@gmail.com"
+          },
+          "shared": true,
+          "ownedByMe": true,
+          "downloadRestrictions": {
+            "itemDownloadRestriction": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            },
+            "effectiveDownloadRestrictionWithContext": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            }
+          },
+          "capabilities": {
+            "canAcceptOwnership": false,
+            "canAddChildren": false,
+            "canAddMyDriveParent": false,
+            "canChangeCopyRequiresWriterPermission": true,
+            "canChangeItemDownloadRestriction": true,
+            "canChangeSecurityUpdateEnabled": false,
+            "canChangeViewersCanCopyContent": true,
+            "canComment": true,
+            "canCopy": true,
+            "canDelete": true,
+            "canDisableInheritedPermissions": false,
+            "canDownload": true,
+            "canEdit": true,
+            "canEnableInheritedPermissions": true,
+            "canListChildren": false,
+            "canModifyContent": true,
+            "canModifyContentRestriction": true,
+            "canModifyEditorContentRestriction": true,
+            "canModifyOwnerContentRestriction": true,
+            "canModifyLabels": false,
+            "canMoveChildrenWithinDrive": false,
+            "canMoveItemIntoTeamDrive": true,
+            "canMoveItemOutOfDrive": true,
+            "canMoveItemWithinDrive": true,
+            "canReadLabels": false,
+            "canReadRevisions": true,
+            "canRemoveChildren": false,
+            "canRemoveContentRestriction": false,
+            "canRemoveMyDriveParent": true,
+            "canRename": true,
+            "canShare": true,
+            "canTrash": true,
+            "canUntrash": true
+          },
+          "viewersCanCopyContent": true,
+          "copyRequiresWriterPermission": false,
+          "writersCanShare": true,
+          "permissions": [
+            {
+              "kind": "drive#permission",
+              "id": "anyoneWithLink",
+              "type": "anyone",
+              "role": "reader",
+              "allowFileDiscovery": false
+            },
+            {
+              "kind": "drive#permission",
+              "id": "00302079348347854402",
+              "type": "user",
+              "emailAddress": "RichieCoy@gmail.com",
+              "role": "owner",
+              "displayName": "RichieCoy",
+              "deleted": false,
+              "pendingOwner": false
+            }
+          ],
+          "permissionIds": [
+            "anyoneWithLink",
+            "00302079348347854402"
+          ],
+          "originalFilename": "Coppervale_slideshow_01.mp4",
+          "fullFileExtension": "mp4",
+          "fileExtension": "mp4",
+          "md5Checksum": "c7a3ae184e22c09ccbcfdb8b09629243",
+          "sha1Checksum": "1feb718fe1a07a4a1566d7c8f56750b547747b71",
+          "sha256Checksum": "080182ae2f66d8481c917ef9d1e97b4236a1c828dfc7584ed82b56ca6a7f344f",
+          "size": "1537909",
+          "quotaBytesUsed": "1537909",
+          "headRevisionId": "0BwSJGQVMNbPKQWFnYzV0K2pZdzQzZ1lPMkM5WHpLVDBZc0Z3PQ",
+          "isAppAuthorized": true,
+          "linkShareMetadata": {
+            "securityUpdateEligible": false,
+            "securityUpdateEnabled": true
+          },
+          "inheritedPermissionsDisabled": false
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "kind": "drive#file",
+          "id": "1Z_nnx7slayIuS7ZlIjLA3ZowNIbeXcba",
+          "name": "Coppervale_slideshow_02.mp4",
+          "mimeType": "video/mp4",
+          "starred": false,
+          "trashed": false,
+          "explicitlyTrashed": false,
+          "parents": [
+            "19HkaRaJM7YGPargkUbBv-MZDbORBt9LS"
+          ],
+          "spaces": [
+            "drive"
+          ],
+          "version": "4",
+          "webContentLink": "https://drive.google.com/uc?id=1Z_nnx7slayIuS7ZlIjLA3ZowNIbeXcba&export=download",
+          "webViewLink": "https://drive.google.com/file/d/1Z_nnx7slayIuS7ZlIjLA3ZowNIbeXcba/view?usp=drivesdk",
+          "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/video/mp4",
+          "hasThumbnail": false,
+          "thumbnailVersion": "0",
+          "viewedByMe": false,
+          "createdTime": "2026-01-27T19:45:56.425Z",
+          "modifiedTime": "2026-01-27T19:45:57.212Z",
+          "modifiedByMeTime": "2026-01-27T19:45:57.212Z",
+          "modifiedByMe": true,
+          "owners": [
+            {
+              "kind": "drive#user",
+              "displayName": "Richie Coy",
+              "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocLZRBotJrCkJqAIqcqbbYgdcgczdt2PdVO2VQTTUL0DbkcWTG-_9w=s64",
+              "me": true,
+              "permissionId": "00302079348347854402",
+              "emailAddress": "richiecoy@gmail.com"
+            }
+          ],
+          "lastModifyingUser": {
+            "kind": "drive#user",
+            "displayName": "Richie Coy",
+            "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocLZRBotJrCkJqAIqcqbbYgdcgczdt2PdVO2VQTTUL0DbkcWTG-_9w=s64",
+            "me": true,
+            "permissionId": "00302079348347854402",
+            "emailAddress": "richiecoy@gmail.com"
+          },
+          "shared": true,
+          "ownedByMe": true,
+          "downloadRestrictions": {
+            "itemDownloadRestriction": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            },
+            "effectiveDownloadRestrictionWithContext": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            }
+          },
+          "capabilities": {
+            "canAcceptOwnership": false,
+            "canAddChildren": false,
+            "canAddMyDriveParent": false,
+            "canChangeCopyRequiresWriterPermission": true,
+            "canChangeItemDownloadRestriction": true,
+            "canChangeSecurityUpdateEnabled": false,
+            "canChangeViewersCanCopyContent": true,
+            "canComment": true,
+            "canCopy": true,
+            "canDelete": true,
+            "canDisableInheritedPermissions": false,
+            "canDownload": true,
+            "canEdit": true,
+            "canEnableInheritedPermissions": true,
+            "canListChildren": false,
+            "canModifyContent": true,
+            "canModifyContentRestriction": true,
+            "canModifyEditorContentRestriction": true,
+            "canModifyOwnerContentRestriction": true,
+            "canModifyLabels": false,
+            "canMoveChildrenWithinDrive": false,
+            "canMoveItemIntoTeamDrive": true,
+            "canMoveItemOutOfDrive": true,
+            "canMoveItemWithinDrive": true,
+            "canReadLabels": false,
+            "canReadRevisions": true,
+            "canRemoveChildren": false,
+            "canRemoveContentRestriction": false,
+            "canRemoveMyDriveParent": true,
+            "canRename": true,
+            "canShare": true,
+            "canTrash": true,
+            "canUntrash": true
+          },
+          "viewersCanCopyContent": true,
+          "copyRequiresWriterPermission": false,
+          "writersCanShare": true,
+          "permissions": [
+            {
+              "kind": "drive#permission",
+              "id": "anyoneWithLink",
+              "type": "anyone",
+              "role": "reader",
+              "allowFileDiscovery": false
+            },
+            {
+              "kind": "drive#permission",
+              "id": "00302079348347854402",
+              "type": "user",
+              "emailAddress": "RichieCoy@gmail.com",
+              "role": "owner",
+              "displayName": "RichieCoy",
+              "deleted": false,
+              "pendingOwner": false
+            }
+          ],
+          "permissionIds": [
+            "anyoneWithLink",
+            "00302079348347854402"
+          ],
+          "originalFilename": "Coppervale_slideshow_02.mp4",
+          "fullFileExtension": "mp4",
+          "fileExtension": "mp4",
+          "md5Checksum": "46ef35a026b5e775e803881b8c49a05c",
+          "sha1Checksum": "4b27b698f58b8f931df9f3e1b93723134eb42021",
+          "sha256Checksum": "86a3661eeefe0c1de0a24d5e4b87f03ea9ef13a3f9b23132e2daa526141e3903",
+          "size": "1550872",
+          "quotaBytesUsed": "1550872",
+          "headRevisionId": "0BwSJGQVMNbPKRkhkb0tjblJ2OUY0cFJsVWNQSXRRKy9RWnVvPQ",
+          "isAppAuthorized": true,
+          "linkShareMetadata": {
+            "securityUpdateEligible": false,
+            "securityUpdateEnabled": true
+          },
+          "inheritedPermissionsDisabled": false
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      }
+    ],
+    "Create Slideshow Content Row": [
+      {
+        "json": {
+          "Content_ID": "Coppervale_slideshow_01",
+          "Location_ID": "LOC_002",
+          "Content_Type": "slideshow_01",
+          "Image_Status": "N/A",
+          "Video_Status": "Review",
+          "Title": "Postcards from Coppervale",
+          "Caption": "Collecting memories (and Pleck's sighs) across the universe. #SpaceTourists #GorbAndPleck #TravelLife"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "Content_ID": "Coppervale_slideshow_02",
+          "Location_ID": "LOC_002",
+          "Content_Type": "slideshow_02",
+          "Image_Status": "N/A",
+          "Video_Status": "Review",
+          "Title": "Pleck almost smiled (proof inside)",
+          "Caption": "Just two aliens doing tourist things in Coppervale. Pleck only complained 47 times. #AlienTourists #GorbAndPleck #TravelGram"
+        },
+        "pairedItem": {
+          "item": 1
+        }
+      }
+    ],
+    "Generate Music": [
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "4aa7d885a2cc141f79a75fc40ae7b583"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Create Postcard Content Row": [
+      {
+        "json": {
+          "Content_ID": "Coppervale_postcard",
+          "Location_ID": "LOC_002",
+          "Content_Type": "postcard",
+          "Image_Status": "Review",
+          "Video_Status": "N/A"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Determine Run Type": [
+      {
+        "json": {
+          "location": {
+            "row_number": 3,
+            "Location_ID": "LOC_002",
+            "Name": "Coppervale",
+            "Description": "A Victorian steampunk city with cramped half-timbered buildings, exposed copper pipes and fittings accenting the architecture, cobblestone streets, ornate wrought-iron gas lamp posts, airships drifting overhead, and one giant clock tower rising above the city.",
+            "Weather": "Clear and crisp",
+            "Color_Palette": "Warm sepia and brass gold, deep mahogany brown, aged copper green, cream stone, black wrought iron",
+            "Camera_Angle": "Wide aerial view overlooking the city rooftops",
+            "Sky_Day": "Amber-tinted sky with a pale sun, scattered dirigibles drifting between distant clock towers",
+            "Sky_Night": "Deep indigo sky with a bright copper-colored moon and faint stars",
+            "Lighting_Day": "Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes",
+            "Lighting_Night": "Warm amber pools from gas lamps, brass and copper surfaces glowing softly, deep shadows between lamp posts",
+            "Ambient_Day": "Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery",
+            "Ambient_Night": "Distant rhythmic machinery, occasional steam releases, muffled footsteps on cobblestone, clock tower chimes echoing",
+            "Music": "Victorian orchestral with strings and brass, interwoven with rhythmic clockwork percussion and subtle steam hisses",
+            "Status": "Images_Approved"
+          },
+          "contentRows": [
+            {
+              "row_number": 20,
+              "Content_ID": "LOC_002_style",
+              "Location_ID": "LOC_002",
+              "Content_Type": "style",
+              "Spot_ID": "",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "",
+              "Polaroid_Caption": "",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 21,
+              "Content_ID": "Coppervale_intro",
+              "Location_ID": "LOC_002",
+              "Content_Type": "intro",
+              "Spot_ID": "SPT015",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "Welcome to Coppervale!",
+              "Caption": "Ready to explore the steampunk wonder that is Coppervale? Gears, gadgets, and great food await! #Coppervale #SteampunkVibes #TravelAdventure",
+              "Polaroid_Caption": "",
+              "Video_Prompt_1": "Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Silent this clip. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb taking a deep breath of the air, Pleck looking skeptical Gorb says: \"I can't believe we made it to Coppervale! Look at this place!\" Pleck stands beside, observing silently.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+              "Video_Prompt_2": "Two alien tourists at Dirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nPleck says: \"It's too high.\" Gorb looks concerned, then reassuring and says: \"Don't look down! Let's explore!\" Pleck sighs, reluctantly follows.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+              "Image_Status": "Approved",
+              "Video_Status": "Pending"
+            },
+            {
+              "row_number": 22,
+              "Content_ID": "Coppervale_joke_01",
+              "Location_ID": "LOC_002",
+              "Content_Type": "joke_01",
+              "Spot_ID": "SPT023",
+              "Food_ID": "",
+              "Joke_ID": 8,
+              "Title": "Coppervale Comedy Gold",
+              "Caption": "Gorb's got jokes about Coppervale's clockwork citizens! Sometimes the gears really do get stuck. #CoppervaleComedy #SteampunkHumor #TravelLaughs",
+              "Polaroid_Caption": "",
+              "Video_Prompt_1": "Two alien tourists at Observation deck with wrought-iron railings and coin-operated brass telescopes, the city's platforms spreading out below. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb says: \"How does a penguin build its house?\" Pleck replies: \"How?\" Gorb delivers the punchline: \"Igloos it together.\" Both aliens double over in laughter.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "Pending"
+            },
+            {
+              "row_number": 23,
+              "Content_ID": "Coppervale_joke_02",
+              "Location_ID": "LOC_002",
+              "Content_Type": "joke_02",
+              "Spot_ID": "SPT017",
+              "Food_ID": "",
+              "Joke_ID": 9,
+              "Title": "Steam-Powered Punchlines",
+              "Caption": "Nothing like a good Coppervale joke to keep the steam pressure up! Gorb's timing is as precise as their clockwork. #SteampunkJokes #CoppervaleLife #ComedyGold",
+              "Polaroid_Caption": "",
+              "Video_Prompt_1": "Two alien tourists at The Coppervale Clock — massive central clock tower of riveted iron and brass, exposed gears turning behind glass panels, four clock faces visible from every district. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb says: \"What did the janitor say when he jumped out of the closet?\" Pleck replies: \"What?\" Gorb delivers the punchline: \"Supplies!\" Both aliens burst into laughter.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "Pending"
+            },
+            {
+              "row_number": 24,
+              "Content_ID": "Coppervale_snapshot_01",
+              "Location_ID": "LOC_002",
+              "Content_Type": "snapshot_01",
+              "Spot_ID": "SPT024",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "When Gorb spots something amazing in Coppervale, you KNOW it's worth seeing! That excitement is absolutely infectious. #CoppervaleDiscovery #TravelBuddies #SteampunkWonders",
+              "Polaroid_Caption": "Look at that!",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 25,
+              "Content_ID": "Coppervale_snapshot_02",
+              "Location_ID": "LOC_002",
+              "Content_Type": "snapshot_02",
+              "Spot_ID": "SPT020",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "Nothing beats a classic tourist selfie in beautiful Coppervale! These two know how to make memories together. #CoppervaleSelfie #TravelMemories #BestFriends",
+              "Polaroid_Caption": "Tourist mode: ON!",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 26,
+              "Content_ID": "Coppervale_snapshot_03",
+              "Location_ID": "LOC_002",
+              "Content_Type": "snapshot_03",
+              "Spot_ID": "SPT025",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "Classic travel dynamic: one wants to rest, one's ready for the next adventure! Coppervale's got something for everyone's pace. #TravelLife #CoppervaleVibes #TouristMoments",
+              "Polaroid_Caption": "Need. More. Coffee.",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 27,
+              "Content_ID": "Coppervale_snapshot_04",
+              "Location_ID": "LOC_002",
+              "Content_Type": "snapshot_04",
+              "Spot_ID": "SPT028",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "Pure joy captured in Coppervale! Sometimes the best travel moments are just spontaneous laughter with good friends. #CoppervaleLaughs #TravelJoy #GoodTimes",
+              "Polaroid_Caption": "Best laugh ever!",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 28,
+              "Content_ID": "Coppervale_snapshot_05",
+              "Location_ID": "LOC_002",
+              "Content_Type": "snapshot_05",
+              "Spot_ID": "SPT026",
+              "Food_ID": "FOOD_003",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "Documenting every delicious bite in Coppervale! Pleck's learning that food photos are mandatory when traveling with Gorb. #CoppervaleEats #BoilerhousePasty #FoodieLife",
+              "Polaroid_Caption": "Say cheese! Er, pasty!",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 29,
+              "Content_ID": "Coppervale_snapshot_06",
+              "Location_ID": "LOC_002",
+              "Content_Type": "snapshot_06",
+              "Spot_ID": "SPT018",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "Even the most enthusiastic travelers need a Coppervale rest stop! Those cobblestone streets can really wear you out. #CoppervaleBreak #TravelTired #RestAndRecharge",
+              "Polaroid_Caption": "Feet = officially dead",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 30,
+              "Content_ID": "Coppervale_snapshot_07",
+              "Location_ID": "LOC_002",
+              "Content_Type": "snapshot_07",
+              "Spot_ID": "SPT022",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "Peak tourist energy meets peak embarrassment in Coppervale! Gorb's enthusiasm knows no bounds, Pleck's patience has limits. #CoppervaleAntics #TravelEmbarrassment #TouristLife",
+              "Polaroid_Caption": "Why are you like this",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 31,
+              "Content_ID": "Coppervale_snapshot_08",
+              "Location_ID": "LOC_002",
+              "Content_Type": "snapshot_08",
+              "Spot_ID": "SPT027",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "Coppervale's towering steampunk architecture never fails to amaze! Even seasoned travelers can't help but gawk at these mechanical marvels. #CoppervaleArchitecture #SteampunkWonders #TravelAwe",
+              "Polaroid_Caption": "So. Freaking. Tall.",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 32,
+              "Content_ID": "Coppervale_snapshot_09",
+              "Location_ID": "LOC_002",
+              "Content_Type": "snapshot_09",
+              "Spot_ID": "SPT021",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "First rule of Coppervale dining: photograph everything before the first bite! The local cuisine is almost too beautiful to eat. #CoppervaleFood #FoodPhotography #CulinaryTravel",
+              "Polaroid_Caption": "Food pic mandatory!",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 33,
+              "Content_ID": "Coppervale_snapshot_10",
+              "Location_ID": "LOC_002",
+              "Content_Type": "snapshot_10",
+              "Spot_ID": "SPT016",
+              "Food_ID": "FOOD_004",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "Gorb giving the full Gearpress waffle breakdown while Pleck just wants to eat! This is peak Coppervale food tour energy. #GearpressWaffle #CoppervaleFoodie #TravelEducation",
+              "Polaroid_Caption": "Waffle wisdom time!",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Approved",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 34,
+              "Content_ID": "Coppervale_review",
+              "Location_ID": "LOC_002",
+              "Content_Type": "review",
+              "Spot_ID": "SPT019",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "Coppervale: Final Verdict",
+              "Caption": "Time for the ultimate Coppervale review! From steam-powered sights to mechanical marvels, here's our honest take. #CoppervaleReview #SteampunkTravel #TravelVerdict",
+              "Polaroid_Caption": "",
+              "Video_Prompt_1": "Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Voice: Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Silent this clip. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nGorb looks at camera enthusiastically and says: \"Coppervale was amazing! The views, the food, everything! Five out of five probes!\" Pleck stands beside with arms crossed, rolling eyes.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+              "Video_Prompt_2": "Two alien tourists at Covered market hall with an arched iron framework and dirty glass roof, crowded stalls selling mechanical parts, fabric bolts, and exotic curios. GORB: a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers. Silent this clip. PLECK: a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers. Voice: Male low, dry, deadpan delivery, slight exasperation. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes. Wide aerial view overlooking the city rooftops.\n\nPleck looks at camera with deadpan expression and says: \"It's still too high. One probe.\" Gorb stands beside, looking disappointed at Pleck's review.\n\nAudio: Hissing steam valves, spinning gears, vendor calls, crowd chatter, distant clock tower chimes, clanking machinery. No subtitles. Buddy-comedy vibe.",
+              "Image_Status": "Approved",
+              "Video_Status": "Pending"
+            },
+            {
+              "row_number": 35,
+              "Content_ID": "Coppervale_postcard",
+              "Location_ID": "LOC_002",
+              "Content_Type": "postcard",
+              "Spot_ID": "",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "",
+              "Caption": "",
+              "Polaroid_Caption": "",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "Review",
+              "Video_Status": "N/A"
+            },
+            {
+              "row_number": 36,
+              "Content_ID": "Coppervale_slideshow_01",
+              "Location_ID": "LOC_002",
+              "Content_Type": "slideshow_01",
+              "Spot_ID": "",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "Postcards from Coppervale",
+              "Caption": "Collecting memories (and Pleck's sighs) across the universe. #SpaceTourists #GorbAndPleck #TravelLife",
+              "Polaroid_Caption": "",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "N/A",
+              "Video_Status": "Review"
+            },
+            {
+              "row_number": 37,
+              "Content_ID": "Coppervale_slideshow_02",
+              "Location_ID": "LOC_002",
+              "Content_Type": "slideshow_02",
+              "Spot_ID": "",
+              "Food_ID": "",
+              "Joke_ID": "",
+              "Title": "Pleck almost smiled (proof inside)",
+              "Caption": "Just two aliens doing tourist things in Coppervale. Pleck only complained 47 times. #AlienTourists #GorbAndPleck #TravelGram",
+              "Polaroid_Caption": "",
+              "Video_Prompt_1": "",
+              "Video_Prompt_2": "",
+              "Image_Status": "N/A",
+              "Video_Status": "Review"
+            }
+          ],
+          "isInitialRun": true,
+          "hasRedos": false,
+          "redoItems": []
+        }
+      }
+    ]
+  },
   "connections": {
     "Manual Trigger": {
       "main": [
@@ -3920,7 +5245,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "a2b31bdb-d26b-4e71-9ff8-d0bec87f10f1",
+  "versionId": "19ceed1b-da1a-4db3-a83d-0295f31ac3af",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "daba14a88550d0304eb819e927ffe087dff267675394753b32278f2dd7342718"
