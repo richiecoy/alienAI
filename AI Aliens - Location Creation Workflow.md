@@ -151,6 +151,28 @@ Pick 6 from this pool, **max 1 per category**:
 2. What do they see in front of them?
 3. What's the context/moment? (arriving, exploring, eating, etc.)
 
+### Spatial Context Rules:
+
+The location description provides the world's DNA, but the spot description must specify **where in that world** the characters are. Without this, the model will default to street-level exteriors.
+
+**Interior spots — explicitly say "inside":**
+
+Bad:
+> "Municipal steam baths fed by the city's boiler system, tiled pools with condensation dripping from copper pipes overhead"
+
+Good:
+> "Inside the municipal steam baths — a tiled hall with sunken pools fed by the city's boiler system, condensation dripping from copper pipes overhead, arched windows fogged with steam"
+
+**Elevated/spanning spots — specify what's below and what's visible:**
+
+Bad:
+> "Iron suspension bridge with riveted plates and cable stays, swaying slightly underfoot, open sky visible through the grated walkway"
+
+Good:
+> "An iron suspension bridge spanning high above the city rooftops, riveted plates and cable stays, grated walkway with open sky visible below, the clock tower and distant airships in view"
+
+**Key principle:** If the spot isn't at street level or isn't exterior, you must explicitly state where it is — otherwise the model will combine it with the location's street-level DNA and produce confused results.
+
 ---
 
 ## Stage 5: Foods
@@ -206,7 +228,7 @@ When building image prompts, layer the information in this order:
 
 ```
 1. [Location Description] — sets the world (visual DNA)
-2. [Spot Description] — places them with perspective
+2. [Spot Description] — places them with perspective and spatial context
 3. [Characters + Activity] — minimal ID + what they're doing + camera
 4. [Sky + Lighting] — atmosphere
 5. [Composition] — aspect ratio
