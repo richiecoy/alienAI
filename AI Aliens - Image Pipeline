@@ -1,16 +1,6 @@
 {
+  "name": "AI Aliens - Image Pipeline v3",
   "nodes": [
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        -544,
-        1392
-      ],
-      "id": "064a4625-e008-4e33-9176-0ace5a3d4a87",
-      "name": "Manual Trigger"
-    },
     {
       "parameters": {
         "documentId": {
@@ -578,6 +568,16 @@
               "canBeUsedToMatch": true
             },
             {
+              "id": "Blotato_ID",
+              "displayName": "Blotato_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "Time_of_Day",
               "displayName": "Time_of_Day",
               "required": false,
@@ -636,26 +636,6 @@
               "removed": false
             },
             {
-              "id": "Video_Prompt_1",
-              "displayName": "Video_Prompt_1",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "Video_Prompt_2",
-              "displayName": "Video_Prompt_2",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
               "id": "Image_Status",
               "displayName": "Image_Status",
               "required": false,
@@ -672,6 +652,16 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "Post_Status",
+              "displayName": "Post_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -1308,6 +1298,16 @@
               "removed": true
             },
             {
+              "id": "Blotato_ID",
+              "displayName": "Blotato_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "Time_of_Day",
               "displayName": "Time_of_Day",
               "required": false,
@@ -1368,26 +1368,6 @@
               "removed": false
             },
             {
-              "id": "Video_Prompt_1",
-              "displayName": "Video_Prompt_1",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Video_Prompt_2",
-              "displayName": "Video_Prompt_2",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "Image_Status",
               "displayName": "Image_Status",
               "required": false,
@@ -1399,6 +1379,16 @@
             {
               "id": "Video_Status",
               "displayName": "Video_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Post_Status",
+              "displayName": "Post_Status",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -1914,6 +1904,16 @@
               "removed": false
             },
             {
+              "id": "Blotato_ID",
+              "displayName": "Blotato_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "Time_of_Day",
               "displayName": "Time_of_Day",
               "required": false,
@@ -1974,26 +1974,6 @@
               "removed": false
             },
             {
-              "id": "Video_Prompt_1",
-              "displayName": "Video_Prompt_1",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Video_Prompt_2",
-              "displayName": "Video_Prompt_2",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "Image_Status",
               "displayName": "Image_Status",
               "required": false,
@@ -2005,6 +1985,16 @@
             {
               "id": "Video_Status",
               "displayName": "Video_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Post_Status",
+              "displayName": "Post_Status",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -2735,6 +2725,16 @@
               "removed": false
             },
             {
+              "id": "Blotato_ID",
+              "displayName": "Blotato_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "Time_of_Day",
               "displayName": "Time_of_Day",
               "required": false,
@@ -2795,26 +2795,6 @@
               "removed": false
             },
             {
-              "id": "Video_Prompt_1",
-              "displayName": "Video_Prompt_1",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Video_Prompt_2",
-              "displayName": "Video_Prompt_2",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "Image_Status",
               "displayName": "Image_Status",
               "required": false,
@@ -2826,6 +2806,16 @@
             {
               "id": "Video_Status",
               "displayName": "Video_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Post_Status",
+              "displayName": "Post_Status",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -3035,6 +3025,16 @@
               "removed": false
             },
             {
+              "id": "Blotato_ID",
+              "displayName": "Blotato_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "Time_of_Day",
               "displayName": "Time_of_Day",
               "required": false,
@@ -3095,26 +3095,6 @@
               "removed": false
             },
             {
-              "id": "Video_Prompt_1",
-              "displayName": "Video_Prompt_1",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Video_Prompt_2",
-              "displayName": "Video_Prompt_2",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "Image_Status",
               "displayName": "Image_Status",
               "required": false,
@@ -3126,6 +3106,16 @@
             {
               "id": "Video_Status",
               "displayName": "Video_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Post_Status",
+              "displayName": "Post_Status",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -3493,25 +3483,33 @@
       ],
       "id": "8a5ba29e-77f0-4529-a6d1-e9975ee9de42",
       "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                3
+              ],
+              "triggerAtHour": 22
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -544,
+        1408
+      ],
+      "id": "3fcd91b9-2630-483b-a6f1-8ad069d9512b",
+      "name": "Schedule Trigger"
     }
   ],
+  "pinData": {},
   "connections": {
-    "Manual Trigger": {
-      "main": [
-        [
-          {
-            "node": "Get Style_Approved Locations",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Get Images_Review Locations",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Get Style_Approved Locations": {
       "main": [
         [
@@ -3669,17 +3667,6 @@
         ]
       ]
     },
-    "Parse Claude Response": {
-      "main": [
-        [
-          {
-            "node": "Split Content Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Get Photo Activities": {
       "main": [
         [
@@ -3702,11 +3689,11 @@
         ]
       ]
     },
-    "Create Content Rows": {
+    "Parse Claude Response": {
       "main": [
         [
           {
-            "node": "Prepare Used Updates",
+            "node": "Split Content Items",
             "type": "main",
             "index": 0
           }
@@ -3740,22 +3727,33 @@
         ]
       ]
     },
-    "Mark Spots Used": {
+    "Extract Food Updates": {
       "main": [
         [
           {
-            "node": "Wait for Marks",
+            "node": "Mark Foods Used",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Extract Food Updates": {
+    "Create Content Rows": {
       "main": [
         [
           {
-            "node": "Mark Foods Used",
+            "node": "Prepare Used Updates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Spots Used": {
+      "main": [
+        [
+          {
+            "node": "Wait for Marks",
             "type": "main",
             "index": 0
           }
@@ -3828,17 +3826,6 @@
         ]
       ]
     },
-    "Set Image Start Time": {
-      "main": [
-        [
-          {
-            "node": "Prep Status Check",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Prep Status Check": {
       "main": [
         [
@@ -3894,6 +3881,17 @@
         ]
       ]
     },
+    "Set Image Start Time": {
+      "main": [
+        [
+          {
+            "node": "Prep Status Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Prep Download": {
       "main": [
         [
@@ -3921,17 +3919,6 @@
         [
           {
             "node": "Collect Image Result",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Collect Image Result": {
-      "main": [
-        [
-          {
-            "node": "Prep Content Update",
             "type": "main",
             "index": 0
           }
@@ -3982,6 +3969,17 @@
         ]
       ]
     },
+    "Collect Image Result": {
+      "main": [
+        [
+          {
+            "node": "Prep Content Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "IF (Still Pending)": {
       "main": [
         [
@@ -4005,17 +4003,6 @@
         [
           {
             "node": "Wait 30s",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait 30s": {
-      "main": [
-        [
-          {
-            "node": "Prep Status Check",
             "type": "main",
             "index": 0
           }
@@ -4056,17 +4043,6 @@
         ]
       ]
     },
-    "Extract Successful": {
-      "main": [
-        [
-          {
-            "node": "Prep Download",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "IF (Any Failed)": {
       "main": [
         [
@@ -4090,6 +4066,28 @@
         [
           {
             "node": "Update Content - Redo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30s": {
+      "main": [
+        [
+          {
+            "node": "Prep Status Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Successful": {
+      "main": [
+        [
+          {
+            "node": "Prep Download",
             "type": "main",
             "index": 0
           }
@@ -4401,46 +4399,6 @@
         ]
       ]
     },
-    "IF (Any Failed) (Redo)": {
-      "main": [
-        [
-          {
-            "node": "Prep Failed Updates (Redo)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Merge Success and Failed (Redo)",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Prep Failed Updates (Redo)": {
-      "main": [
-        [
-          {
-            "node": "Update Content - Redo (Redo)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update Content - Redo (Redo)": {
-      "main": [
-        [
-          {
-            "node": "Merge Success and Failed (Redo)",
-            "type": "main",
-            "index": 2
-          }
-        ]
-      ]
-    },
     "Prep Download (Redo)": {
       "main": [
         [
@@ -4503,6 +4461,46 @@
             "node": "Merge Success and Failed (Redo)",
             "type": "main",
             "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Any Failed) (Redo)": {
+      "main": [
+        [
+          {
+            "node": "Prep Failed Updates (Redo)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Success and Failed (Redo)",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Prep Failed Updates (Redo)": {
+      "main": [
+        [
+          {
+            "node": "Update Content - Redo (Redo)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Content - Redo (Redo)": {
+      "main": [
+        [
+          {
+            "node": "Merge Success and Failed (Redo)",
+            "type": "main",
+            "index": 2
           }
         ]
       ]
@@ -4590,91 +4588,46 @@
           }
         ]
       ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Style_Approved Locations",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Images_Review Locations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "pinData": {
-    "Generate Prompts (Redo)": [
-      {
-        "locationId": "LOC_001",
-        "locationName": "Coppervale",
-        "sanitizedName": "Coppervale",
-        "contentItems": [
-          {
-            "contentId": "Coppervale_intro",
-            "contentType": "intro",
-            "spotId": "SPT001",
-            "foodId": null,
-            "timeOfDay": "golden_hour",
-            "imagePrompt": "Photorealistic 3D CGI render. Coppervale — A Victorian steampunk city with cramped half-timbered buildings, exposed copper pipes and fittings accenting the architecture, cobblestone streets, ornate wrought-iron gas lamp posts, airships drifting overhead, and one giant clock tower rising above the city.\n\nDirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks\n\nGORB, a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers, in foreground, medium close-up, Gorb looking around in wonder, eyes wide. medium shot.\n\nAmber-tinted sky with a pale sun, scattered dirigibles drifting between distant clock towers. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes.\n\nVertical 9:16 composition.",
-            "aspectRatio": "9:16"
-          },
-          {
-            "contentId": "Coppervale_gorb_story",
-            "contentType": "gorb_story",
-            "spotId": "SPT013",
-            "foodId": null,
-            "timeOfDay": "afternoon",
-            "imagePrompt": "Photorealistic 3D CGI render. Coppervale — A Victorian steampunk city with cramped half-timbered buildings, exposed copper pipes and fittings accenting the architecture, cobblestone streets, ornate wrought-iron gas lamp posts, airships drifting overhead, and one giant clock tower rising above the city.\n\nSmall iron balcony at the end of a dead-end lane, single wooden bench, unobstructed view across the rooftops and distant platforms\n\nGORB, a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers, in foreground, medium close-up, Gorb grinning at camera. medium shot.\n\nAmber-tinted sky with a pale sun, scattered dirigibles drifting between distant clock towers. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes.\n\nVertical 9:16 composition.",
-            "aspectRatio": "9:16"
-          },
-          {
-            "contentId": "Coppervale_pleck_story",
-            "contentType": "pleck_story",
-            "spotId": "SPT010",
-            "foodId": null,
-            "timeOfDay": "dusk",
-            "imagePrompt": "Photorealistic 3D CGI render. Coppervale — A Victorian steampunk city with cramped half-timbered buildings, exposed copper pipes and fittings accenting the architecture, cobblestone streets, ornate wrought-iron gas lamp posts, airships drifting overhead, and one giant clock tower rising above the city.\n\nInside the municipal steam baths — a tiled hall with sunken pools fed by the city's boiler system, condensation dripping from copper pipes overhead, locals soaking in the warmth, arched windows fogged with steam\n\nPLECK, a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers, in foreground, medium close-up, Pleck arms crossed, looking unimpressed. medium shot.\n\nDeep indigo sky with a bright copper-colored moon and faint stars. Warm amber pools from gas lamps, brass and copper surfaces glowing softly, deep shadows between lamp posts.\n\nVertical 9:16 composition.",
-            "aspectRatio": "9:16"
-          },
-          {
-            "contentId": "Coppervale_review",
-            "contentType": "review",
-            "spotId": "SPT009",
-            "foodId": null,
-            "timeOfDay": "dawn",
-            "imagePrompt": "Photorealistic 3D CGI render. Coppervale — A Victorian steampunk city with cramped half-timbered buildings, exposed copper pipes and fittings accenting the architecture, cobblestone streets, ornate wrought-iron gas lamp posts, airships drifting overhead, and one giant clock tower rising above the city.\n\nObservation deck with wrought-iron railings and coin-operated brass telescopes, the city's platforms spreading out below\n\nGORB, a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers, in foreground, medium close-up, Standing confidently, addressing camera. medium shot.\n\nAmber-tinted sky with a pale sun, scattered dirigibles drifting between distant clock towers. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes.\n\nVertical 9:16 composition.",
-            "aspectRatio": "9:16"
-          }
-        ],
-        "totalItems": 4
-      }
-    ],
-    "Generate Image (Redo)": [
-      {
-        "code": 200,
-        "msg": "success",
-        "data": {
-          "taskId": "85d960cf9c50018af1556fd72cade0d1",
-          "recordId": "85d960cf9c50018af1556fd72cade0d1"
-        }
-      },
-      {
-        "code": 200,
-        "msg": "success",
-        "data": {
-          "taskId": "e975ee86b56b1f60c4be0703bfaa099a",
-          "recordId": "e975ee86b56b1f60c4be0703bfaa099a"
-        }
-      },
-      {
-        "code": 200,
-        "msg": "success",
-        "data": {
-          "taskId": "14224452840933951947a2e3a40a8085",
-          "recordId": "14224452840933951947a2e3a40a8085"
-        }
-      },
-      {
-        "code": 200,
-        "msg": "success",
-        "data": {
-          "taskId": "501c5c66458642129752880353c382af",
-          "recordId": "501c5c66458642129752880353c382af"
-        }
-      }
-    ]
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
   },
+  "versionId": "679fede3-827e-47de-a185-867859857c06",
   "meta": {
     "instanceId": "daba14a88550d0304eb819e927ffe087dff267675394753b32278f2dd7342718"
-  }
+  },
+  "id": "QQ4815iIONcMSDlm",
+  "tags": [
+    {
+      "updatedAt": "2026-01-21T17:38:45.151Z",
+      "createdAt": "2026-01-21T17:38:45.151Z",
+      "id": "CEWpWHWat0OoEcmi",
+      "name": "Gorb & Pleck"
+    },
+    {
+      "updatedAt": "2026-01-28T20:06:51.435Z",
+      "createdAt": "2026-01-28T20:06:51.435Z",
+      "id": "sdchqjcsR3ONuXkQ",
+      "name": "v3"
+    }
+  ]
 }
