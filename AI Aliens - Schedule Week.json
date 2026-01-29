@@ -1,0 +1,1168 @@
+{
+  "name": "AI Aliens - Schedule Week",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                6
+              ],
+              "triggerAtHour": 20
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2416,
+        -32
+      ],
+      "id": "dac2c3f8-211e-4dcc-b6b5-a8b47d1ea3a1",
+      "name": "Saturday 8pm EST"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 143205348,
+          "mode": "list",
+          "cachedResultName": "Locations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=143205348"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Ready"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -2192,
+        -32
+      ],
+      "id": "ae2f2780-1d87-44b9-a8a3-cfbad8fddd3b",
+      "name": "Get Location (Ready)",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "check-location",
+              "leftValue": "={{ $json.Location_ID }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1968,
+        -32
+      ],
+      "id": "8053ef0c-57cb-4dd5-b044-eec210ade6b0",
+      "name": "Location Found?"
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "AI Aliens - No Location Ready",
+        "html": "No location with Status = Ready was found. Nothing to schedule this week.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -1760,
+        176
+      ],
+      "id": "0ffaec8e-f258-41ab-b7db-78ff8cfb493c",
+      "name": "Email - No Location",
+      "webhookId": "e87ff6c6-7a28-4415-9c73-c070124752b4",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1192648937,
+          "mode": "list",
+          "cachedResultName": "Content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=1192648937"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Location_ID",
+              "lookupValue": "={{ $('Get Location (Ready)').item.json.Location_ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1760,
+        -32
+      ],
+      "id": "eb2e3349-f473-415e-aaac-1d135bb0ddd9",
+      "name": "Get Content Rows",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $('Get Location (Ready)').item.json.Location_ID }}",
+        "limit": 1,
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1536,
+        -32
+      ],
+      "id": "b6e9d8c9-ab66-4d82-baa8-10abee821931",
+      "name": "Search Location Folder",
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "=",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1312,
+        -32
+      ],
+      "id": "1dfc276b-c9b4-43bf-904e-cfbc1f1b5e44",
+      "name": "List Files in Folder",
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get location data, content rows, and file list\nconst location = $('Get Location (Ready)').first().json;\nconst contentRows = $('Get Content Rows').all().map(item => item.json);\nconst files = $input.all().map(item => item.json);\n\nconst locationId = location.Location_ID;\nconst locationName = location.Name;\n\n// Sanitize location name for filename matching (spaces -> underscores, remove special chars)\nconst sanitizedName = locationName.replace(/\\s+/g, '_');\n\n// Build file URL map: content_type -> URL\nconst fileMap = {};\nfiles.forEach(file => {\n  // Extract content type from filename: Sanitized_Location_Name_contenttype.ext\n  const match = file.name.match(new RegExp(`^${sanitizedName}_(.+)\\\\.(png|mp4|jpg)$`, 'i'));\n  if (match) {\n    const contentType = match[1];\n    const ext = match[2].toLowerCase();\n    const url = `https://drive.google.com/uc?export=view&id=${file.id}`;\n    \n    if (ext === 'mp4') {\n      fileMap[contentType + '_video'] = url;\n    } else {\n      fileMap[contentType + '_image'] = url;\n    }\n  }\n});\n\n// Calculate next Sunday at 8pm EST\nconst now = new Date();\nconst dayOfWeek = now.getDay();\nconst daysUntilSunday = (7 - dayOfWeek) % 7 || 7;\nconst nextSunday = new Date(now);\nnextSunday.setDate(now.getDate() + daysUntilSunday);\nnextSunday.setHours(20, 0, 0, 0);\n\nfunction getScheduledTime(dayOffset, hour, minute = 0) {\n  const date = new Date(nextSunday);\n  date.setDate(date.getDate() + dayOffset);\n  date.setHours(hour, minute, 0, 0);\n  const year = date.getFullYear();\n  const month = String(date.getMonth() + 1).padStart(2, '0');\n  const day = String(date.getDate()).padStart(2, '0');\n  const hours = String(date.getHours()).padStart(2, '0');\n  const minutes = String(date.getMinutes()).padStart(2, '0');\n  const seconds = String(date.getSeconds()).padStart(2, '0');\n\n// Get timezone offset and format it\n  const offset = -date.getTimezoneOffset();\n  const offsetHours = String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0');\n  const offsetMinutes = String(Math.abs(offset) % 60).padStart(2, '0');\n  const offsetSign = offset >= 0 ? '+' : '-';\n\n  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${offsetSign}${offsetHours}:${offsetMinutes}`;\n}\n\nfunction getContent(type) {\n  return contentRows.find(c => c.Content_Type === type);\n}\n\nfunction getVideoUrl(type) {\n  return fileMap[type + '_video'] || '';\n}\n\nfunction getImageUrl(type) {\n  return fileMap[type + '_image'] || '';\n}\n\nconst posts = [];\n\nconst INSTAGRAM_ID = '8824';\nconst TIKTOK_ID = '10553';\nconst YOUTUBE_ID = '7607';\n\n// === SUNDAY 8PM: Intro Video ===\nconst intro = getContent('intro');\nif (intro) {\n  const introTime = getScheduledTime(0, 20);\n  const videoUrl = getVideoUrl('intro');\n  \n  posts.push({\n    contentId: intro.Content_ID,\n    contentType: 'intro',\n    platform: 'instagram',\n    accountId: INSTAGRAM_ID,\n    mediaType: 'reel',\n    text: intro.Caption || '',\n    title: intro.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: introTime,\n    row_number: intro.row_number\n  });\n  \n  posts.push({\n    contentId: intro.Content_ID,\n    contentType: 'intro',\n    platform: 'tiktok',\n    accountId: TIKTOK_ID,\n    text: intro.Caption || '',\n    title: intro.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: introTime,\n    row_number: intro.row_number\n  });\n  \n  posts.push({\n    contentId: intro.Content_ID,\n    contentType: 'intro',\n    platform: 'youtube',\n    accountId: YOUTUBE_ID,\n    text: intro.Caption || '',\n    title: intro.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: introTime,\n    row_number: intro.row_number\n  });\n}\n\n// === MONDAY: Stories + Carousel + Slideshow ===\nconst mondayStoryTimes = [\n  { snapshot: 'snapshot_01', hour: 8 },\n  { snapshot: 'snapshot_02', hour: 12 },\n  { snapshot: 'snapshot_03', hour: 15 },\n  { snapshot: 'snapshot_04', hour: 17 },\n  { snapshot: 'snapshot_05', hour: 19 }\n];\n\nmondayStoryTimes.forEach(({snapshot, hour}) => {\n  const content = getContent(snapshot);\n  if (content) {\n    posts.push({\n      contentId: content.Content_ID,\n      contentType: snapshot,\n      platform: 'instagram',\n      accountId: INSTAGRAM_ID,\n      mediaType: 'story',\n      text: '',\n      mediaUrl: getImageUrl(snapshot),\n      scheduledTime: getScheduledTime(1, hour),\n      row_number: content.row_number\n    });\n  }\n});\n\n// Monday 5pm: Carousel (snapshots 1-5)\nconst carouselImages1 = ['snapshot_01', 'snapshot_02', 'snapshot_03', 'snapshot_04', 'snapshot_05']\n  .map(type => getImageUrl(type))\n  .filter(url => url);\n\nif (carouselImages1.length > 0) {\n  const snapshot01 = getContent('snapshot_01');\n  posts.push({\n    contentId: 'carousel_monday',\n    contentType: 'carousel',\n    platform: 'instagram',\n    accountId: INSTAGRAM_ID,\n    mediaType: 'carousel',\n    text: snapshot01?.Caption || `Exploring ${locationName}! #AlienTourists #GorbAndPleck`,\n    mediaUrls: carouselImages1,\n    scheduledTime: getScheduledTime(1, 17),\n    row_number: snapshot01?.row_number\n  });\n}\n\n// Monday 5pm: Slideshow 01 (TikTok + YouTube)\nconst slideshow01 = getContent('slideshow_01');\nif (slideshow01) {\n  const mondayVideoTime = getScheduledTime(1, 17);\n  const videoUrl = getVideoUrl('slideshow_01');\n  \n  posts.push({\n    contentId: slideshow01.Content_ID,\n    contentType: 'slideshow_01',\n    platform: 'tiktok',\n    accountId: TIKTOK_ID,\n    text: slideshow01.Caption || '',\n    title: slideshow01.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: mondayVideoTime,\n    row_number: slideshow01.row_number\n  });\n  \n  posts.push({\n    contentId: slideshow01.Content_ID,\n    contentType: 'slideshow_01',\n    platform: 'youtube',\n    accountId: YOUTUBE_ID,\n    text: slideshow01.Caption || '',\n    title: slideshow01.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: mondayVideoTime,\n    row_number: slideshow01.row_number\n  });\n}\n\n// === TUESDAY 5PM: Gorb Story Video ===\nconst gorbStory = getContent('gorb_story');\nif (gorbStory) {\n  const tuesdayTime = getScheduledTime(2, 17);\n  const videoUrl = getVideoUrl('gorb_story');\n  \n  posts.push({\n    contentId: gorbStory.Content_ID,\n    contentType: 'gorb_story',\n    platform: 'instagram',\n    accountId: INSTAGRAM_ID,\n    mediaType: 'reel',\n    text: gorbStory.Caption || '',\n    title: gorbStory.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: tuesdayTime,\n    row_number: gorbStory.row_number\n  });\n  \n  posts.push({\n    contentId: gorbStory.Content_ID,\n    contentType: 'gorb_story',\n    platform: 'tiktok',\n    accountId: TIKTOK_ID,\n    text: gorbStory.Caption || '',\n    title: gorbStory.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: tuesdayTime,\n    row_number: gorbStory.row_number\n  });\n  \n  posts.push({\n    contentId: gorbStory.Content_ID,\n    contentType: 'gorb_story',\n    platform: 'youtube',\n    accountId: YOUTUBE_ID,\n    text: gorbStory.Caption || '',\n    title: gorbStory.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: tuesdayTime,\n    row_number: gorbStory.row_number\n  });\n}\n\n// === WEDNESDAY: Stories + Carousel + Slideshow ===\nconst wednesdayStoryTimes = [\n  { snapshot: 'snapshot_06', hour: 8 },\n  { snapshot: 'snapshot_07', hour: 12 },\n  { snapshot: 'snapshot_08', hour: 15 },\n  { snapshot: 'snapshot_09', hour: 17 },\n  { snapshot: 'snapshot_10', hour: 19 }\n];\n\nwednesdayStoryTimes.forEach(({snapshot, hour}) => {\n  const content = getContent(snapshot);\n  if (content) {\n    posts.push({\n      contentId: content.Content_ID,\n      contentType: snapshot,\n      platform: 'instagram',\n      accountId: INSTAGRAM_ID,\n      mediaType: 'story',\n      text: '',\n      mediaUrl: getImageUrl(snapshot),\n      scheduledTime: getScheduledTime(3, hour),\n      row_number: content.row_number\n    });\n  }\n});\n\n// Wednesday 5pm: Carousel (snapshots 6-10)\nconst carouselImages2 = ['snapshot_06', 'snapshot_07', 'snapshot_08', 'snapshot_09', 'snapshot_10']\n  .map(type => getImageUrl(type))\n  .filter(url => url);\n\nif (carouselImages2.length > 0) {\n  const snapshot06 = getContent('snapshot_06');\n  posts.push({\n    contentId: 'carousel_wednesday',\n    contentType: 'carousel',\n    platform: 'instagram',\n    accountId: INSTAGRAM_ID,\n    mediaType: 'carousel',\n    text: snapshot06?.Caption || `More adventures in ${locationName}! #AlienTourists #GorbAndPleck`,\n    mediaUrls: carouselImages2,\n    scheduledTime: getScheduledTime(3, 17),\n    row_number: snapshot06?.row_number\n  });\n}\n\n// Wednesday 5pm: Slideshow 02 (TikTok + YouTube)\nconst slideshow02 = getContent('slideshow_02');\nif (slideshow02) {\n  const wedVideoTime = getScheduledTime(3, 17);\n  const videoUrl = getVideoUrl('slideshow_02');\n  \n  posts.push({\n    contentId: slideshow02.Content_ID,\n    contentType: 'slideshow_02',\n    platform: 'tiktok',\n    accountId: TIKTOK_ID,\n    text: slideshow02.Caption || '',\n    title: slideshow02.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: wedVideoTime,\n    row_number: slideshow02.row_number\n  });\n  \n  posts.push({\n    contentId: slideshow02.Content_ID,\n    contentType: 'slideshow_02',\n    platform: 'youtube',\n    accountId: YOUTUBE_ID,\n    text: slideshow02.Caption || '',\n    title: slideshow02.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: wedVideoTime,\n    row_number: slideshow02.row_number\n  });\n}\n\n// === THURSDAY 5PM: Pleck Story Video ===\nconst pleckStory = getContent('pleck_story');\nif (pleckStory) {\n  const thursdayTime = getScheduledTime(4, 17);\n  const videoUrl = getVideoUrl('pleck_story');\n  \n  posts.push({\n    contentId: pleckStory.Content_ID,\n    contentType: 'pleck_story',\n    platform: 'instagram',\n    accountId: INSTAGRAM_ID,\n    mediaType: 'reel',\n    text: pleckStory.Caption || '',\n    title: pleckStory.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: thursdayTime,\n    row_number: pleckStory.row_number\n  });\n  \n  posts.push({\n    contentId: pleckStory.Content_ID,\n    contentType: 'pleck_story',\n    platform: 'tiktok',\n    accountId: TIKTOK_ID,\n    text: pleckStory.Caption || '',\n    title: pleckStory.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: thursdayTime,\n    row_number: pleckStory.row_number\n  });\n  \n  posts.push({\n    contentId: pleckStory.Content_ID,\n    contentType: 'pleck_story',\n    platform: 'youtube',\n    accountId: YOUTUBE_ID,\n    text: pleckStory.Caption || '',\n    title: pleckStory.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: thursdayTime,\n    row_number: pleckStory.row_number\n  });\n}\n\n// === FRIDAY 5PM: Review Video ===\nconst review = getContent('review');\nif (review) {\n  const fridayTime = getScheduledTime(5, 17);\n  const videoUrl = getVideoUrl('review');\n  \n  posts.push({\n    contentId: review.Content_ID,\n    contentType: 'review',\n    platform: 'instagram',\n    accountId: INSTAGRAM_ID,\n    mediaType: 'reel',\n    text: review.Caption || '',\n    title: review.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: fridayTime,\n    row_number: review.row_number\n  });\n  \n  posts.push({\n    contentId: review.Content_ID,\n    contentType: 'review',\n    platform: 'tiktok',\n    accountId: TIKTOK_ID,\n    text: review.Caption || '',\n    title: review.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: fridayTime,\n    row_number: review.row_number\n  });\n  \n  posts.push({\n    contentId: review.Content_ID,\n    contentType: 'review',\n    platform: 'youtube',\n    accountId: YOUTUBE_ID,\n    text: review.Caption || '',\n    title: review.Title || '',\n    mediaUrl: videoUrl,\n    scheduledTime: fridayTime,\n    row_number: review.row_number\n  });\n}\n\nreturn [{\n  json: {\n    locationId,\n    locationName,\n    fileMap,\n    posts,\n    totalPosts: posts.length\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1088,
+        -32
+      ],
+      "id": "dd687e3e-ccb4-4f19-a688-de5493bb6fbd",
+      "name": "Build Posts Array"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nreturn data.posts.map(post => ({ json: post }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -880,
+        -32
+      ],
+      "id": "6c06839c-383a-4534-9465-f3be439b74e1",
+      "name": "Split Posts"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "is-instagram",
+              "leftValue": "={{ $json.platform }}",
+              "rightValue": "instagram",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -656,
+        -32
+      ],
+      "id": "804deb9b-c370-44c4-a7c3-4507419809bf",
+      "name": "Is Instagram?"
+    },
+    {
+      "parameters": {
+        "accountId": {
+          "__rl": true,
+          "value": "={{ $json.accountId }}",
+          "mode": "id"
+        },
+        "postContentText": "={{ $json.text }}",
+        "postContentMediaUrls": "={{ $json.mediaUrls ? $json.mediaUrls.join(', ') : $json.mediaUrl }}",
+        "options": {
+          "instagramMediaType": "={{ $json.mediaType === 'carousel' ? '' : $json.mediaType }}",
+          "scheduledTime": "={{ $json.scheduledTime }}"
+        }
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        -192
+      ],
+      "id": "7faf55b5-04a4-4947-83c0-71ac638b7ce5",
+      "name": "Post to Instagram",
+      "credentials": {
+        "blotatoApi": {
+          "id": "VV7WE9ynWlfGvZcY",
+          "name": "Blotato account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "is-tiktok",
+              "leftValue": "={{ $json.platform }}",
+              "rightValue": "tiktok",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -432,
+        80
+      ],
+      "id": "f01b544e-aedf-4186-9a6a-24ab847faae8",
+      "name": "Is TikTok?"
+    },
+    {
+      "parameters": {
+        "platform": "tiktok",
+        "accountId": {
+          "__rl": true,
+          "value": "={{ $json.accountId }}",
+          "mode": "id"
+        },
+        "postContentText": "={{ $json.text }}",
+        "postContentMediaUrls": "={{ $json.mediaUrl }}",
+        "options": {
+          "scheduledTime": "={{ $json.scheduledTime }}"
+        }
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        0
+      ],
+      "id": "ac0e7153-054d-4c01-bd62-7f21c13d79f9",
+      "name": "Post to TikTok",
+      "credentials": {
+        "blotatoApi": {
+          "id": "VV7WE9ynWlfGvZcY",
+          "name": "Blotato account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "platform": "youtube",
+        "accountId": {
+          "__rl": true,
+          "value": "={{ $json.accountId }}",
+          "mode": "id"
+        },
+        "postContentText": "={{ $json.text }}",
+        "postContentMediaUrls": "={{ $json.mediaUrl }}",
+        "postCreateYoutubeOptionTitle": "={{ $json.title }}",
+        "options": {
+          "scheduledTime": "={{ $json.scheduledTime }}"
+        }
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        176
+      ],
+      "id": "98f2d225-aca5-4114-b01a-47b20c29db27",
+      "name": "Post to YouTube",
+      "credentials": {
+        "blotatoApi": {
+          "id": "VV7WE9ynWlfGvZcY",
+          "name": "Blotato account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Collect all post results\nconst results = $input.all().map(item => item.json);\n\n// Get the original posts data to match up\nconst postsData = $('Split Posts').all().map(item => item.json);\n\n// Build update array for Content rows\nconst updates = [];\nconst seen = new Set();\n\nresults.forEach((result, index) => {\n  const originalPost = postsData[index];\n  if (originalPost && originalPost.row_number && !seen.has(originalPost.row_number)) {\n    seen.add(originalPost.row_number);\n    updates.push({\n      row_number: originalPost.row_number,\n      contentId: originalPost.contentId,\n      blotatoId: result.postSubmissionId || result.id || 'scheduled',\n      status: 'Scheduled'\n    });\n  }\n});\n\nreturn updates.map(u => ({ json: u }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        -32
+      ],
+      "id": "e1f55b51-bdca-453b-85f4-895e86d218ad",
+      "name": "Collect Results"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1192648937,
+          "mode": "list",
+          "cachedResultName": "Content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=1192648937"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Content_ID": "={{ $json.contentId }}",
+            "Blotato_ID": "={{ $json.blotatoId }}",
+            "Post_Status": "={{ $json.status }}"
+          },
+          "matchingColumns": [
+            "Content_ID"
+          ],
+          "schema": [
+            {
+              "id": "Content_ID",
+              "displayName": "Content_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Location_ID",
+              "displayName": "Location_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Content_Type",
+              "displayName": "Content_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Spot_ID",
+              "displayName": "Spot_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Food_ID",
+              "displayName": "Food_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Blotato_ID",
+              "displayName": "Blotato_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Time_of_Day",
+              "displayName": "Time_of_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caption",
+              "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Polaroid_Caption",
+              "displayName": "Polaroid_Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Image_Prompt",
+              "displayName": "Image_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Video_Prompt",
+              "displayName": "Video_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Image_Status",
+              "displayName": "Image_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Video_Status",
+              "displayName": "Video_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Post_Status",
+              "displayName": "Post_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        -32
+      ],
+      "id": "ef7d3de0-d563-4a90-84a2-cd2c94f979c1",
+      "name": "Update Content Status",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 143205348,
+          "mode": "list",
+          "cachedResultName": "Locations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=143205348"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Location_ID": "={{ $('Get Location (Ready)').first().json.Location_ID }}",
+            "Status": "={{ $('Collect Results').item.json.status }}"
+          },
+          "matchingColumns": [
+            "Location_ID"
+          ],
+          "schema": [
+            {
+              "id": "Location_ID",
+              "displayName": "Location_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Weather",
+              "displayName": "Weather",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Color_Palette",
+              "displayName": "Color_Palette",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Camera_Angle",
+              "displayName": "Camera_Angle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Sky_Day",
+              "displayName": "Sky_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Sky_Night",
+              "displayName": "Sky_Night",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lighting_Day",
+              "displayName": "Lighting_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lighting_Night",
+              "displayName": "Lighting_Night",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ambient_Day",
+              "displayName": "Ambient_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ambient_Night",
+              "displayName": "Ambient_Night",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Music",
+              "displayName": "Music",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        672,
+        -32
+      ],
+      "id": "294a4b51-182c-454a-9d96-a08ceb31c06b",
+      "name": "Update Location Status",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=AI Aliens - Week Scheduled: {{ $('Get Location (Ready)').first().json.Location_Name }}",
+        "html": "=Week successfully scheduled for {{ $('Get Location (Ready)').first().json.Location_Name }}.<br><br>Total posts scheduled: {{ $('Build Posts Array').first().json.totalPosts }}<br><br>Posts will begin Sunday at 8pm EST.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        896,
+        -32
+      ],
+      "id": "0ec88660-1283-44a0-89bd-96c3df90f67a",
+      "name": "Email - Success",
+      "webhookId": "bcc12445-f87b-4b7e-b39f-3d25a72f5670",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        96,
+        -64
+      ],
+      "id": "6926687e-37be-4936-b7c7-3952b7e94f31",
+      "name": "Merge Results"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "94d6f57e-e835-4254-a72c-473e12bb05fa",
+              "leftValue": "={{ $json.mediaType }}",
+              "rightValue": "carousel",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -464,
+        -160
+      ],
+      "id": "59f8f1ef-8e13-44dd-bcf3-bbf1e3c78fc9",
+      "name": "If carousel"
+    },
+    {
+      "parameters": {
+        "accountId": {
+          "__rl": true,
+          "value": "={{ $json.accountId }}",
+          "mode": "id"
+        },
+        "postContentText": "={{ $json.text }}",
+        "postContentMediaUrls": "={{ $json.mediaUrls ? $json.mediaUrls.join(', ') : $json.mediaUrl }}",
+        "options": {
+          "scheduledTime": "={{ $json.scheduledTime }}"
+        }
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        -368
+      ],
+      "id": "cf18fd36-e10d-462e-9357-fb40ac63bd53",
+      "name": "Post Instagram Carousel",
+      "credentials": {
+        "blotatoApi": {
+          "id": "VV7WE9ynWlfGvZcY",
+          "name": "Blotato account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Saturday 8pm EST": {
+      "main": [
+        [
+          {
+            "node": "Get Location (Ready)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Location (Ready)": {
+      "main": [
+        [
+          {
+            "node": "Location Found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Location Found?": {
+      "main": [
+        [
+          {
+            "node": "Get Content Rows",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Email - No Location",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Content Rows": {
+      "main": [
+        [
+          {
+            "node": "Search Location Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Location Folder": {
+      "main": [
+        [
+          {
+            "node": "List Files in Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Files in Folder": {
+      "main": [
+        [
+          {
+            "node": "Build Posts Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Posts Array": {
+      "main": [
+        [
+          {
+            "node": "Split Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Posts": {
+      "main": [
+        [
+          {
+            "node": "Is Instagram?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Instagram?": {
+      "main": [
+        [
+          {
+            "node": "If carousel",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is TikTok?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to Instagram": {
+      "main": [
+        [
+          {
+            "node": "Merge Results",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Is TikTok?": {
+      "main": [
+        [
+          {
+            "node": "Post to TikTok",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Post to YouTube",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to TikTok": {
+      "main": [
+        [
+          {
+            "node": "Merge Results",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge Results": {
+      "main": [
+        [
+          {
+            "node": "Collect Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect Results": {
+      "main": [
+        [
+          {
+            "node": "Update Content Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Content Status": {
+      "main": [
+        [
+          {
+            "node": "Update Location Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Location Status": {
+      "main": [
+        [
+          {
+            "node": "Email - Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to YouTube": {
+      "main": [
+        [
+          {
+            "node": "Merge Results",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "If carousel": {
+      "main": [
+        [
+          {
+            "node": "Post Instagram Carousel",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Post to Instagram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Instagram Carousel": {
+      "main": [
+        [
+          {
+            "node": "Merge Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "6b5776cc-f18b-4969-92d4-15e90ce42c91",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "daba14a88550d0304eb819e927ffe087dff267675394753b32278f2dd7342718"
+  },
+  "id": "MmBDoTD7y8PxeVOiHK7I_",
+  "tags": []
+}
