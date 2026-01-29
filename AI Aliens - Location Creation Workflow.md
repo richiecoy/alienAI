@@ -197,28 +197,38 @@ Include:
 
 ## Stage 6: Dialogue
 
-Each location needs dialogue for arrival and review.
+Each location needs dialogue for intro, stories, and review.
 
 ### Fields:
 
 | Field | Purpose |
 |-------|---------|
-| **Arrival_Gorb** | Gorb's first line on arrival |
-| **Arrival_Pleck** | Pleck's response |
-| **Arrival_Gorb_Response** | Gorb's comeback |
-| **Review_Gorb** | Gorb's review line |
-| **Review_Pleck** | Pleck's review line |
+| **Intro_Line** | Gorb's excited arrival line (~6 seconds spoken) |
+| **Gorb_Story** | Gorb's enthusiastic anecdote about the location (~6 seconds spoken) |
+| **Pleck_Story** | Pleck's grumpy complaint about the location or Gorb (~6 seconds spoken) |
+| **Review_Speaker** | Who delivers the review — "Gorb" or "Pleck" |
+| **Review_Line** | Final review of the location (~6 seconds spoken) |
 
 ### Character notes:
 
-**Gorb:** Enthusiastic, optimistic, easily awed, loves everything
-**Pleck:** Dry, skeptical, finds problems, deadpan delivery
+**Gorb:** Enthusiastic, optimistic, easily awed, loves everything. His stories are about amazing things that happened to him — discoveries, delights, moments of wonder.
+
+**Pleck:** Dry, skeptical, finds problems, deadpan delivery. His stories are complaints — things that went wrong, annoyed him, or confirmed his suspicions about a place.
 
 ### Questions to ask:
 
-1. **What's Gorb excited about?** (What specifically would he react to?)
-2. **What's Pleck's complaint?** (What would bother him about this place?)
-3. **Any location-specific gags?** (Height, temperature, crowds, smells, etc.)
+1. **What's Gorb excited about on arrival?** (What's the first thing he'd react to?)
+2. **What amazing thing happened to Gorb here?** (For Gorb_Story — a specific anecdote)
+3. **What's Pleck's complaint?** (For Pleck_Story — what went wrong or bothered him?)
+4. **Who gives the review?** (Gorb = glowing, Pleck = critical)
+5. **What's the final verdict?** (One-liner summary of the location)
+
+### Writing guidelines:
+
+- All dialogue should be speakable in ~5-6 seconds (roughly 15-25 words)
+- Intro_Line should reference something visible at the landing zone
+- Stories should be specific anecdotes, not general observations
+- Review_Line should feel like a conclusion to the week's content
 
 ---
 
