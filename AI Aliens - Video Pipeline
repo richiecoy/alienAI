@@ -1,16 +1,6 @@
 {
+  "name": "AI Aliens - Video Pipeline v3",
   "nodes": [
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        4352,
-        -320
-      ],
-      "name": "Manual Trigger",
-      "id": "d82c047e-b874-4820-8a07-c94e2ddf8169"
-    },
     {
       "parameters": {
         "documentId": {
@@ -282,7 +272,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        14432,
+        14656,
         -32
       ],
       "name": "IF Has Redos",
@@ -299,7 +289,7 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        14656,
+        14880,
         64
       ],
       "name": "Email - Nothing to Do",
@@ -569,6 +559,16 @@
               "removed": false
             },
             {
+              "id": "Blotato_ID",
+              "displayName": "Blotato_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "Time_of_Day",
               "displayName": "Time_of_Day",
               "required": false,
@@ -645,6 +645,16 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "Post_Status",
+              "displayName": "Post_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -876,7 +886,7 @@
             "caseSensitive": true,
             "leftValue": "",
             "typeValidation": "strict",
-            "version": 2
+            "version": 3
           },
           "conditions": [
             {
@@ -958,7 +968,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        11072,
+        11296,
         -416
       ],
       "name": "Prepare Slideshows",
@@ -973,7 +983,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        11296,
+        11520,
         -416
       ],
       "name": "Split Slideshows",
@@ -987,7 +997,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        11520,
+        11744,
         -416
       ],
       "name": "Prepare Slideshow Downloads",
@@ -1002,7 +1012,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        11744,
+        11968,
         -416
       ],
       "name": "Split Slideshow Images",
@@ -1017,7 +1027,7 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        12416,
+        12640,
         -416
       ],
       "name": "Save Slideshow Image",
@@ -1031,7 +1041,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        12640,
+        12864,
         -416
       ],
       "name": "Create Polaroid Frame",
@@ -1044,7 +1054,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        12864,
+        13088,
         -416
       ],
       "name": "Collect Polaroids",
@@ -1058,7 +1068,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        13088,
+        13312,
         -416
       ],
       "name": "Create Slideshow Video",
@@ -1072,7 +1082,7 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        13312,
+        13536,
         -416
       ],
       "name": "Read Slideshow Video",
@@ -1096,7 +1106,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        13536,
+        13760,
         -416
       ],
       "name": "Upload Slideshow to Drive",
@@ -1116,7 +1126,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        13760,
+        13984,
         -416
       ],
       "name": "Prep Slideshow Content Row",
@@ -1191,6 +1201,16 @@
             {
               "id": "Food_ID",
               "displayName": "Food_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Blotato_ID",
+              "displayName": "Blotato_ID",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -1275,6 +1295,16 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "Post_Status",
+              "displayName": "Post_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -1285,7 +1315,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        13984,
+        14208,
         -416
       ],
       "name": "Create Slideshow Content Row",
@@ -1304,7 +1334,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        14208,
+        14432,
         -416
       ],
       "name": "Aggregate Slideshows",
@@ -1317,7 +1347,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        14432,
+        14656,
         -416
       ],
       "name": "Slideshow Cleanup",
@@ -1339,7 +1369,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        11968,
+        12192,
         -416
       ],
       "name": "Search Snapshot Image",
@@ -1364,7 +1394,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        12192,
+        12416,
         -416
       ],
       "name": "Download Snapshot Image",
@@ -1405,7 +1435,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        10624,
+        10848,
         -416
       ],
       "id": "a4d852a5-1fd8-4139-9745-00e444eee67a",
@@ -1447,7 +1477,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        10848,
+        11072,
         -416
       ],
       "id": "2002377d-8408-43ca-b3d0-8b95b304fb55",
@@ -1467,7 +1497,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        14656,
+        14880,
         -416
       ],
       "id": "9cde7a7e-d98f-4b0c-ba0b-261e26b79bea",
@@ -1482,7 +1512,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        14880,
+        15104,
         -320
       ],
       "id": "53a0f2e5-d9e8-4b59-96a1-4f98fa14817a",
@@ -1524,7 +1554,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        15552,
+        15776,
         -320
       ],
       "id": "2b93141b-de35-4f85-afdf-c3baceafb472",
@@ -1552,7 +1582,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        15104,
+        15328,
         -320
       ],
       "id": "d9fbc835-8251-431a-b32f-67d906c66f77",
@@ -1572,7 +1602,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        15328,
+        15552,
         -320
       ],
       "id": "2aa18a5a-8e1a-4e17-ae0f-dec3b1d1b9f2",
@@ -1586,7 +1616,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        15776,
+        16000,
         -320
       ],
       "id": "fd52eda5-7670-4fb4-b070-1667cd5dd24d",
@@ -1602,7 +1632,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        16000,
+        16224,
         -320
       ],
       "id": "bdfc55b6-e5c6-49c8-9779-10581f580bb7",
@@ -1625,7 +1655,7 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        17344,
+        17568,
         -400
       ],
       "id": "037859eb-754d-41f9-967e-9c4c6099ce09",
@@ -1649,7 +1679,7 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        17120,
+        17344,
         -496
       ],
       "id": "ce5b94c4-b4ad-433d-9065-88f7825e9a91",
@@ -1670,7 +1700,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        16224,
+        16448,
         -400
       ],
       "id": "144f0902-caa7-4eff-adf9-2624429b535d",
@@ -1685,7 +1715,7 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        16448,
+        16672,
         -400
       ],
       "id": "3bebec51-ed90-413f-923d-1413703eab0f",
@@ -1698,7 +1728,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        16672,
+        16896,
         -400
       ],
       "id": "721e3af5-2270-445e-b65b-86aa01ffd579",
@@ -1731,7 +1761,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        16896,
+        17120,
         -400
       ],
       "id": "fdfc4c93-6d8d-4244-9471-35bbbf3ce56b",
@@ -1764,7 +1794,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        17120,
+        17344,
         -304
       ],
       "id": "f2fa029c-9a71-47c6-bbab-91f1d795d7f9",
@@ -1797,7 +1827,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        17344,
+        17568,
         -208
       ],
       "id": "eb1470b8-823e-4559-ba55-4f6c1cef9509",
@@ -1810,7 +1840,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        17568,
+        17792,
         -112
       ],
       "id": "c892b278-19b0-4e78-b8fb-4680c0361f10",
@@ -1823,7 +1853,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        17792,
+        18016,
         -32
       ],
       "id": "b39a7ab0-fe77-41e7-bdee-249ddf57d686",
@@ -1838,7 +1868,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        17568,
+        17792,
         -304
       ],
       "id": "31e17653-b98f-4e54-a515-baf819a45932",
@@ -1872,7 +1902,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        17792,
+        18016,
         -304
       ],
       "id": "696a0451-7d6c-4330-ab35-be09154b3584",
@@ -1906,7 +1936,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        18016,
+        18240,
         -368
       ],
       "id": "149c4d76-636d-4f88-b412-3672836e26f2",
@@ -1932,7 +1962,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        21376,
+        21600,
         112
       ],
       "id": "4a96a990-f3f9-460f-a085-d8206bf99d05",
@@ -1946,7 +1976,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        18240,
+        18464,
         -368
       ],
       "id": "fb0e026d-b54a-47a2-8886-6005747ea2dc",
@@ -1962,7 +1992,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        18464,
+        18688,
         -368
       ],
       "id": "c385169f-110e-41b8-8fcd-f9b35b0e0491",
@@ -1985,7 +2015,7 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        19584,
+        19808,
         -544
       ],
       "id": "4c97a3cc-dc91-46fc-a952-46c77bf91dff",
@@ -2009,7 +2039,7 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        19808,
+        20032,
         -448
       ],
       "id": "8025e300-83f3-4ff2-92b6-23925ea30ad8",
@@ -2039,7 +2069,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        20256,
+        20480,
         -352
       ],
       "id": "0a9402f2-cb1f-4944-83d3-85ebdb6b177b",
@@ -2068,7 +2098,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        20480,
+        20704,
         -352
       ],
       "id": "44d0ae32-d2b6-4332-a8c6-cbbea676731d",
@@ -2090,7 +2120,7 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        20704,
+        20928,
         -352
       ],
       "id": "4b7a5a75-6ea5-426d-b815-e6d64ba72158",
@@ -2106,7 +2136,7 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        20928,
+        21152,
         -352
       ],
       "id": "7d6143b3-b18c-4ff8-8a8f-815fbb05c4dd",
@@ -2120,7 +2150,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        21152,
+        21376,
         -352
       ],
       "id": "7ddb415c-ad7b-499d-8b2c-9a114e3f0dd8",
@@ -2134,7 +2164,7 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        21376,
+        21600,
         -352
       ],
       "id": "94e3aa0f-0297-4aa6-9bf5-3ddb48b1987e",
@@ -2158,7 +2188,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        22048,
+        22272,
         -112
       ],
       "id": "ddd54ad5-7460-4345-85ed-3297452ccf83",
@@ -2178,7 +2208,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        18688,
+        18912,
         -448
       ],
       "id": "dbcc3b98-1981-4aec-a313-1cfbe54ee100",
@@ -2193,7 +2223,7 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        18912,
+        19136,
         -448
       ],
       "id": "c75fd0ce-5a17-41fb-a90b-528d1961fede",
@@ -2206,7 +2236,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        19136,
+        19360,
         -448
       ],
       "id": "cc85da7b-5b19-4caa-a976-88f6268c30f9",
@@ -2239,7 +2269,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        19360,
+        19584,
         -448
       ],
       "id": "cfb0fe4a-0bbc-496e-8eda-9d8f43258989",
@@ -2272,7 +2302,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        19584,
+        19808,
         -352
       ],
       "id": "21195dba-f14f-4132-949c-b2b54d75808e",
@@ -2305,7 +2335,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        19808,
+        20032,
         -256
       ],
       "id": "40a8fbf6-5dac-46f0-a1cb-e17866d18b24",
@@ -2318,7 +2348,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        20032,
+        20256,
         -160
       ],
       "id": "45c7fdc4-927c-4dfb-b447-48bad3482a1f",
@@ -2331,7 +2361,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        20256,
+        20480,
         -80
       ],
       "id": "d3f2ba81-1371-4afb-8aa1-1613fc0f6754",
@@ -2346,7 +2376,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        20032,
+        20256,
         -352
       ],
       "id": "fdd159e4-270c-446d-92a8-c8c5af2b1c39",
@@ -2357,7 +2387,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        21824,
+        22048,
         -112
       ],
       "id": "8a3b1abe-05f5-43e5-88ec-81ba7fcb4adb",
@@ -2371,7 +2401,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        21600,
+        21824,
         -352
       ],
       "id": "ea602f2f-6a92-473a-80d0-34168fd14aca",
@@ -2385,7 +2415,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        21600,
+        21824,
         112
       ],
       "id": "bcbbccd3-8430-4b71-8b24-27feb5f74c40",
@@ -2402,7 +2432,7 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        22720,
+        22944,
         -112
       ],
       "id": "48ef8648-fc14-4091-96ce-cc485c201892",
@@ -2423,7 +2453,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        14656,
+        14880,
         -128
       ],
       "id": "90b97377-306d-4b49-a7e3-b8c8b22488b5",
@@ -2603,7 +2633,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        22496,
+        22720,
         -112
       ],
       "id": "4f906cf1-57fa-4da5-a3a5-5a3606af4c4b",
@@ -2694,6 +2724,16 @@
               "removed": true
             },
             {
+              "id": "Blotato_ID",
+              "displayName": "Blotato_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "Time_of_Day",
               "displayName": "Time_of_Day",
               "required": false,
@@ -2773,6 +2813,16 @@
               "canBeUsedToMatch": true
             },
             {
+              "id": "Post_Status",
+              "displayName": "Post_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "row_number",
               "displayName": "row_number",
               "required": false,
@@ -2792,7 +2842,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        22272,
+        22496,
         -112
       ],
       "id": "ea8179d7-8f58-43c1-bed7-b03725d883ff",
@@ -2804,25 +2854,63 @@
           "name": "Google Sheets account"
         }
       }
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Prepare Postcard').first().json.sanitizedName }}_music.mp3",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Search Location Folder').first().json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        10624,
+        -416
+      ],
+      "id": "da4b2f1c-1606-47ce-b254-5eacc1e3f971",
+      "name": "Upload Music to Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                4
+              ],
+              "triggerAtHour": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        4352,
+        -320
+      ],
+      "id": "93d3d2e4-1350-4cce-8a99-0cedd9a57621",
+      "name": "Schedule Trigger"
     }
   ],
+  "pinData": {},
   "connections": {
-    "Manual Trigger": {
-      "main": [
-        [
-          {
-            "node": "Get Location (Images_Approved)",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Get Location (Videos_Review)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Get Location (Images_Approved)": {
       "main": [
         [
@@ -3053,17 +3141,6 @@
         ]
       ]
     },
-    "Postcard Cleanup": {
-      "main": [
-        [
-          {
-            "node": "Generate Music",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Generate Music": {
       "main": [
         [
@@ -3188,7 +3265,7 @@
       "main": [
         [
           {
-            "node": "Get Slideshow Titles",
+            "node": "Upload Music to Drive",
             "type": "main",
             "index": 0
           }
@@ -3338,11 +3415,11 @@
         ]
       ]
     },
-    "Slideshow Cleanup": {
+    "Postcard Cleanup": {
       "main": [
         [
           {
-            "node": "Prepare Video Generation",
+            "node": "Generate Music",
             "type": "main",
             "index": 0
           }
@@ -3420,6 +3497,17 @@
         [
           {
             "node": "Set Clip 1 Start Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slideshow Cleanup": {
+      "main": [
+        [
+          {
+            "node": "Prepare Video Generation",
             "type": "main",
             "index": 0
           }
@@ -3602,28 +3690,6 @@
         [
           {
             "node": "Download Single Clip",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Generate Video Clip 2": {
-      "main": [
-        [
-          {
-            "node": "Set Clip 2 Start Time",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Download Single Clip": {
-      "main": [
-        [
-          {
-            "node": "Normalize Single Clip",
             "type": "main",
             "index": 0
           }
@@ -3871,6 +3937,28 @@
         ]
       ]
     },
+    "Generate Video Clip 2": {
+      "main": [
+        [
+          {
+            "node": "Set Clip 2 Start Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Single Clip": {
+      "main": [
+        [
+          {
+            "node": "Normalize Single Clip",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Normalize Single Clip": {
       "main": [
         [
@@ -3914,51 +4002,58 @@
           }
         ]
       ]
+    },
+    "Upload Music to Drive": {
+      "main": [
+        [
+          {
+            "node": "Get Slideshow Titles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Location (Images_Approved)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Location (Videos_Review)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "pinData": {
-    "Generate Music": [
-      {
-        "code": 200,
-        "msg": "success",
-        "data": {
-          "taskId": "f57fe4b9a21d80facb3be31daadc1d07"
-        }
-      }
-    ],
-    "Generate Video Clip 1": [
-      {
-        "code": 200,
-        "msg": "success",
-        "data": {
-          "taskId": "e2db31bef295ed6aa8cf0d6cfb4e1f96"
-        }
-      },
-      {
-        "code": 200,
-        "msg": "success",
-        "data": {
-          "taskId": "10b234a85e5e3e30f7d66b62b9ff2efa"
-        }
-      },
-      {
-        "code": 200,
-        "msg": "success",
-        "data": {
-          "taskId": "09006fe6f81e9f8289c85e14acb0fc6f"
-        }
-      },
-      {
-        "code": 200,
-        "msg": "success",
-        "data": {
-          "taskId": "d37cfc24e468218c9a09b64a8bf3ae0a"
-        }
-      }
-    ]
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
   },
+  "versionId": "62a263e3-1442-42ce-8c28-fb362ed93189",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "daba14a88550d0304eb819e927ffe087dff267675394753b32278f2dd7342718"
-  }
+  },
+  "id": "zR0gRwgVdZwLHQLj",
+  "tags": [
+    {
+      "updatedAt": "2026-01-21T17:38:45.151Z",
+      "createdAt": "2026-01-21T17:38:45.151Z",
+      "id": "CEWpWHWat0OoEcmi",
+      "name": "Gorb & Pleck"
+    },
+    {
+      "updatedAt": "2026-01-28T20:06:51.435Z",
+      "createdAt": "2026-01-28T20:06:51.435Z",
+      "id": "sdchqjcsR3ONuXkQ",
+      "name": "v3"
+    }
+  ]
 }
