@@ -1,16 +1,6 @@
 {
+  "name": "AI Aliens - Style Generation v2",
   "nodes": [
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        -22576,
-        -1584
-      ],
-      "id": "d7ca3264-15ee-465e-87e8-66fd8429a366",
-      "name": "Manual Trigger"
-    },
     {
       "parameters": {
         "documentId": {
@@ -33,7 +23,7 @@
       "typeVersion": 4.7,
       "position": [
         -22368,
-        -1584
+        -1264
       ],
       "id": "4efb4542-ca72-4c34-84c6-6920267198cd",
       "name": "Get All Locations",
@@ -51,8 +41,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -22160,
-        -1584
+        -22144,
+        -1264
       ],
       "id": "b157bd13-c622-4710-8631-177cc26a1a3c",
       "name": "Filter Eligible Location"
@@ -85,8 +75,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -21952,
-        -1584
+        -21920,
+        -1264
       ],
       "id": "80dd777f-e439-42b9-b58b-794a2a260e28",
       "name": "IF (Location Found)"
@@ -102,8 +92,8 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        -21744,
-        -1440
+        -21696,
+        -1168
       ],
       "id": "7f1d47b1-4dd3-40c1-968f-0f085f8ad98c",
       "name": "Email - No Locations",
@@ -122,8 +112,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -21744,
-        -1584
+        -21696,
+        -1360
       ],
       "id": "7c4714de-f947-4486-a620-3d7b3af97c64",
       "name": "Generate Prompt"
@@ -142,8 +132,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -21536,
-        -1584
+        -21472,
+        -1360
       ],
       "id": "f3948ca9-476f-49f1-ad45-b6a257b2012f",
       "name": "Generate Image",
@@ -161,8 +151,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -21328,
-        -1584
+        -21248,
+        -1360
       ],
       "id": "09879138-1b95-4f52-ad8a-ec113350ea63",
       "name": "Set Image Start Time"
@@ -177,8 +167,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -21120,
-        -1584
+        -21024,
+        -1360
       ],
       "id": "cbe137dc-5594-4b7f-93b0-e74fa11f7c8a",
       "name": "Check Image Status",
@@ -217,8 +207,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -20912,
-        -1584
+        -20800,
+        -1432
       ],
       "id": "bbbb32e8-38a7-44d0-b275-5e94824563d3",
       "name": "IF (Image Success)"
@@ -250,8 +240,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -20704,
-        -1440
+        -20576,
+        -1336
       ],
       "id": "400bf75c-aad2-4d4b-95c0-7f00fa487176",
       "name": "IF (Image Failed)"
@@ -267,8 +257,8 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        -20496,
-        -1456
+        -20352,
+        -1432
       ],
       "id": "b99956f8-c2cb-4c2b-a3d8-9297c02fdfab",
       "name": "Email - Image Generation Error",
@@ -287,8 +277,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -20496,
-        -1280
+        -20352,
+        -1240
       ],
       "id": "93869ccf-7c49-43cb-96eb-5c022a4d5ffa",
       "name": "Check Time Elapsed"
@@ -321,8 +311,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -20288,
-        -1280
+        -20128,
+        -1240
       ],
       "id": "0d98ce07-8f32-4263-9f44-f692face3ad8",
       "name": "IF (Image Timeout)"
@@ -338,8 +328,8 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        -20080,
-        -1376
+        -19904,
+        -1336
       ],
       "id": "509222d6-c5f4-492d-b8d0-e0306334c0f0",
       "name": "Email - Image Timeout Error",
@@ -358,8 +348,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -20080,
-        -1200
+        -19904,
+        -1072
       ],
       "id": "ebd6a4c1-218b-4b78-af6c-28db378445a6",
       "name": "Wait - Image",
@@ -381,8 +371,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -20704,
-        -1600
+        -20576,
+        -1624
       ],
       "id": "98fb4fde-8764-48d0-be44-e1acad443780",
       "name": "Search for Location Folder",
@@ -422,8 +412,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -20496,
-        -1600
+        -20352,
+        -1624
       ],
       "id": "1cdcbd77-ab13-4a4f-a9ff-846a28bc011b",
       "name": "IF (Folder Exists)"
@@ -447,8 +437,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -20288,
-        -1520
+        -20128,
+        -1528
       ],
       "id": "805ef0a1-e90f-41a0-acfa-0f9f752600bc",
       "name": "Create Location Folder",
@@ -473,8 +463,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -20080,
-        -1616
+        -19904,
+        -1624
       ],
       "id": "29f8fd8c-5120-4525-b84d-0ed4b9a7f00b",
       "name": "Download Image"
@@ -497,8 +487,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -19872,
-        -1616
+        -19680,
+        -1624
       ],
       "id": "986d57f2-c616-4fdd-b368-c947ce1cfdb2",
       "name": "Upload Image to Google Drive",
@@ -536,8 +526,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -19664,
-        -1616
+        -19456,
+        -1624
       ],
       "id": "3c4fe3e0-6e14-4aed-827b-bf2f2a61ad92",
       "name": "IF (New Location)"
@@ -720,7 +710,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -19456,
+        -19232,
         -1696
       ],
       "id": "2e176653-2000-41c3-a6a2-a525847c674d",
@@ -918,8 +908,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -19248,
-        -1600
+        -19008,
+        -1624
       ],
       "id": "da858230-be60-40df-bbe8-f27a29cfb65e",
       "name": "Mark Location Style_Pending",
@@ -941,8 +931,8 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        -19040,
-        -1600
+        -18784,
+        -1624
       ],
       "id": "ecc4d2c6-3008-463d-9f6d-99d00fdfbab8",
       "name": "Email - Style Ready",
@@ -953,20 +943,33 @@
           "name": "SMTP account"
         }
       }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                3
+              ],
+              "triggerAtHour": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -22592,
+        -1264
+      ],
+      "id": "3624b55d-2105-4713-84d9-6c03a4ed2019",
+      "name": "Schedule Trigger"
     }
   ],
+  "pinData": {},
   "connections": {
-    "Manual Trigger": {
-      "main": [
-        [
-          {
-            "node": "Get All Locations",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Get All Locations": {
       "main": [
         [
@@ -1228,10 +1231,41 @@
           }
         ]
       ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get All Locations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "e70e489c-1f6f-4375-b804-5a8db04c929e",
   "meta": {
     "instanceId": "daba14a88550d0304eb819e927ffe087dff267675394753b32278f2dd7342718"
-  }
+  },
+  "id": "wfqIROPzRG2stMYkqPk9p",
+  "tags": [
+    {
+      "updatedAt": "2026-01-21T17:38:45.151Z",
+      "createdAt": "2026-01-21T17:38:45.151Z",
+      "id": "CEWpWHWat0OoEcmi",
+      "name": "Gorb & Pleck"
+    },
+    {
+      "updatedAt": "2026-01-28T20:06:51.435Z",
+      "createdAt": "2026-01-28T20:06:51.435Z",
+      "id": "sdchqjcsR3ONuXkQ",
+      "name": "v3"
+    }
+  ]
 }
