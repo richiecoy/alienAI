@@ -9,7 +9,7 @@ Three workflows handle all content generation for the AI Aliens project. Each wo
 ## Workflow 1: Style Generation
 
 ### Purpose
-Generates a style reference image for a location Ã¢â‚¬â€ an establishing shot with no characters that defines the visual look for all subsequent content.
+Generates a style reference image for a location — an establishing shot with no characters that defines the visual look for all subsequent content.
 
 ### Trigger
 Manual
@@ -34,7 +34,7 @@ Manual
 
 ### Writes
 - **Content tab**: 1 new row (style)
-- **Locations tab**: Status Ã¢â€ â€™ Style_Pending
+- **Locations tab**: Status → Style_Pending
 - **Google Drive**: {Location_Name}_style.png
 
 ### After Running
@@ -44,10 +44,10 @@ Manual
 
 ---
 
-## Workflow 2: Image Pipeline
+## Workflow 2: Image Pipeline v3
 
 ### Purpose
-Handles random assignments, prompt generation, title/caption creation, and image generation for all 14 content pieces (intro, 2 jokes, 10 snapshots, review). Also handles image redos.
+Handles random assignments, prompt generation, title/caption creation, and image generation for all 14 content pieces (intro, gorb_story, pleck_story, 10 snapshots, review). Also handles image redos.
 
 ### Trigger
 Manual
@@ -57,9 +57,8 @@ Manual
 - **Content tab**: Existing rows for this location (if any)
 - **Spots tab**: Available spots for this location
 - **Foods tab**: Available foods for this location
-- **Jokes tab**: Unposted jokes (Posted = No)
 - **Dialogue tab**: Row for this location
-- **Pools tab**: All pool values (position, pose, action, laugh_style, time_of_day)
+- **Pools tab**: time_of_day values
 - **Photo_Activities tab**: All activities
 
 ### Logic
@@ -67,35 +66,42 @@ Manual
 #### Initial Run (no Content rows except style)
 ```
 1. Random Assignments:
-   - intro Ã¢â€ â€™ landing_zone spot (fixed)
-   - joke_01 Ã¢â€ â€™ random spot from pool + random unposted joke
-   - joke_02 Ã¢â€ â€™ random spot from pool + random unposted joke
-   - snapshot_01-04 Ã¢â€ â€™ random spots from pool + random general activities
-   - snapshot_05 Ã¢â€ â€™ random food_vendor spot + random food + random food activity
-   - snapshot_06-09 Ã¢â€ â€™ random spots from pool + random general activities
-   - snapshot_10 Ã¢â€ â€™ random food_vendor spot + random food + random food activity
-   - review Ã¢â€ â€™ random spot from pool
+   - intro → landing_zone spot (fixed), Gorb solo
+   - gorb_story → random generic spot, Gorb solo
+   - pleck_story → random generic spot, Pleck solo
+   - snapshot_01-04 → random generic spots + general activities, both characters
+   - snapshot_05 → random food_vendor spot + food + food activity, both characters
+   - snapshot_06-09 → random generic spots + general activities, both characters
+   - snapshot_10 → random food_vendor spot + food + food activity, both characters
+   - review → random generic spot, solo (based on Review_Speaker)
 
-2. Create 14 Content rows with assignments (Spot_ID, Food_ID, Joke_ID)
+2. Create 14 Content rows with assignments (Spot_ID, Food_ID)
 
 3. Build image prompts for each piece:
-   - Random position, poses, time of day
-   - For jokes: random actions, laugh style
-   - Use Veo3 best practices (no positional markers, natural prose)
+   - Solo character framing for video content (intro, gorb_story, pleck_story, review)
+   - Both characters for snapshots
+   - Random time of day (daytime only for intro)
 
-4. Call Claude to generate titles and captions for each piece
+4. Build video prompts for video content:
+   - Single clip format
+   - Uses videoId + voice from character definitions
+   - Reads dialogue from Dialogue tab
 
-5. Generate 14 images via Nano Banana API
+5. Call Claude to generate titles and captions for each piece
 
-6. Upload images to Google Drive: {Location_ID}_{content_type}.png
+6. Generate 14 images via Nano Banana API
+   - Solo content: single character reference image
+   - Snapshots: both character reference images
 
-7. Mark spots/foods/jokes as Used in spreadsheet
+7. Upload images to Google Drive: {Location_ID}_{content_type}.png
 
-8. Set all Content rows: Image_Status = Review
+8. Mark spots/foods as Used in spreadsheet
 
-9. Update Location.Status = Images_Review
+9. Set all Content rows: Image_Status = Pending → Review
 
-10. Send email notification "Images ready for review"
+10. Update Location.Status = Images_Review
+
+11. Send email notification "Images ready for review"
 ```
 
 #### Redo Run (Content rows exist with Image_Status = Redo)
@@ -103,24 +109,24 @@ Manual
 1. Get Content rows where Image_Status = Redo
 
 2. For each redo row:
-   - Keep existing: Spot_ID, Food_ID, Joke_ID, Title, Caption
-   - Rebuild image prompt with fresh randoms (position, poses, time of day, etc.)
+   - Keep existing: Spot_ID, Food_ID, Title, Caption
+   - Rebuild image prompt with fresh randoms (activity, time of day)
+   - Determine solo/both character based on content type
 
 3. Generate only those images via Nano Banana API
 
 4. Upload images, overwriting existing files
 
-5. Set those Content rows: Image_Status = Review
+5. Set those Content rows: Image_Status = Review, update Image_Prompt
 
 6. Send email notification "Redo images ready for review"
 ```
 
 ### Writes
-- **Content tab**: 14 new rows (initial) or updated Image_Status (redo)
+- **Content tab**: 14 new rows (initial) or updated Image_Status + Image_Prompt (redo)
 - **Spots tab**: Used = Yes for assigned spots
 - **Foods tab**: Used = Yes for assigned foods
-- **Jokes tab**: Posted = Yes for assigned jokes
-- **Locations tab**: Status Ã¢â€ â€™ Images_Review
+- **Locations tab**: Status → Images_Review
 - **Google Drive**: 14 image files
 
 ### After Running
@@ -134,7 +140,7 @@ Manual
 ## Workflow 3: Video Pipeline
 
 ### Purpose
-Generates postcard, slideshows (auto-approved), and 4 videos (intro, 2 jokes, review). Also handles video redos.
+Generates postcard, slideshows (auto-approved), and 4 videos (intro, gorb_story, pleck_story, review). Also handles video redos.
 
 ### Trigger
 Manual (after all images approved)
@@ -142,7 +148,6 @@ Manual (after all images approved)
 ### Reads
 - **Locations tab**: Row where all Content.Image_Status = Approved
 - **Content tab**: All rows for this location
-- **Dialogue tab**: Row for this location (for video prompts)
 - **Google Drive**: Approved images
 
 ### Logic
@@ -163,13 +168,13 @@ Manual (after all images approved)
    - Upload: {Location_ID}_slideshow_01.mp4, {Location_ID}_slideshow_02.mp4
    - Create Content rows: Content_Type = slideshow_01/02, Video_Status = Approved
 
-3. Generate 4 videos:
-   - intro: 2 clips via Veo3, stitch together
-   - joke_01: 1 clip via Veo3
-   - joke_02: 1 clip via Veo3
-   - review: 2 clips via Veo3, stitch together
+3. Generate 4 videos (all single clip, no stitching):
+   - intro: 1 clip via Veo3, Gorb solo
+   - gorb_story: 1 clip via Veo3, Gorb solo
+   - pleck_story: 1 clip via Veo3, Pleck solo
+   - review: 1 clip via Veo3, solo (based on Review_Speaker)
    - Use approved images as first frame
-   - Upload: {Location_ID}_intro.mp4, {Location_ID}_joke_01.mp4, etc.
+   - Upload: {Location_ID}_intro.mp4, {Location_ID}_gorb_story.mp4, etc.
 
 4. Set video Content rows: Video_Status = Review
 
@@ -188,7 +193,7 @@ Manual (after all images approved)
 
 3. For each redo row:
    - Use same approved image as first frame
-   - Regenerate video via Veo3
+   - Regenerate video via Veo3 using existing Video_Prompt
 
 4. Upload videos, overwriting existing files
 
@@ -199,7 +204,7 @@ Manual (after all images approved)
 
 ### Writes
 - **Content tab**: 3 new rows (postcard, slideshow_01, slideshow_02) + updated Video_Status
-- **Locations tab**: Status Ã¢â€ â€™ Videos_Review (or Ready when all approved)
+- **Locations tab**: Status → Videos_Review (or Ready when all approved)
 - **Google Drive**: postcard, 2 slideshows, 4 videos
 
 ### After Running
@@ -212,17 +217,17 @@ Manual (after all images approved)
 
 ## Content Type Reference
 
-| Content_Type | Has Image | Has Video | Image Approval | Video Approval |
-|--------------|-----------|-----------|----------------|----------------|
-| style | Yes | No | NO (auto) | Ã¢â‚¬â€ |
-| postcard | Yes | No | NO (auto) | Ã¢â‚¬â€ |
-| intro | Yes | Yes | YES | YES |
-| joke_01 | Yes | Yes | YES | YES |
-| joke_02 | Yes | Yes | YES | YES |
-| snapshot_01-10 | Yes | No | YES | Ã¢â‚¬â€ |
-| slideshow_01 | No | Yes | Ã¢â‚¬â€ | NO (auto) |
-| slideshow_02 | No | Yes | Ã¢â‚¬â€ | NO (auto) |
-| review | Yes | Yes | YES | YES |
+| Content_Type | Has Image | Has Video | Image Approval | Video Approval | Character |
+|--------------|-----------|-----------|----------------|----------------|-----------|
+| style | Yes | No | NO (auto) | — | None |
+| postcard | Yes | No | NO (auto) | — | None |
+| intro | Yes | Yes | YES | YES | Gorb solo |
+| gorb_story | Yes | Yes | YES | YES | Gorb solo |
+| pleck_story | Yes | Yes | YES | YES | Pleck solo |
+| snapshot_01-10 | Yes | No | YES | — | Both |
+| slideshow_01 | No | Yes | — | NO (auto) | Both |
+| slideshow_02 | No | Yes | — | NO (auto) | Both |
+| review | Yes | Yes | YES | YES | Solo (Review_Speaker) |
 
 ---
 
@@ -236,10 +241,10 @@ All files stored in Google Drive under: `Content/LOC_XXX/`
 | {Location_ID}_postcard.png | Video Pipeline |
 | {Location_ID}_intro.png | Image Pipeline |
 | {Location_ID}_intro.mp4 | Video Pipeline |
-| {Location_ID}_joke_01.png | Image Pipeline |
-| {Location_ID}_joke_01.mp4 | Video Pipeline |
-| {Location_ID}_joke_02.png | Image Pipeline |
-| {Location_ID}_joke_02.mp4 | Video Pipeline |
+| {Location_ID}_gorb_story.png | Image Pipeline |
+| {Location_ID}_gorb_story.mp4 | Video Pipeline |
+| {Location_ID}_pleck_story.png | Image Pipeline |
+| {Location_ID}_pleck_story.mp4 | Video Pipeline |
 | {Location_ID}_snapshot_01.png | Image Pipeline |
 | {Location_ID}_snapshot_02.png | Image Pipeline |
 | {Location_ID}_snapshot_03.png | Image Pipeline |
@@ -279,14 +284,44 @@ Pleck: `https://drive.google.com/uc?export=view&id=1fTadAxxCe8Oz2z4OHRrMxOr6-hUH
 
 ---
 
-## Veo3 Prompting Best Practices
+## Video Prompt Template
 
-Based on research from Powtoon and GodofPrompt articles:
+All videos use single-clip, single-character format:
 
-1. **Natural prose flow** Ã¢â‚¬â€ No heavy section headers or timestamps
-2. **Visual character ID** Ã¢â‚¬â€ Describe characters, don't use "(left)"/"(right)"
-3. **Colon dialogue format** Ã¢â‚¬â€ `Character says: "dialogue"`
-4. **Always add "No subtitles"** Ã¢â‚¬â€ At the end of every video prompt
-5. **Keep dialogue short** Ã¢â‚¬â€ Must fit in ~8 seconds
-6. **Specific speaker** Ã¢â‚¬â€ Always clarify who is speaking each line
-7. **Not over-engineered** Ã¢â‚¬â€ Keep prompts compact and clear
+```
+Static camera, medium close-up. ${character.videoId}, ${character.action}. Voice: ${character.voice}.
+
+${Name}: "${dialogue}"
+
+Ambient sounds: ${ambient}.
+```
+
+---
+
+## Image Prompt Structure
+
+### Solo Character (video content)
+```
+Photorealistic 3D CGI render. ${loc.Name} — ${loc.Description}
+
+${spot.Spot_Description}
+
+${CHARACTER}, ${character.description}, in foreground, medium close-up, ${activity}. ${framing}.
+
+${time.sky}. ${time.lighting}.
+
+Vertical 9:16 composition.
+```
+
+### Both Characters (snapshots)
+```
+Photorealistic 3D CGI render. ${loc.Name} — ${loc.Description}
+
+${spot.Spot_Description}
+
+GORB, ${gorb.description}, and PLECK, ${pleck.description}: ${activity}. ${framing}.
+
+${time.sky}. ${time.lighting}.
+
+Vertical 4:5 composition.
+```
