@@ -1,0 +1,3964 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        4352,
+        -320
+      ],
+      "name": "Manual Trigger",
+      "id": "d82c047e-b874-4820-8a07-c94e2ddf8169"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 143205348,
+          "mode": "list",
+          "cachedResultName": "Locations"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Images_Approved"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4576,
+        -416
+      ],
+      "name": "Get Location (Images_Approved)",
+      "id": "8ab311fa-b515-4e9d-9034-5352520676ac",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 143205348,
+          "mode": "list",
+          "cachedResultName": "Locations"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Videos_Review"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4576,
+        -224
+      ],
+      "name": "Get Location (Videos_Review)",
+      "id": "f3d7b017-b3ab-47b8-bb04-4724359cc958",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4800,
+        -320
+      ],
+      "name": "Merge Locations",
+      "id": "e3fdfe69-ef26-4ede-b170-47bec3149872"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all().map(i => i.json);\n\n// Filter out empty results\nconst locations = items.filter(i => i.Location_ID);\n\nif (locations.length === 0) {\n  return [{ json: { found: false } }];\n}\n\n// Take first location\nreturn [{ json: { found: true, location: locations[0] } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5024,
+        -320
+      ],
+      "name": "Check Location Found",
+      "id": "6042c487-aac9-46ca-a919-2b88d948bd19"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "location-found",
+              "leftValue": "={{ $json.found }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        5248,
+        -320
+      ],
+      "name": "IF Location Found",
+      "id": "0ca319dd-421f-4737-b931-8708bec65081"
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "AI Aliens Video Pipeline - No Location Found",
+        "html": "No location found with Status = Images_Approved or Videos_Review.<br><br>Make sure all images are approved before running the Video Pipeline.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        5472,
+        -224
+      ],
+      "name": "Email - No Location",
+      "id": "a614bf5f-807f-47f6-bc08-662e1b7c7157",
+      "webhookId": "3347f1d5-ff0c-4b5d-9ccf-dd9f57160338",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1192648937,
+          "mode": "list",
+          "cachedResultName": "Content"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Location_ID",
+              "lookupValue": "={{ $json.location.Location_ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        5472,
+        -416
+      ],
+      "name": "Get Content Rows",
+      "id": "978b3b3d-8013-4369-8c08-6d3b4b96e534",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const location = $('IF Location Found').first().json.location;\nconst contentRows = $input.all().map(i => i.json);\n\n// Check if postcard exists (indicates initial run already done)\nconst postcardExists = contentRows.some(r => r.Content_Type === 'postcard');\n\n// Check for video redos\nconst redoItems = contentRows.filter(r => r.Video_Status === 'Redo');\n\nreturn [{\n  json: {\n    location: location,\n    contentRows: contentRows,\n    isInitialRun: !postcardExists,\n    hasRedos: redoItems.length > 0,\n    redoItems: redoItems\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5696,
+        -416
+      ],
+      "name": "Determine Run Type",
+      "id": "23e0f61a-a76c-4b46-8221-1c2f23493d43"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "is-initial",
+              "leftValue": "={{ $('Determine Run Type').first().json.isInitialRun }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        6144,
+        -416
+      ],
+      "name": "IF Initial Run",
+      "id": "260bbd83-9c24-42a9-8a00-362d46161666"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "has-redos",
+              "leftValue": "={{ $('Determine Run Type').first().json.hasRedos }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        14432,
+        -32
+      ],
+      "name": "IF Has Redos",
+      "id": "ccbac964-3083-4e8c-8768-30cbc961972f"
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=AI Aliens Video Pipeline - Nothing to Do",
+        "html": "=Video Pipeline ran for {{ $json.location.Name }} but found nothing to do.<br><br>Initial run already complete and no videos marked for Redo.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        14656,
+        64
+      ],
+      "name": "Email - Nothing to Do",
+      "id": "df6ad95b-cc7f-4865-8d46-f0742df2bd15",
+      "webhookId": "0a9a3007-bcdb-4781-bbe6-9030a2e63c84",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.location.Location_ID }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1Hjo2EeYM8Y6Q2T2QA3cUjDcmhziQTncE",
+            "mode": "list",
+            "cachedResultName": "Content",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1Hjo2EeYM8Y6Q2T2QA3cUjDcmhziQTncE"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        5920,
+        -416
+      ],
+      "name": "Search Location Folder",
+      "alwaysOutputData": true,
+      "id": "5e79a5bd-36e9-4a35-9a8d-5c68ae5cc6e2",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $('Determine Run Type').first().json;\n\nreturn [{\n  json: {\n    locationName: data.location.Name,\n    locationId: data.location.Location_ID,\n    sanitizedName: data.location.Name.replace(/\\s+/g, '_')\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6368,
+        -496
+      ],
+      "name": "Prepare Postcard",
+      "id": "63305c6c-01eb-4e6e-afc1-71fea7ca3947"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.sanitizedName }}_style.png",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Search Location Folder').first().json.id }}",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        6592,
+        -496
+      ],
+      "name": "Search Style Image",
+      "id": "6c358878-d9b0-49c4-9f04-e5746cffc623",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        6816,
+        -496
+      ],
+      "name": "Download Style Image",
+      "id": "830a7301-14c4-4839-b25c-3d095fe736fb",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/mnt/data/tmp/style_image.png",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        7040,
+        -496
+      ],
+      "name": "Save Style to Disk",
+      "id": "90ad86da-1024-4101-8e2b-c2feff2d3532"
+    },
+    {
+      "parameters": {
+        "command": "=convert /mnt/data/tmp/style_image.png -bordercolor white -border 40x40 -gravity south -background white -splice 0x80 -font Helvetica-Bold -pointsize 48 -fill '#2C3E50' -gravity south -annotate +0+30 'Greetings from {{ $('Prepare Postcard').first().json.locationName }}!' /mnt/data/tmp/postcard.png"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        7264,
+        -496
+      ],
+      "name": "Create Postcard",
+      "id": "750de8c5-598f-4c2d-8a0e-880e347b79bc"
+    },
+    {
+      "parameters": {
+        "fileSelector": "=/mnt/data/tmp/postcard.png",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        7488,
+        -496
+      ],
+      "name": "Read Postcard",
+      "id": "630e471d-d5f5-4da2-ba28-4b09ad440ede"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Prepare Postcard').first().json.sanitizedName }}_postcard.png",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Search Location Folder').first().json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        7712,
+        -496
+      ],
+      "name": "Upload Postcard to Drive",
+      "id": "3b7e2981-33a1-44ef-9f02-97e2749285cf",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const uploadResult = $json;\nconst prepData = $('Prepare Postcard').first().json;\n\nreturn [{\n  json: {\n    Content_ID: `${prepData.sanitizedName}_postcard`,\n    Location_ID: prepData.locationId,\n    Content_Type: 'postcard',\n    Image_Status: 'Review',\n    Video_Status: 'N/A',\n    Drive_ID: uploadResult.id\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7936,
+        -496
+      ],
+      "name": "Prep Postcard Content Row",
+      "id": "472e6951-8481-4923-9525-3f6a8c60ec13"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1192648937,
+          "mode": "list",
+          "cachedResultName": "Content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=1192648937"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Content_ID": "={{ $json.Content_ID }}",
+            "Location_ID": "={{ $json.Location_ID }}",
+            "Content_Type": "={{ $json.Content_Type }}",
+            "Image_Status": "={{ $json.Image_Status }}",
+            "Video_Status": "={{ $json.Video_Status }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Content_ID",
+              "displayName": "Content_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location_ID",
+              "displayName": "Location_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Content_Type",
+              "displayName": "Content_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Spot_ID",
+              "displayName": "Spot_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Food_ID",
+              "displayName": "Food_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Time_of_Day",
+              "displayName": "Time_of_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Caption",
+              "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Polaroid_Caption",
+              "displayName": "Polaroid_Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Image_Prompt",
+              "displayName": "Image_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt",
+              "displayName": "Video_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Image_Status",
+              "displayName": "Image_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Video_Status",
+              "displayName": "Video_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        8160,
+        -496
+      ],
+      "name": "Create Postcard Content Row",
+      "id": "b6fae76a-ae55-4aab-9d54-c8538d0eb480",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "rm -f /mnt/data/tmp/style_image.png /mnt/data/tmp/postcard.png 2>/dev/null || true"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        8384,
+        -496
+      ],
+      "name": "Postcard Cleanup",
+      "id": "058f6a00-9296-425e-9a17-db695a02a14e",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"{{ $('Determine Run Type').first().json.location.Music }}, 20 seconds\",\n  \"customMode\": false,\n  \"instrumental\": true,\n  \"model\": \"V4_5PLUS\",\n  \"callBackUrl\": \"https://example.com/callback\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        8608,
+        -496
+      ],
+      "name": "Generate Music",
+      "id": "e3c050a3-d985-4c35-a0f9-27da2b664a94",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cvwEzZ8bMz0qcuom",
+          "name": "Kie.api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $json;\nconst data = $('Determine Run Type').first().json;\n\nreturn [{\n  json: {\n    taskId: response.data.taskId,\n    musicStartTime: Date.now(),\n    locationName: data.location.Name,\n    locationId: data.location.Location_ID,\n    sanitizedName: data.location.Name.replace(/\\s+/g, '_')\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8832,
+        -496
+      ],
+      "name": "Set Music Start Time",
+      "id": "5a1dcc43-c6bd-4242-88b6-fabb9a6f167b"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/generate/record-info?taskId={{ $json.taskId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        9056,
+        -496
+      ],
+      "name": "Check Music Status",
+      "id": "7b77f345-edd3-472e-b123-e23b30795f80",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cvwEzZ8bMz0qcuom",
+          "name": "Kie.api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const statusResponse = $json;\nconst prevData = $('Set Music Start Time').first().json;\n\nconst status = statusResponse.data?.status || 'PENDING';\nconst isSuccess = status === 'SUCCESS';\nconst isFailed = status === 'FAILED' || statusResponse.data?.errorCode;\n\nconst elapsed = Date.now() - prevData.musicStartTime;\nconst fiveMinutes = 5 * 60 * 1000;\nconst isTimedOut = elapsed > fiveMinutes && !isSuccess;\n\nlet audioUrl = null;\nif (isSuccess && statusResponse.data?.response?.sunoData?.[0]?.audioUrl) {\n  audioUrl = statusResponse.data.response.sunoData[0].audioUrl;\n}\n\nreturn [{\n  json: {\n    ...prevData,\n    status,\n    isSuccess,\n    isFailed,\n    isTimedOut,\n    elapsed,\n    audioUrl,\n    statusResponse\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9280,
+        -560
+      ],
+      "name": "Evaluate Music Status",
+      "id": "e2761efb-6abb-4686-bc65-284d99fd1863"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "music-failed",
+              "leftValue": "={{ $json.isFailed }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        9504,
+        -560
+      ],
+      "name": "IF Music Failed",
+      "id": "05a4e6c4-0a96-4f02-a10d-1ec947b80a3d"
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=AI Aliens - Music Generation Failed for {{ $json.locationName }}",
+        "html": "=Music generation failed for {{ $json.locationName }}.<br><br>Please check the workflow and try again.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        9728,
+        -656
+      ],
+      "name": "Email - Music Failed",
+      "id": "39a70463-4b61-4f78-a9db-1ac72821b606",
+      "webhookId": "6359a431-32ad-4c2a-86b9-cde6fe0ccb75",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "music-timeout",
+              "leftValue": "={{ $json.isTimedOut }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        9728,
+        -464
+      ],
+      "name": "IF Music Timeout",
+      "id": "572cabb8-e6af-47c8-9f85-0a45325bddf1"
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=AI Aliens - Music Generation Timeout for {{ $json.locationName }}",
+        "html": "=Music generation timed out for {{ $json.locationName }}.<br><br>Elapsed: {{ Math.round($json.elapsed / 1000) }} seconds",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        9952,
+        -560
+      ],
+      "name": "Email - Music Timeout",
+      "id": "25fb98bc-5226-4a17-b0be-7f7754f539e8",
+      "webhookId": "c97eaaf0-173f-417a-905a-7a9d50ec55ce",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "music-success",
+              "leftValue": "={{ $json.isSuccess }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        9952,
+        -368
+      ],
+      "name": "IF Music Success",
+      "id": "d9e608d2-3223-44c8-bf55-47a0d589c446"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        10176,
+        -208
+      ],
+      "name": "Wait - Music",
+      "webhookId": "ac7c6377-b8db-481f-ba65-3563aa7b7e15",
+      "id": "ad68c611-16bb-4223-a448-03cddb2be1ba"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.audioUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        10176,
+        -416
+      ],
+      "name": "Download Music",
+      "id": "30bbba03-d791-490f-a48b-7dc1513ca6bd"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/mnt/data/tmp/music.mp3",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        10400,
+        -416
+      ],
+      "name": "Save Music",
+      "id": "7a021014-8f09-42f0-9c58-96b6bc198125"
+    },
+    {
+      "parameters": {
+        "jsCode": "const prevData = $('Set Music Start Time').first().json;\n\n// Build snapshot filenames\nconst snapshots = [];\nfor (let i = 1; i <= 10; i++) {\n  snapshots.push({\n    index: i,\n    filename: `${prevData.sanitizedName}_snapshot_${String(i).padStart(2, '0')}.png`\n  });\n}\n\n// Split into two groups\nconst slideshow1 = snapshots.slice(0, 5);\nconst slideshow2 = snapshots.slice(5, 10);\n\nreturn [{\n  json: {\n    musicPath: '/mnt/data/tmp/music.mp3',\n    locationName: prevData.locationName,\n    locationId: prevData.locationId,\n    sanitizedName: prevData.sanitizedName,\n    slideshows: [\n      {\n        index: 1,\n        filename: `${prevData.sanitizedName}_slideshow_01.mp4`,\n        images: slideshow1\n      },\n      {\n        index: 2,\n        filename: `${prevData.sanitizedName}_slideshow_02.mp4`,\n        images: slideshow2\n      }\n    ]\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        11072,
+        -416
+      ],
+      "name": "Prepare Slideshows",
+      "id": "b01689c8-304c-47e1-9037-a3c8df9ae158"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "slideshows",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        11296,
+        -416
+      ],
+      "name": "Split Slideshows",
+      "id": "1474832c-3bb6-4a06-92f1-3bbcd60e87c7"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const slideshow = $json.slideshows;\nconst images = slideshow.images;\nconst contentRows = $('Get Content Rows').all().map(item => item.json);\n\nconst startIndex = slideshow.index === 1 ? 1 : 6;\n\nconst imageDownloads = images.map((img, i) => {\n  const snapshotNum = String(startIndex + i).padStart(2, '0');\n  const contentRow = contentRows.find(r => r.Content_Type === `snapshot_${snapshotNum}`);\n  const rawCaption = contentRow?.Polaroid_Caption || '';\n  const caption = rawCaption.replace(/'/g, \"'\\\\''\");\n  \n  return {\n    filename: img.filename,\n    index: i,\n    caption: caption,\n    outputPath: `/mnt/data/tmp/slideshow_${slideshow.index}_img_${i}.png`,\n    polaroidPath: `/mnt/data/tmp/slideshow_${slideshow.index}_polaroid_${i}.png`\n  };\n});\n\nreturn {\n  json: {\n    slideshowIndex: slideshow.index,\n    filename: slideshow.filename,\n    imageDownloads: imageDownloads\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        11520,
+        -416
+      ],
+      "name": "Prepare Slideshow Downloads",
+      "id": "e25293ab-10bb-4951-bbc3-feffd7c371fe"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "imageDownloads",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        11744,
+        -416
+      ],
+      "name": "Split Slideshow Images",
+      "id": "a806856f-df00-460b-bc1f-4c3e409840ae"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $('Split Slideshow Images').item.json.imageDownloads.outputPath }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        12416,
+        -416
+      ],
+      "name": "Save Slideshow Image",
+      "id": "f54bcabd-6efd-447c-b789-f7029748c5e7"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=convert {{ $('Split Slideshow Images').item.json.imageDownloads.outputPath }} -resize 1000x1250 -bordercolor white -border 40x40 -gravity south -background white -splice 0x285 -font Humor-Sans -pointsize 48 -fill black -gravity south -annotate +0+140 '{{ $('Split Slideshow Images').item.json.imageDownloads.caption }}' {{ $('Split Slideshow Images').item.json.imageDownloads.polaroidPath }}"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        12640,
+        -416
+      ],
+      "name": "Create Polaroid Frame",
+      "id": "51284cb3-b7e3-4c61-afb5-6153a4fcf6d0"
+    },
+    {
+      "parameters": {
+        "jsCode": "const allItems = $input.all();\nconst slideshowData = $('Prepare Slideshow Downloads').all().map(i => i.json);\n\nconst uniqueSlideshows = [...new Set(slideshowData.map(s => s.slideshowIndex))];\n\nreturn uniqueSlideshows.map(idx => {\n  const slideshow = slideshowData.find(s => s.slideshowIndex === idx);\n  return {\n    json: {\n      slideshowIndex: idx,\n      filename: slideshow.filename,\n      polaroidPattern: `/mnt/data/tmp/slideshow_${idx}_polaroid_%d.png`,\n      outputPath: `/mnt/data/tmp/slideshow_${idx}.mp4`\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        12864,
+        -416
+      ],
+      "name": "Collect Polaroids",
+      "id": "950b7f6c-6cb9-48a1-ba7a-73b772a1a152"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=ffmpeg -y -framerate 1/5 -i {{ $('Collect Polaroids').item.json.polaroidPattern }} -i /mnt/data/tmp/music.mp3 -c:v libx264 -r 30 -pix_fmt yuv420p -c:a aac -shortest -vf \"scale=1080:1350:force_original_aspect_ratio=decrease,pad=1080:1350:(ow-iw)/2:(oh-ih)/2\" {{ $('Collect Polaroids').item.json.outputPath }}"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        13088,
+        -416
+      ],
+      "name": "Create Slideshow Video",
+      "id": "0fa1cfc7-6d62-456d-93de-ba4345c0fdbc"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $('Collect Polaroids').item.json.outputPath }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        13312,
+        -416
+      ],
+      "name": "Read Slideshow Video",
+      "id": "2315c73f-c8a1-4c36-abd1-fdefa52b322b"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Collect Polaroids').item.json.filename }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Search Location Folder').first().json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        13536,
+        -416
+      ],
+      "name": "Upload Slideshow to Drive",
+      "id": "8e211ca4-7ec2-4f84-b8d5-b3d9b0bdaeda",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const slideshowData = $('Collect Polaroids').item.json;\nconst uploadResult = $json;\nconst prepData = $('Prepare Slideshows').first().json;\nconst contentId = `${prepData.sanitizedName}_slideshow_0${slideshowData.slideshowIndex}`;\n\n// Pick random title and caption\nconst titles = $('Get Slideshow Titles').all().map(i => i.json.Value);\nconst captions = $('Get Slideshow Captions').all().map(i => i.json.Value);\nconst title = titles[Math.floor(Math.random() * titles.length)].replace('{location}', prepData.locationName);\nconst caption = captions[Math.floor(Math.random() * captions.length)].replace('{location}', prepData.locationName);\n\nreturn {\n  json: {\n    Content_ID: contentId,\n    Location_ID: prepData.locationId,\n    Content_Type: `slideshow_0${slideshowData.slideshowIndex}`,\n    Title: title,\n    Caption: caption,\n    Image_Status: 'N/A',\n    Video_Status: 'Review',\n    Drive_ID: uploadResult.id\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        13760,
+        -416
+      ],
+      "name": "Prep Slideshow Content Row",
+      "id": "10d5852c-52a9-4d4d-97a5-ad3bb8105501"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1192648937,
+          "mode": "list",
+          "cachedResultName": "Content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=1192648937"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Content_ID": "={{ $json.Content_ID }}",
+            "Location_ID": "={{ $json.Location_ID }}",
+            "Content_Type": "={{ $json.Content_Type }}",
+            "Image_Status": "={{ $json.Image_Status }}",
+            "Video_Status": "={{ $json.Video_Status }}",
+            "Title": "={{ $json.Title }}",
+            "Caption": "={{ $json.Caption }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Content_ID",
+              "displayName": "Content_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location_ID",
+              "displayName": "Location_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Content_Type",
+              "displayName": "Content_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Spot_ID",
+              "displayName": "Spot_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Food_ID",
+              "displayName": "Food_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Time_of_Day",
+              "displayName": "Time_of_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Caption",
+              "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Polaroid_Caption",
+              "displayName": "Polaroid_Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Image_Prompt",
+              "displayName": "Image_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt",
+              "displayName": "Video_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Image_Status",
+              "displayName": "Image_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Video_Status",
+              "displayName": "Video_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        13984,
+        -416
+      ],
+      "name": "Create Slideshow Content Row",
+      "id": "56ff3452-7751-4707-9e2d-7bad2f223f4e",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const slideshows = $input.all().map(item => item.json);\n\nreturn [{\n  json: {\n    slideshows: slideshows,\n    slideshowCount: slideshows.length\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        14208,
+        -416
+      ],
+      "name": "Aggregate Slideshows",
+      "id": "f110824b-2229-4b10-9daf-7bf9199c5cc6"
+    },
+    {
+      "parameters": {
+        "command": "rm -f /mnt/data/tmp/slideshow_*.png /mnt/data/tmp/postcard.png /mnt/data/tmp/slideshow_*.mp4  /mnt/data/tmp/*_ending.mp4.mp4 /mnt/data/tmp/music.mp3 2>/dev/null || true"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        14432,
+        -416
+      ],
+      "name": "Slideshow Cleanup",
+      "id": "168fc70b-a9bf-4869-b97c-9d646cb36212"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.imageDownloads.filename }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Search Location Folder').first().json.id }}",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        11968,
+        -416
+      ],
+      "name": "Search Snapshot Image",
+      "id": "39ac4e68-69cb-48f8-a540-758334699d58",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        12192,
+        -416
+      ],
+      "name": "Download Snapshot Image",
+      "id": "ce7da300-eea9-4b64-b81d-def181066e01",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1434410303,
+          "mode": "list",
+          "cachedResultName": "Pools",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=1434410303"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Pool_Type",
+              "lookupValue": "slideshow_title"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        10624,
+        -416
+      ],
+      "id": "a4d852a5-1fd8-4139-9745-00e444eee67a",
+      "name": "Get Slideshow Titles",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1434410303,
+          "mode": "list",
+          "cachedResultName": "Pools",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=1434410303"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Pool_Type",
+              "lookupValue": "slideshow_caption"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        10848,
+        -416
+      ],
+      "id": "2002377d-8408-43ca-b3d0-8b95b304fb55",
+      "name": "Get Slideshow Captions",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $('Determine Run Type').first().json;\nconst location = data.location;\nconst contentRows = data.contentRows;\nconst sanitizedName = location.Name.replace(/\\s+/g, '_');\n\nconst intro = contentRows.find(r => r.Content_Type === 'intro');\nconst gorbStory = contentRows.find(r => r.Content_Type === 'gorb_story');\nconst pleckStory = contentRows.find(r => r.Content_Type === 'pleck_story');\nconst review = contentRows.find(r => r.Content_Type === 'review');\n\nconst videoItems = [];\n\n// Intro\nvideoItems.push({\n  contentType: 'intro',\n  contentId: intro.Content_ID,\n  imageFilename: `${sanitizedName}_intro.png`,\n  videoFilename: `${sanitizedName}_intro.mp4`,\n  videoPrompt: intro.Video_Prompt,\n  needsStitch: false\n});\n\n// Gorb Story\nvideoItems.push({\n  contentType: 'gorb_story',\n  contentId: gorbStory.Content_ID,\n  imageFilename: `${sanitizedName}_gorb_story.png`,\n  videoFilename: `${sanitizedName}_gorb_story.mp4`,\n  videoPrompt: gorbStory.Video_Prompt,\n  needsStitch: false\n});\n\n// Pleck Story\nvideoItems.push({\n  contentType: 'pleck_story',\n  contentId: pleckStory.Content_ID,\n  imageFilename: `${sanitizedName}_pleck_story.png`,\n  videoFilename: `${sanitizedName}_pleck_story.mp4`,\n  videoPrompt: pleckStory.Video_Prompt,\n  needsStitch: false\n});\n\n// Review\nvideoItems.push({\n  contentType: 'review',\n  contentId: review.Content_ID,\n  imageFilename: `${sanitizedName}_review.png`,\n  videoFilename: `${sanitizedName}_review.mp4`,\n  videoPrompt: review.Video_Prompt,\n  needsStitch: false\n});\n\nreturn [{\n  json: {\n    locationId: location.Location_ID,\n    locationName: location.Name,\n    sanitizedName: sanitizedName,\n    videoItems: videoItems\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        14656,
+        -416
+      ],
+      "id": "9cde7a7e-d98f-4b0c-ba0b-261e26b79bea",
+      "name": "Prepare Video Generation"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "videoItems",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        14880,
+        -320
+      ],
+      "id": "53a0f2e5-d9e8-4b59-96a1-4f98fa14817a",
+      "name": "Split Videos"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/veo/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.needsStitch ? $json.videoPrompt1 : $json.videoPrompt }}"
+            },
+            {
+              "name": "imageUrls",
+              "value": "={{ [$json.imageUrl] }}"
+            },
+            {
+              "name": "model",
+              "value": "veo3_fast"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "9:16"
+            },
+            {
+              "name": "generationType",
+              "value": "FIRST_AND_LAST_FRAMES_2_VIDEO"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        15552,
+        -320
+      ],
+      "id": "2b93141b-de35-4f85-afdf-c3baceafb472",
+      "name": "Generate Video Clip 1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cvwEzZ8bMz0qcuom",
+          "name": "Kie.api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.videoItems.imageFilename }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Search Location Folder').first().json.id }}",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        15104,
+        -320
+      ],
+      "id": "d9fbc835-8251-431a-b32f-67d906c66f77",
+      "name": "Search files and folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const videoData = $('Split Videos').item.json.videoItems;\nconst fileId = $json.id;\n\nreturn {\n  json: {\n    ...videoData,\n    imageUrl: `https://drive.google.com/uc?export=view&id=${fileId}`\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        15328,
+        -320
+      ],
+      "id": "2aa18a5a-8e1a-4e17-ae0f-dec3b1d1b9f2",
+      "name": "Build Image URL"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const videoData = $('Build Image URL').item.json;\n\nreturn {\n  json: {\n    ...videoData,\n    clip1TaskId: $json.data.taskId,\n    clip1StartTime: Date.now()\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        15776,
+        -320
+      ],
+      "id": "fd52eda5-7670-4fb4-b070-1667cd5dd24d",
+      "name": "Set Clip 1 Start Time"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/veo/record-info?taskId={{ $json.clip1TaskId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        16000,
+        -320
+      ],
+      "id": "bdfc55b6-e5c6-49c8-9779-10581f580bb7",
+      "name": "Check Clip 1 Status",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cvwEzZ8bMz0qcuom",
+          "name": "Kie.api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=Gorb & Pleck Batch - Clip 1 Timeout",
+        "html": "=Clip 1 generation timed out.<br><br>Content: {{ $('Set Clip 1 Start Time').item.json.contentType }}<br>Filename: {{ $('Set Clip 1 Start Time').item.json.filename }}<br>Task ID: {{ $('Set Clip 1 Start Time').item.json.clip1TaskId }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        17344,
+        -400
+      ],
+      "id": "037859eb-754d-41f9-967e-9c4c6099ce09",
+      "name": "Email - Clip 1 Timeout",
+      "webhookId": "c24523a4-3cd9-4793-99ab-5e5ac3ef5247",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=Gorb & Pleck Batch - Clip 1 Failed",
+        "html": "=Clip 1 generation failed.<br><br>Content: {{ $('Set Clip 1 Start Time').item.json.contentType }}<br>Filename: {{ $('Set Clip 1 Start Time').item.json.filename }}<br>Task ID: {{ $('Set Clip 1 Start Time').item.json.clip1TaskId }}<br>Error: {{ $('Check Clip 1 Status').item.json.data.errorMessage }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        17120,
+        -496
+      ],
+      "id": "ce5b94c4-b4ad-433d-9065-88f7825e9a91",
+      "name": "Email - Clip 1 Failed",
+      "webhookId": "50305fb2-e205-43a3-a51b-5c86931cf68e",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const statusResponse = $input.item.json;\nconst allVideoData = $('Set Clip 1 Start Time').all();\nconst videoData = allVideoData.find(v => v.json.clip1TaskId === statusResponse.data?.taskId)?.json || {};\n\nconst data = statusResponse.data;\nconst successFlag = data?.successFlag;\nconst fiveMinutes = 5 * 60 * 1000;\nconst elapsed = Date.now() - videoData.clip1StartTime;\n\nlet videoUrl = null;\nif (data?.response?.resultUrls?.[0]) {\n  videoUrl = data.response.resultUrls[0];\n}\n\nreturn {\n  json: {\n    ...videoData,\n    status: successFlag === 1 ? 'success' : (data?.errorCode ? 'failed' : 'pending'),\n    elapsed: elapsed,\n    isTimedOut: elapsed > fiveMinutes && successFlag !== 1,\n    isFailed: data?.errorCode !== null,\n    isSuccess: successFlag === 1,\n    videoUrl: videoUrl,\n    statusResponse: data\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        16224,
+        -400
+      ],
+      "id": "144f0902-caa7-4eff-adf9-2624429b535d",
+      "name": "Merge Clip 1 Status"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "items",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        16448,
+        -400
+      ],
+      "id": "3bebec51-ed90-413f-923d-1413703eab0f",
+      "name": "Aggregate Clip 1 Results"
+    },
+    {
+      "parameters": {
+        "jsCode": "const statusItems = $input.first().json.items;\nconst originalItems = $('Set Clip 1 Start Time').all().map(i => i.json);\n\nconst items = statusItems.map(status => {\n  const original = originalItems.find(o => o.clip1TaskId === status.taskId);\n  const elapsed = original ? Date.now() - original.clip1StartTime : 0;\n  const fiveMinutes = 5 * 60 * 1000;\n  \n  return {\n    ...status,\n    ...original,\n    elapsed: elapsed,\n    isTimedOut: elapsed > fiveMinutes && !status.isSuccess\n  };\n});\n\nconst successCount = items.filter(i => i.isSuccess).length;\nconst failedItems = items.filter(i => i.isFailed);\nconst timedOutItems = items.filter(i => i.isTimedOut && !i.isFailed);\nconst pendingItems = items.filter(i => !i.isSuccess && !i.isFailed && !i.isTimedOut);\n\nreturn [{\n  json: {\n    allSuccess: successCount === items.length,\n    anyFailed: failedItems.length > 0,\n    anyTimedOut: timedOutItems.length > 0,\n    totalItems: items.length,\n    successCount,\n    failedCount: failedItems.length,\n    timedOutCount: timedOutItems.length,\n    pendingCount: pendingItems.length,\n    failedItems,\n    timedOutItems,\n    items\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        16672,
+        -400
+      ],
+      "id": "721e3af5-2270-445e-b65b-86aa01ffd579",
+      "name": "Evaluate Clip 1 Statuses"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "clip1-any-failed",
+              "leftValue": "={{ $json.anyFailed }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        16896,
+        -400
+      ],
+      "id": "fdfc4c93-6d8d-4244-9471-35bbbf3ce56b",
+      "name": "IF (Any Clip 1 Failed)"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "clip1-any-timeout",
+              "leftValue": "={{ $json.anyTimedOut }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        17120,
+        -304
+      ],
+      "id": "f2fa029c-9a71-47c6-bbab-91f1d795d7f9",
+      "name": "IF (Any Clip 1 Timeout)"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "clip1-all-complete",
+              "leftValue": "={{ $json.allSuccess }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        17344,
+        -208
+      ],
+      "id": "eb1470b8-823e-4559-ba55-4f6c1cef9509",
+      "name": "IF (All Clip 1 Complete)"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\n\nreturn data.items.map(item => ({ json: item }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        17568,
+        -112
+      ],
+      "id": "c892b278-19b0-4e78-b8fb-4680c0361f10",
+      "name": "Extract Clip 1 Pending"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        17792,
+        -32
+      ],
+      "id": "b39a7ab0-fe77-41e7-bdee-249ddf57d686",
+      "name": "Wait - Clip 1 Batch",
+      "webhookId": "d7238006-c266-45dc-a7c7-bedb2d41ea8c"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "items",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        17568,
+        -304
+      ],
+      "id": "31e17653-b98f-4e54-a515-baf819a45932",
+      "name": "Split Clip 1 Results"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "887e9c54-23be-4ec4-a8ea-0b69c50fac3c",
+              "leftValue": "={{ $json.needsStitch }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        17792,
+        -304
+      ],
+      "id": "696a0451-7d6c-4330-ab35-be09154b3584",
+      "name": "IF (Needs Clip 2)"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/veo/extend",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $json.clip1TaskId }}"
+            },
+            {
+              "name": "prompt",
+              "value": "={{ $json.videoPrompt2 }}"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "9:16"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        18016,
+        -368
+      ],
+      "id": "149c4d76-636d-4f88-b412-3672836e26f2",
+      "name": "Generate Video Clip 2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cvwEzZ8bMz0qcuom",
+          "name": "Kie.api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.videoUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        21376,
+        112
+      ],
+      "id": "4a96a990-f3f9-460f-a085-d8206bf99d05",
+      "name": "Download Single Clip"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const videoData = $('Split Clip 1 Results').item.json;\n\nreturn {\n  json: {\n    ...videoData,\n    clip2TaskId: $json.data.taskId,\n    clip2StartTime: Date.now()\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        18240,
+        -368
+      ],
+      "id": "fb0e026d-b54a-47a2-8886-6005747ea2dc",
+      "name": "Set Clip 2 Start Time"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/veo/record-info?taskId={{ $json.clip2TaskId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        18464,
+        -368
+      ],
+      "id": "c385169f-110e-41b8-8fcd-f9b35b0e0491",
+      "name": "Check Clip 2 Status",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cvwEzZ8bMz0qcuom",
+          "name": "Kie.api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=Gorb & Pleck Batch - Clip 2 Failed",
+        "html": "=Clip 2 generation failed.<br><br>Content: {{ $('Set Clip 2 Start Time').item.json.contentType }}<br>Filename: {{ $('Set Clip 2 Start Time').item.json.filename }}<br>Task ID: {{ $('Set Clip 2 Start Time').item.json.clip2TaskId }}<br>Error: {{ $('Check Clip 2 Status').item.json.data.errorMessage }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        19584,
+        -544
+      ],
+      "id": "4c97a3cc-dc91-46fc-a952-46c77bf91dff",
+      "name": "Email - Clip 2 Failed",
+      "webhookId": "457d9cb5-7f65-491b-a07f-e04e5adb8622",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=Gorb & Pleck Batch - Clip 2 Timeout",
+        "html": "=Clip 2 generation timed out.<br><br>Content: {{ $('Set Clip 2 Start Time').item.json.contentType }}<br>Filename: {{ $('Set Clip 2 Start Time').item.json.filename }}<br>Task ID: {{ $('Set Clip 2 Start Time').item.json.clip2TaskId }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        19808,
+        -448
+      ],
+      "id": "8025e300-83f3-4ff2-92b6-23925ea30ad8",
+      "name": "Email - Clip 2 Timeout",
+      "webhookId": "8daae3f1-2183-423a-bf07-e46d03f07eca",
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.videoUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "clip1"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        20256,
+        -352
+      ],
+      "id": "0a9402f2-cb1f-4944-83d3-85ebdb6b177b",
+      "name": "Download Clip 1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cvwEzZ8bMz0qcuom",
+          "name": "Kie.api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.clip2VideoUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "clip2"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        20480,
+        -352
+      ],
+      "id": "44d0ae32-d2b6-4332-a8c6-cbbea676731d",
+      "name": "Download Clip 2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cvwEzZ8bMz0qcuom",
+          "name": "Kie.api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/mnt/data/tmp/clip1_{{ $json.contentType }}.mp4",
+        "dataPropertyName": "clip1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        20704,
+        -352
+      ],
+      "id": "4b7a5a75-6ea5-426d-b815-e6d64ba72158",
+      "name": "Save Clip 1 to Disk"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/mnt/data/tmp/clip2_{{ $json.contentType }}.mp4",
+        "dataPropertyName": "clip2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        20928,
+        -352
+      ],
+      "id": "7d6143b3-b18c-4ff8-8a8f-815fbb05c4dd",
+      "name": "Save Clip 2 to Disk"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=ffmpeg -y -i /mnt/data/tmp/clip1_{{ $json.contentType }}.mp4 -i /mnt/data/tmp/clip2_{{ $json.contentType }}.mp4 -filter_complex \"[1:v]trim=start=1,setpts=PTS-STARTPTS[v2];[1:a]atrim=start=1,asetpts=PTS-STARTPTS[a2];[0:v][0:a][v2][a2]concat=n=2:v=1:a=1\" /mnt/data/tmp/stitched_{{ $json.contentType }}.mp4"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        21152,
+        -352
+      ],
+      "id": "7ddb415c-ad7b-499d-8b2c-9a114e3f0dd8",
+      "name": "Stitch Clips"
+    },
+    {
+      "parameters": {
+        "fileSelector": "=/mnt/data/tmp/stitched_{{ $('Split Clip 2 Results').item.json.contentType }}.mp4",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        21376,
+        -352
+      ],
+      "id": "94e3aa0f-0297-4aa6-9bf5-3ddb48b1987e",
+      "name": "Read Stitched Video"
+    },
+    {
+      "parameters": {
+        "name": "={{ $json.filename }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Search Location Folder').first().json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        22048,
+        -112
+      ],
+      "id": "ddd54ad5-7460-4345-85ed-3297452ccf83",
+      "name": "Upload Video to Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "hv4DRx5bzGlEDlfc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const statusResponse = $input.item.json;\nconst data = statusResponse.data;\nconst successFlag = data?.successFlag;\nconst elapsed = data?.createTime ? Date.now() - data.createTime : 0;\nconst fiveMinutes = 5 * 60 * 1000;\n\n// Get video URL if available\nlet videoUrl = null;\nif (data?.response?.resultUrls?.[0]) {\n  videoUrl = data.response.resultUrls[0];\n}\n\nreturn {\n  json: {\n    taskId: data?.taskId,\n    status: successFlag === 1 ? 'success' : (data?.errorCode ? 'failed' : 'pending'),\n    elapsed: elapsed,\n    isTimedOut: elapsed > fiveMinutes && successFlag !== 1,\n    isFailed: data?.errorCode !== null,\n    isSuccess: successFlag === 1,\n    clip2VideoUrl: videoUrl,\n    statusResponse: data\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        18688,
+        -448
+      ],
+      "id": "dbcc3b98-1981-4aec-a313-1cfbe54ee100",
+      "name": "Merge Clip 2 Status"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "items",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        18912,
+        -448
+      ],
+      "id": "c75fd0ce-5a17-41fb-a90b-528d1961fede",
+      "name": "Aggregate Clip 2 Results"
+    },
+    {
+      "parameters": {
+        "jsCode": "const statusItems = $input.first().json.items;\nconst originalItems = $('Set Clip 2 Start Time').all().map(i => i.json);\n\nconst items = statusItems.map(status => {\n  const original = originalItems.find(o => o.clip2TaskId === status.taskId);\n  const elapsed = original ? Date.now() - original.clip2StartTime : 0;\n  const fiveMinutes = 5 * 60 * 1000;\n  \n  return {\n    ...original,\n    ...status,\n    elapsed: elapsed,\n    isTimedOut: elapsed > fiveMinutes && !status.isSuccess\n  };\n});\n\nconst successCount = items.filter(i => i.isSuccess).length;\nconst failedItems = items.filter(i => i.isFailed);\nconst timedOutItems = items.filter(i => i.isTimedOut && !i.isFailed);\nconst pendingItems = items.filter(i => !i.isSuccess && !i.isFailed && !i.isTimedOut);\n\nreturn [{\n  json: {\n    allSuccess: successCount === items.length,\n    anyFailed: failedItems.length > 0,\n    anyTimedOut: timedOutItems.length > 0,\n    totalItems: items.length,\n    successCount,\n    failedCount: failedItems.length,\n    timedOutCount: timedOutItems.length,\n    pendingCount: pendingItems.length,\n    failedItems,\n    timedOutItems,\n    items\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        19136,
+        -448
+      ],
+      "id": "cc85da7b-5b19-4caa-a976-88f6268c30f9",
+      "name": "Evaluate Clip 2 Statuses"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "clip2-any-failed",
+              "leftValue": "={{ $json.anyFailed }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        19360,
+        -448
+      ],
+      "id": "cfb0fe4a-0bbc-496e-8eda-9d8f43258989",
+      "name": "IF (Any Clip 2 Failed)"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "clip2-any-timeout",
+              "leftValue": "={{ $json.anyTimedOut }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        19584,
+        -352
+      ],
+      "id": "21195dba-f14f-4132-949c-b2b54d75808e",
+      "name": "IF (Any Clip 2 Timeout)"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "clip2-all-complete",
+              "leftValue": "={{ $json.allSuccess }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        19808,
+        -256
+      ],
+      "id": "40a8fbf6-5dac-46f0-a1cb-e17866d18b24",
+      "name": "IF (All Clip 2 Complete)"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\n\nreturn data.items.map(item => ({ json: item }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        20032,
+        -160
+      ],
+      "id": "45c7fdc4-927c-4dfb-b447-48bad3482a1f",
+      "name": "Extract Clip 2 Pending"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        20256,
+        -80
+      ],
+      "id": "d3f2ba81-1371-4afb-8aa1-1613fc0f6754",
+      "name": "Wait - Clip 2 Batch",
+      "webhookId": "d231fc6d-bb10-4a33-9cf5-170f0000884e"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "items",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        20032,
+        -352
+      ],
+      "id": "fdd159e4-270c-446d-92a8-c8c5af2b1c39",
+      "name": "Split Clip 2 Results"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        21824,
+        -112
+      ],
+      "id": "8a3b1abe-05f5-43e5-88ec-81ba7fcb4adb",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item.json;\nconst originalData = $('Split Clip 2 Results').item.json;\nconst sanitizedName = $('Determine Run Type').first().json.location.Name.replace(/\\s+/g, '_');\n\nreturn {\n  json: {\n    ...item,\n    contentType: originalData.contentType,\n    contentId: originalData.contentId,\n    filename: `${sanitizedName}_${originalData.contentType}.mp4`\n  },\n  binary: $input.item.binary\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        21600,
+        -352
+      ],
+      "id": "ea602f2f-6a92-473a-80d0-34168fd14aca",
+      "name": "Normalize Data"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item.json;\nconst originalData = $('Split Clip 1 Results').item.json;\n\nreturn {\n  json: {\n    ...item,\n    contentType: originalData.contentType,\n    contentId: originalData.contentId,\n    filename: originalData.videoFilename\n  },\n  binary: $input.item.binary\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        21600,
+        112
+      ],
+      "id": "bcbbccd3-8430-4b71-8b24-27feb5f74c40",
+      "name": "Normalize Single Clip"
+    },
+    {
+      "parameters": {
+        "fromEmail": "richiecoy@gmail.com",
+        "toEmail": "richiecoy@gmail.com",
+        "subject": "=AI Aliens - Videos Complete: {{ $('Prepare Video Generation').first().json.locationName }}",
+        "html": "=Video generation complete for {{ $('Prepare Video Generation').first().json.locationName }}.<br><br>4 videos uploaded and ready for review.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        22720,
+        -112
+      ],
+      "id": "48ef8648-fc14-4091-96ce-cc485c201892",
+      "name": "Send email",
+      "webhookId": "f5c732c1-96c7-4859-ab33-cd237de5fba4",
+      "executeOnce": true,
+      "credentials": {
+        "smtp": {
+          "id": "8alovuwdyCQhOA4Q",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $('Determine Run Type').first().json;\nconst redoItems = data.redoItems;\nconst location = data.location;\nconst sanitizedName = location.Name.replace(/\\s+/g, '_');\n\nconst videoItems = redoItems.map(item => {\n  return {\n    contentType: item.Content_Type,\n    contentId: item.Content_ID,\n    imageFilename: `${sanitizedName}_${item.Content_Type}.png`,\n    videoFilename: `${sanitizedName}_${item.Content_Type}.mp4`,\n    videoPrompt: item.Video_Prompt,\n    needsStitch: false\n  };\n});\n\nreturn [{\n  json: {\n    locationId: location.Location_ID,\n    locationName: location.Name,\n    sanitizedName: sanitizedName,\n    videoItems: videoItems\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        14656,
+        -128
+      ],
+      "id": "90b97377-306d-4b49-a7e3-b8c8b22488b5",
+      "name": "Prepare Video Redos"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 143205348,
+          "mode": "list",
+          "cachedResultName": "Locations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=143205348"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Videos_Review",
+            "Location_ID": "={{ $('Prepare Video Generation').first().json.locationId }}"
+          },
+          "matchingColumns": [
+            "Location_ID"
+          ],
+          "schema": [
+            {
+              "id": "Location_ID",
+              "displayName": "Location_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Weather",
+              "displayName": "Weather",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Color_Palette",
+              "displayName": "Color_Palette",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Camera_Angle",
+              "displayName": "Camera_Angle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Sky_Day",
+              "displayName": "Sky_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Sky_Night",
+              "displayName": "Sky_Night",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lighting_Day",
+              "displayName": "Lighting_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lighting_Night",
+              "displayName": "Lighting_Night",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ambient_Day",
+              "displayName": "Ambient_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ambient_Night",
+              "displayName": "Ambient_Night",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Music",
+              "displayName": "Music",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        22496,
+        -112
+      ],
+      "id": "4f906cf1-57fa-4da5-a3a5-5a3606af4c4b",
+      "name": "Update Location Status",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
+          "mode": "list",
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1192648937,
+          "mode": "list",
+          "cachedResultName": "Content",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=1192648937"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Content_ID": "={{ $('Normalize Single Clip').item.json.contentId }}",
+            "Video_Status": "Review"
+          },
+          "matchingColumns": [
+            "Content_ID"
+          ],
+          "schema": [
+            {
+              "id": "Content_ID",
+              "displayName": "Content_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Location_ID",
+              "displayName": "Location_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Content_Type",
+              "displayName": "Content_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Spot_ID",
+              "displayName": "Spot_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Food_ID",
+              "displayName": "Food_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Time_of_Day",
+              "displayName": "Time_of_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caption",
+              "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Polaroid_Caption",
+              "displayName": "Polaroid_Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Image_Prompt",
+              "displayName": "Image_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt",
+              "displayName": "Video_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Image_Status",
+              "displayName": "Image_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Video_Status",
+              "displayName": "Video_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        22272,
+        -112
+      ],
+      "id": "ea8179d7-8f58-43c1-bed7-b03725d883ff",
+      "name": "Update Content Status",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RbV7nYKHgNGjsvXM",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Location (Images_Approved)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Location (Videos_Review)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Location (Images_Approved)": {
+      "main": [
+        [
+          {
+            "node": "Merge Locations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Location (Videos_Review)": {
+      "main": [
+        [
+          {
+            "node": "Merge Locations",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Locations": {
+      "main": [
+        [
+          {
+            "node": "Check Location Found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Location Found": {
+      "main": [
+        [
+          {
+            "node": "IF Location Found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Location Found": {
+      "main": [
+        [
+          {
+            "node": "Get Content Rows",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Email - No Location",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Content Rows": {
+      "main": [
+        [
+          {
+            "node": "Determine Run Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Run Type": {
+      "main": [
+        [
+          {
+            "node": "Search Location Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Initial Run": {
+      "main": [
+        [
+          {
+            "node": "Prepare Postcard",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF Has Redos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Has Redos": {
+      "main": [
+        [
+          {
+            "node": "Prepare Video Redos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Email - Nothing to Do",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Location Folder": {
+      "main": [
+        [
+          {
+            "node": "IF Initial Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Postcard": {
+      "main": [
+        [
+          {
+            "node": "Search Style Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Style Image": {
+      "main": [
+        [
+          {
+            "node": "Download Style Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Style Image": {
+      "main": [
+        [
+          {
+            "node": "Save Style to Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Style to Disk": {
+      "main": [
+        [
+          {
+            "node": "Create Postcard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Postcard": {
+      "main": [
+        [
+          {
+            "node": "Read Postcard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Postcard": {
+      "main": [
+        [
+          {
+            "node": "Upload Postcard to Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Postcard to Drive": {
+      "main": [
+        [
+          {
+            "node": "Prep Postcard Content Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep Postcard Content Row": {
+      "main": [
+        [
+          {
+            "node": "Create Postcard Content Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Postcard Content Row": {
+      "main": [
+        [
+          {
+            "node": "Postcard Cleanup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postcard Cleanup": {
+      "main": [
+        [
+          {
+            "node": "Generate Music",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Music": {
+      "main": [
+        [
+          {
+            "node": "Set Music Start Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Music Start Time": {
+      "main": [
+        [
+          {
+            "node": "Check Music Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Music Status": {
+      "main": [
+        [
+          {
+            "node": "Evaluate Music Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluate Music Status": {
+      "main": [
+        [
+          {
+            "node": "IF Music Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Music Failed": {
+      "main": [
+        [
+          {
+            "node": "Email - Music Failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF Music Timeout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Music Timeout": {
+      "main": [
+        [
+          {
+            "node": "Email - Music Timeout",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF Music Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Music Success": {
+      "main": [
+        [
+          {
+            "node": "Download Music",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait - Music",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait - Music": {
+      "main": [
+        [
+          {
+            "node": "Check Music Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Music": {
+      "main": [
+        [
+          {
+            "node": "Save Music",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Music": {
+      "main": [
+        [
+          {
+            "node": "Get Slideshow Titles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Slideshows": {
+      "main": [
+        [
+          {
+            "node": "Split Slideshows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Slideshows": {
+      "main": [
+        [
+          {
+            "node": "Prepare Slideshow Downloads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Slideshow Downloads": {
+      "main": [
+        [
+          {
+            "node": "Split Slideshow Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Slideshow Images": {
+      "main": [
+        [
+          {
+            "node": "Search Snapshot Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Slideshow Image": {
+      "main": [
+        [
+          {
+            "node": "Create Polaroid Frame",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Polaroid Frame": {
+      "main": [
+        [
+          {
+            "node": "Collect Polaroids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect Polaroids": {
+      "main": [
+        [
+          {
+            "node": "Create Slideshow Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Slideshow Video": {
+      "main": [
+        [
+          {
+            "node": "Read Slideshow Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Slideshow Video": {
+      "main": [
+        [
+          {
+            "node": "Upload Slideshow to Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Slideshow to Drive": {
+      "main": [
+        [
+          {
+            "node": "Prep Slideshow Content Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep Slideshow Content Row": {
+      "main": [
+        [
+          {
+            "node": "Create Slideshow Content Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Slideshow Content Row": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Slideshows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Slideshows": {
+      "main": [
+        [
+          {
+            "node": "Slideshow Cleanup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slideshow Cleanup": {
+      "main": [
+        [
+          {
+            "node": "Prepare Video Generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Snapshot Image": {
+      "main": [
+        [
+          {
+            "node": "Download Snapshot Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Snapshot Image": {
+      "main": [
+        [
+          {
+            "node": "Save Slideshow Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Slideshow Titles": {
+      "main": [
+        [
+          {
+            "node": "Get Slideshow Captions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Slideshow Captions": {
+      "main": [
+        [
+          {
+            "node": "Prepare Slideshows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Video Generation": {
+      "main": [
+        [
+          {
+            "node": "Split Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Videos": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Video Clip 1": {
+      "main": [
+        [
+          {
+            "node": "Set Clip 1 Start Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "Build Image URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Image URL": {
+      "main": [
+        [
+          {
+            "node": "Generate Video Clip 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Clip 1 Start Time": {
+      "main": [
+        [
+          {
+            "node": "Check Clip 1 Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Clip 1 Status": {
+      "main": [
+        [
+          {
+            "node": "Merge Clip 1 Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Clip 1 Status": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Clip 1 Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Clip 1 Results": {
+      "main": [
+        [
+          {
+            "node": "Evaluate Clip 1 Statuses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluate Clip 1 Statuses": {
+      "main": [
+        [
+          {
+            "node": "IF (Any Clip 1 Failed)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Any Clip 1 Failed)": {
+      "main": [
+        [
+          {
+            "node": "Email - Clip 1 Failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF (Any Clip 1 Timeout)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Any Clip 1 Timeout)": {
+      "main": [
+        [
+          {
+            "node": "Email - Clip 1 Timeout",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF (All Clip 1 Complete)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (All Clip 1 Complete)": {
+      "main": [
+        [
+          {
+            "node": "Split Clip 1 Results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract Clip 1 Pending",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Clip 1 Pending": {
+      "main": [
+        [
+          {
+            "node": "Wait - Clip 1 Batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait - Clip 1 Batch": {
+      "main": [
+        [
+          {
+            "node": "Check Clip 1 Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Clip 1 Results": {
+      "main": [
+        [
+          {
+            "node": "IF (Needs Clip 2)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Needs Clip 2)": {
+      "main": [
+        [
+          {
+            "node": "Generate Video Clip 2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download Single Clip",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Video Clip 2": {
+      "main": [
+        [
+          {
+            "node": "Set Clip 2 Start Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Single Clip": {
+      "main": [
+        [
+          {
+            "node": "Normalize Single Clip",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Clip 2 Start Time": {
+      "main": [
+        [
+          {
+            "node": "Check Clip 2 Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Clip 2 Status": {
+      "main": [
+        [
+          {
+            "node": "Merge Clip 2 Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Clip 1": {
+      "main": [
+        [
+          {
+            "node": "Download Clip 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Clip 2": {
+      "main": [
+        [
+          {
+            "node": "Save Clip 1 to Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Clip 1 to Disk": {
+      "main": [
+        [
+          {
+            "node": "Save Clip 2 to Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Clip 2 to Disk": {
+      "main": [
+        [
+          {
+            "node": "Stitch Clips",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stitch Clips": {
+      "main": [
+        [
+          {
+            "node": "Read Stitched Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Stitched Video": {
+      "main": [
+        [
+          {
+            "node": "Normalize Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Video to Drive": {
+      "main": [
+        [
+          {
+            "node": "Update Content Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Clip 2 Status": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Clip 2 Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Clip 2 Results": {
+      "main": [
+        [
+          {
+            "node": "Evaluate Clip 2 Statuses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluate Clip 2 Statuses": {
+      "main": [
+        [
+          {
+            "node": "IF (Any Clip 2 Failed)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Any Clip 2 Failed)": {
+      "main": [
+        [
+          {
+            "node": "Email - Clip 2 Failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF (Any Clip 2 Timeout)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (Any Clip 2 Timeout)": {
+      "main": [
+        [
+          {
+            "node": "Email - Clip 2 Timeout",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF (All Clip 2 Complete)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF (All Clip 2 Complete)": {
+      "main": [
+        [
+          {
+            "node": "Split Clip 2 Results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract Clip 2 Pending",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Clip 2 Pending": {
+      "main": [
+        [
+          {
+            "node": "Wait - Clip 2 Batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait - Clip 2 Batch": {
+      "main": [
+        [
+          {
+            "node": "Check Clip 2 Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Clip 2 Results": {
+      "main": [
+        [
+          {
+            "node": "Download Clip 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Upload Video to Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Data": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Single Clip": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Prepare Video Redos": {
+      "main": [
+        [
+          {
+            "node": "Split Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Location Status": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Content Status": {
+      "main": [
+        [
+          {
+            "node": "Update Location Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "Generate Music": [
+      {
+        "code": 200,
+        "msg": "success",
+        "data": {
+          "taskId": "f57fe4b9a21d80facb3be31daadc1d07"
+        }
+      }
+    ],
+    "Generate Video Clip 1": [
+      {
+        "code": 200,
+        "msg": "success",
+        "data": {
+          "taskId": "e2db31bef295ed6aa8cf0d6cfb4e1f96"
+        }
+      },
+      {
+        "code": 200,
+        "msg": "success",
+        "data": {
+          "taskId": "10b234a85e5e3e30f7d66b62b9ff2efa"
+        }
+      },
+      {
+        "code": 200,
+        "msg": "success",
+        "data": {
+          "taskId": "09006fe6f81e9f8289c85e14acb0fc6f"
+        }
+      },
+      {
+        "code": 200,
+        "msg": "success",
+        "data": {
+          "taskId": "d37cfc24e468218c9a09b64a8bf3ae0a"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "daba14a88550d0304eb819e927ffe087dff267675394753b32278f2dd7342718"
+  }
+}
