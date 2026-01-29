@@ -6,7 +6,7 @@
 |--------|------|---------|
 | Location_ID | String | Primary key (e.g., LOC001) |
 | Name | String | Display name |
-| Description | String | Scene description |
+| Description | String | Scene description (visual DNA) |
 | Weather | String | Weather description |
 | Color_Palette | String | Color palette |
 | Camera_Angle | String | Default camera angle |
@@ -50,11 +50,11 @@
 | Column | Type | Purpose |
 |--------|------|---------|
 | Location_ID | String | Foreign key to Locations |
-| Arrival_Gorb | String | Gorb's first line on arrival |
-| Arrival_Pleck | String | Pleck's response |
-| Arrival_Gorb_Response | String | Gorb's comeback |
-| Review_Gorb | String | Gorb's review line |
-| Review_Pleck | String | Pleck's review line |
+| Review_Speaker | String | Gorb or Pleck — determines who delivers review |
+| Intro_Line | String | Gorb's excited arrival line (~6 seconds) |
+| Gorb_Story | String | Gorb's enthusiastic anecdote (~6 seconds) |
+| Pleck_Story | String | Pleck's grumpy complaint (~6 seconds) |
+| Review_Line | String | Review delivered by Review_Speaker (~6 seconds) |
 
 ---
 
@@ -62,17 +62,17 @@
 
 | Column | Type | Purpose |
 |--------|------|---------|
-| Content_ID | Integer | Primary key (auto-increment) |
+| Content_ID | String | Primary key (e.g., Coppervale_intro) |
 | Location_ID | String | Foreign key to Locations |
-| Content_Type | String | style / postcard / intro / joke_01 / joke_02 / snapshot_01-10 / slideshow_01 / slideshow_02 / review |
+| Content_Type | String | style / postcard / intro / gorb_story / pleck_story / snapshot_01-10 / slideshow_01 / slideshow_02 / review |
 | Spot_ID | String | Assigned spot (nullable for style, postcard, slideshows) |
 | Food_ID | String | Assigned food (snapshot_05, snapshot_10 only) |
-| Joke_ID | String | Assigned joke (joke_01, joke_02 only) |
+| Time_of_Day | String | Time of day for this content piece |
 | Title | String | Video title (nullable for snapshots, style, postcard) |
 | Caption | String | Post caption |
 | Polaroid_Caption | String | Caption used for the polaroids |
-| Video_Prompt_1 | String | Prompt used to create Video 1 |
-| Video_Prompt_2 | String | Prompt used to create Video 2 |
+| Image_Prompt | String | Prompt used to create image |
+| Video_Prompt | String | Prompt used to create video (single clip) |
 | Image_Status | String | Pending / Review / Approved / Redo / N/A |
 | Video_Status | String | Pending / Review / Approved / Redo / N/A |
 
@@ -80,57 +80,97 @@
 
 | Content_Type | Image_Status | Video_Status | Image Approval | Video Approval |
 |--------------|--------------|--------------|----------------|----------------|
-| style | Approved (auto) | N/A | NO | â€” |
-| postcard | Approved (auto) | N/A | NO | â€” |
-| intro | Review â†’ Approved/Redo | Pending â†’ Review â†’ Approved/Redo | YES | YES |
-| joke_01 | Review â†’ Approved/Redo | Pending â†’ Review â†’ Approved/Redo | YES | YES |
-| joke_02 | Review â†’ Approved/Redo | Pending â†’ Review â†’ Approved/Redo | YES | YES |
-| snapshot_01 | Review â†’ Approved/Redo | N/A | YES | â€” |
-| snapshot_02 | Review â†’ Approved/Redo | N/A | YES | â€” |
-| snapshot_03 | Review â†’ Approved/Redo | N/A | YES | â€” |
-| snapshot_04 | Review â†’ Approved/Redo | N/A | YES | â€” |
-| snapshot_05 | Review â†’ Approved/Redo | N/A | YES | â€” |
-| snapshot_06 | Review â†’ Approved/Redo | N/A | YES | â€” |
-| snapshot_07 | Review â†’ Approved/Redo | N/A | YES | â€” |
-| snapshot_08 | Review â†’ Approved/Redo | N/A | YES | â€” |
-| snapshot_09 | Review â†’ Approved/Redo | N/A | YES | â€” |
-| snapshot_10 | Review â†’ Approved/Redo | N/A | YES | â€” |
-| slideshow_01 | N/A | Approved (auto) | â€” | NO |
-| slideshow_02 | N/A | Approved (auto) | â€” | NO |
-| review | Review â†’ Approved/Redo | Pending â†’ Review â†’ Approved/Redo | YES | YES |
+| style | Approved (auto) | N/A | NO | — |
+| postcard | Approved (auto) | N/A | NO | — |
+| intro | Review → Approved/Redo | Pending → Review → Approved/Redo | YES | YES |
+| gorb_story | Review → Approved/Redo | Pending → Review → Approved/Redo | YES | YES |
+| pleck_story | Review → Approved/Redo | Pending → Review → Approved/Redo | YES | YES |
+| snapshot_01 | Review → Approved/Redo | N/A | YES | — |
+| snapshot_02 | Review → Approved/Redo | N/A | YES | — |
+| snapshot_03 | Review → Approved/Redo | N/A | YES | — |
+| snapshot_04 | Review → Approved/Redo | N/A | YES | — |
+| snapshot_05 | Review → Approved/Redo | N/A | YES | — |
+| snapshot_06 | Review → Approved/Redo | N/A | YES | — |
+| snapshot_07 | Review → Approved/Redo | N/A | YES | — |
+| snapshot_08 | Review → Approved/Redo | N/A | YES | — |
+| snapshot_09 | Review → Approved/Redo | N/A | YES | — |
+| snapshot_10 | Review → Approved/Redo | N/A | YES | — |
+| slideshow_01 | N/A | Approved (auto) | — | NO |
+| slideshow_02 | N/A | Approved (auto) | — | NO |
+| review | Review → Approved/Redo | Pending → Review → Approved/Redo | YES | YES |
 
 ---
 
-## Tab 6: Jokes
+## Tab 6: Pools
 
 | Column | Type | Purpose |
 |--------|------|---------|
-| Joke_ID | Integer | Primary key (auto-increment) |
-| Setup | String | Setup line |
-| Punchline | String | Punchline |
-| Posted | String | No / Yes |
-
----
-
-## Tab 7: Pools
-
-| Column | Type | Purpose |
-|--------|------|---------|
-| Pool_Type | String | position / pose / action / laugh_style / time_of_day |
+| Pool_Type | String | time_of_day / slideshow_title / slideshow_caption |
 | Value | String | The actual value |
 
-Pool_Types
-**laugh_style:**
-**time_of_day:**
-**slideshow_title:**
-**slideshow_caption:**
+Pool_Types:
+- **time_of_day:** morning, midday, afternoon, dusk, night
+- **slideshow_title:** Template titles for slideshows
+- **slideshow_caption:** Template captions for slideshows
+
+**Note:** Jokes, Positions, Poses, Actions, and Laugh Styles pools are no longer used.
 
 ---
 
-## Tab 8: Photo_Activities
+## Tab 7: Photo_Activities
 
 | Column | Type | Purpose |
 |--------|------|---------|
-| Activity | String | What they're doing |
+| Activity | String | What the character(s) are doing |
 | Framing | String | Camera framing note |
-| Activity_Type | String | general / food |
+| Activity_Type | String | intro / gorb_story / pleck_story / review / general / food |
+
+### Activity Types
+
+| Type | Used For | Character(s) |
+|------|----------|--------------|
+| intro | Intro video images | Gorb solo |
+| gorb_story | Gorb story video images | Gorb solo |
+| pleck_story | Pleck story video images | Pleck solo |
+| review | Review video images | Solo (either speaker) |
+| general | Snapshot images (1-4, 6-9) | Both characters |
+| food | Food snapshot images (5, 10) | Both characters |
+
+---
+
+## Removed Tabs
+
+The following tabs are no longer used:
+- **Jokes** — Dad jokes replaced with character story videos
+- **Laugh_Styles** — No longer needed without joke videos
+- **Positions** — Simplified prompt structure
+- **Poses** — Simplified prompt structure
+- **Actions** — Simplified prompt structure
+
+---
+
+## Character Definitions (Reference)
+
+Used in prompt generation:
+
+```javascript
+const gorb = {
+  id: 'GORB (grey alien, blue eyes, black "I love humans" t-shirt)',
+  videoId: 'Gorb, a grey alien with blue eyes wearing a black "I love humans" t-shirt',
+  description: 'a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with "I love humans" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers',
+  voice: 'Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm',
+  action: 'looks around excitedly'
+};
+
+const pleck = {
+  id: 'PLECK (grey-green alien, amber eyes, Hawaiian shirt)',
+  videoId: 'Pleck, a grey-green alien with amber eyes wearing a Hawaiian shirt',
+  description: 'a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers',
+  voice: 'Male low, dry, deadpan delivery, slight exasperation',
+  action: 'looks at camera with deadpan expression'
+};
+```
+
+**Usage:**
+- Image prompts: Use `description` (full outfit details)
+- Video prompts: Use `videoId` + `voice`
