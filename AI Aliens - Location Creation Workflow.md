@@ -205,21 +205,27 @@ Each location needs dialogue for intro, stories, and review.
 |-------|---------|
 | **Intro_Line** | Gorb's excited arrival line (~6 seconds spoken) |
 | **Gorb_Story** | Gorb's enthusiastic anecdote about the location (~6 seconds spoken) |
-| **Pleck_Story** | Pleck's grumpy complaint about the location or Gorb (~6 seconds spoken) |
+| **Pleck_Story** | Pleck's grumpy complaint about Gorb (~6 seconds spoken) |
 | **Review_Speaker** | Who delivers the review — "Gorb" or "Pleck" |
 | **Review_Line** | Final review of the location (~6 seconds spoken) |
 
 ### Character notes:
 
-**Gorb:** Enthusiastic, optimistic, easily awed, loves everything. His stories are about amazing things that happened to him — discoveries, delights, moments of wonder.
+**Gorb:** Enthusiastic, optimistic, easily awed, loves everything. His stories are about absurd things that happened to him that he thought were wonderful — getting hurt, getting lost, doing something stupid, and framing it as the best thing ever.
 
-**Pleck:** Dry, skeptical, finds problems, deadpan delivery. His stories are complaints — things that went wrong, annoyed him, or confirmed his suspicions about a place.
+**Pleck:** Dry, skeptical, exhausted by Gorb. His stories are complaints about something Gorb did — not the location itself, but Gorb's ridiculous behavior while there.
+
+### Example stories:
+
+**Gorb_Story:** "I got lost in the passages for three hours. No map, no clue, just me and the ice. Best self-guided tour I've ever had."
+
+**Pleck_Story:** "Gorb licked nine walls. Nine. He said he was tasting the history. I'm traveling with a child who eats glaciers."
 
 ### Questions to ask:
 
 1. **What's Gorb excited about on arrival?** (What's the first thing he'd react to?)
-2. **What amazing thing happened to Gorb here?** (For Gorb_Story — a specific anecdote)
-3. **What's Pleck's complaint?** (For Pleck_Story — what went wrong or bothered him?)
+2. **What absurd thing did Gorb do?** (For Gorb_Story — something dumb that he loved)
+3. **What did Gorb do that annoyed Pleck?** (For Pleck_Story — Gorb's behavior, not the location)
 4. **Who gives the review?** (Gorb = glowing, Pleck = critical)
 5. **What's the final verdict?** (One-liner summary of the location)
 
@@ -227,9 +233,10 @@ Each location needs dialogue for intro, stories, and review.
 
 - All dialogue should be speakable in ~5-6 seconds (roughly 15-25 words)
 - Intro_Line should reference something visible at the landing zone
-- Stories should be specific anecdotes, not general observations
+- Gorb_Story: something objectively bad happens, Gorb thinks it's amazing
+- Pleck_Story: Pleck is exhausted by Gorb's specific behavior
 - Review_Line should feel like a conclusion to the week's content
-
+ 
 ---
 
 ## Prompt Structure (Reference)
