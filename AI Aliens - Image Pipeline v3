@@ -1,5 +1,4 @@
 {
-  "name": "AI Aliens - Image Pipeline",
   "nodes": [
     {
       "parameters": {},
@@ -7,9 +6,9 @@
       "typeVersion": 1,
       "position": [
         -544,
-        1408
+        1392
       ],
-      "id": "9e960b36-e74b-4994-b71b-05ba7a65193f",
+      "id": "064a4625-e008-4e33-9176-0ace5a3d4a87",
       "name": "Manual Trigger"
     },
     {
@@ -42,9 +41,9 @@
       "typeVersion": 4.7,
       "position": [
         -320,
-        1312
+        1296
       ],
-      "id": "a86506af-9169-4b87-9551-3a7a5024cf8c",
+      "id": "c6a847ee-6498-4f27-a7b2-f6f8d00bf6bf",
       "name": "Get Style_Approved Locations",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -83,9 +82,9 @@
       "typeVersion": 4.7,
       "position": [
         -320,
-        1504
+        1488
       ],
-      "id": "077ada1f-02ce-4997-bf9a-f83b72fdd3c4",
+      "id": "ed97b639-b02e-4a10-a533-3574631faffb",
       "name": "Get Images_Review Locations",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -100,9 +99,9 @@
       "typeVersion": 3,
       "position": [
         -96,
-        1408
+        1392
       ],
-      "id": "abc0e729-3bb9-47f0-b885-4b4a65795add",
+      "id": "2af6282d-5ca6-4738-bc6f-680a1c569a72",
       "name": "Wait for Both"
     },
     {
@@ -113,9 +112,9 @@
       "typeVersion": 2,
       "position": [
         128,
-        1408
+        1392
       ],
-      "id": "8438302d-782b-4460-8496-490847fdaba0",
+      "id": "a1197ac3-932b-4795-8e51-48afbcf99c16",
       "name": "Evaluate Locations"
     },
     {
@@ -146,9 +145,9 @@
       "typeVersion": 2.2,
       "position": [
         352,
-        1408
+        1392
       ],
-      "id": "2f9d7df1-fc6d-44fb-9aea-390a67d97745",
+      "id": "02320fa1-72a0-49a6-9c90-7eca15560d97",
       "name": "IF Error"
     },
     {
@@ -163,11 +162,11 @@
       "typeVersion": 2.1,
       "position": [
         576,
-        1312
+        1296
       ],
-      "id": "f26a8d7f-289b-4842-b782-3b2de9d5ad22",
+      "id": "9fda8613-a215-445e-b043-453122acbb61",
       "name": "Email - Error",
-      "webhookId": "ab5a6093-18ed-4245-9369-23bfb8d4d12a",
+      "webhookId": "ddef2435-fe9d-4b1b-b24c-2961184df5e5",
       "credentials": {
         "smtp": {
           "id": "8alovuwdyCQhOA4Q",
@@ -203,9 +202,9 @@
       "typeVersion": 2.2,
       "position": [
         576,
-        1712
+        1488
       ],
-      "id": "ebd7e206-63b1-447e-bc8e-c05eb836b974",
+      "id": "b7c5e163-3de2-4d6e-abf7-714e239a82c2",
       "name": "IF Initial Run"
     },
     {
@@ -214,13 +213,15 @@
           "__rl": true,
           "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
           "mode": "list",
-          "cachedResultName": "ai_aliens_master"
+          "cachedResultName": "ai_aliens_master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": 1344220938,
           "mode": "list",
-          "cachedResultName": "Spots"
+          "cachedResultName": "Spots",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU/edit#gid=1344220938"
         },
         "filtersUI": {
           "values": [
@@ -240,9 +241,9 @@
       "typeVersion": 4.7,
       "position": [
         800,
-        976
+        816
       ],
-      "id": "6c09c5fd-0c94-4cf0-80ff-4d2f56c6c37c",
+      "id": "202ad187-7af9-4f94-908d-f739536030f4",
       "name": "Get Spots",
       "executeOnce": true,
       "credentials": {
@@ -285,9 +286,9 @@
       "typeVersion": 4.7,
       "position": [
         1024,
-        976
+        816
       ],
-      "id": "6231f96e-25f4-426f-bbed-c44b79e0fbe6",
+      "id": "3dc86aec-9a72-458f-b3e4-349c62eacb63",
       "name": "Get Foods",
       "executeOnce": true,
       "credentials": {
@@ -325,50 +326,10 @@
       "typeVersion": 4.7,
       "position": [
         1248,
-        976
+        816
       ],
-      "id": "811ab29a-c39a-4035-9d2f-4fafc7215172",
+      "id": "066d31f9-85cd-4485-8ba3-508a3fea5c37",
       "name": "Get Dialogue",
-      "executeOnce": true,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "RbV7nYKHgNGjsvXM",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
-          "mode": "list",
-          "cachedResultName": "ai_aliens_master"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1443649801,
-          "mode": "list",
-          "cachedResultName": "Jokes"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "Posted",
-              "lookupValue": "No"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        1472,
-        976
-      ],
-      "id": "7a855bbd-b17b-4d0f-944e-73e0018cf86d",
-      "name": "Get Jokes",
       "executeOnce": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -404,10 +365,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1696,
-        976
+        1472,
+        816
       ],
-      "id": "a8c1a666-f6b4-4590-aa44-8cbf13b7c532",
+      "id": "61231b4c-e3ea-47d8-a07c-0bb9eb832f2b",
       "name": "Get Time of Day",
       "executeOnce": true,
       "credentials": {
@@ -419,68 +380,28 @@
     },
     {
       "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
-          "mode": "list",
-          "cachedResultName": "ai_aliens_master"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1434410303,
-          "mode": "list",
-          "cachedResultName": "Pools"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "Pool_Type",
-              "lookupValue": "laugh_style"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        1920,
-        976
-      ],
-      "id": "c64e41cb-bf92-4e5c-bcdd-d879b6be5383",
-      "name": "Get Laugh Styles",
-      "executeOnce": true,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "RbV7nYKHgNGjsvXM",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "// ==== INPUTS ====\nconst evalData = $('IF Initial Run').first().json;\nconst loc = evalData.location;\nconst sanitizedName = evalData.sanitizedName;\nconst spots = $('Get Spots').all().map(item => item.json);\nconst foods = $('Get Foods').all().map(item => item.json);\nconst dialogue = $('Get Dialogue').first().json;\nconst jokes = $('Get Jokes').all().map(item => item.json);\nconst timesOfDay = $('Get Time of Day').all().map(item => item.json.Value);\nconst laughStyles = $('Get Laugh Styles').all().map(item => item.json.Value);\nconst allActivities = $('Get Photo Activities').all().map(item => item.json);\n\n// ==== HELPERS ====\nfunction pick(arr) {\n  return arr[Math.floor(Math.random() * arr.length)];\n}\n\nfunction pickMultiple(arr, count) {\n  const shuffled = [...arr].sort(() => 0.5 - Math.random());\n  return shuffled.slice(0, count);\n}\n\nfunction getTimeSettings(timeOfDay) {\n  const isNight = ['dusk', 'night'].includes(timeOfDay);\n  return {\n    timeOfDay,\n    isNight,\n    sky: isNight ? loc.Sky_Night : loc.Sky_Day,\n    lighting: isNight ? loc.Lighting_Night : loc.Lighting_Day,\n    ambient: isNight ? loc.Ambient_Night : loc.Ambient_Day\n  };\n}\n\nfunction getResponderLine(setup) {\n  const trimmed = setup.trim().toLowerCase();\n  if (trimmed.startsWith(\"why\")) return \"Why?\";\n  if (trimmed.startsWith(\"what\")) return \"What?\";\n  if (trimmed.startsWith(\"how\")) return \"How?\";\n  if (trimmed.startsWith(\"did\")) return \"No?\";\n  if (trimmed.startsWith(\"have you\")) return \"No?\";\n  if (trimmed.endsWith(\"?\")) return pick([\"Huh?\", \"What?\", \"Yeah?\"]);\n  return pick([\"You did?\", \"Really?\", \"Go on...\", \"Wait—what?\"]);\n}\n\n// ==== FILTER ACTIVITIES BY TYPE ====\nconst introActivities = allActivities.filter(a => a.Activity_Type === 'intro');\nconst jokeActivities = allActivities.filter(a => a.Activity_Type === 'joke');\nconst reviewActivities = allActivities.filter(a => a.Activity_Type === 'review');\nconst generalActivities = allActivities.filter(a => a.Activity_Type === 'general');\nconst foodActivities = allActivities.filter(a => a.Activity_Type === 'food');\n\n// ==== CHARACTER DEFINITIONS ====\nconst gorb = {\n  id: 'GORB (grey alien, blue eyes, black \"I love humans\" t-shirt)',\n  description: 'a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers',\n  voice: 'Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm'\n};\n\nconst pleck = {\n  id: 'PLECK (grey-green alien, amber eyes, Hawaiian shirt)',\n  description: 'a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers',\n  voice: 'Male low, dry, deadpan delivery, slight exasperation'\n};\n\n// ==== FILTER SPOTS BY TYPE ====\nconst landingZone = spots.find(s => s.Spot_Type === 'landing_zone');\nconst foodVendors = spots.filter(s => s.Spot_Type === 'food_vendor');\nconst genericSpots = spots.filter(s => !['landing_zone', 'food_vendor'].includes(s.Spot_Type));\n\n// ==== SELECT SPOTS FOR CONTENT ====\nconst selectedJokeSpots = pickMultiple(genericSpots, 2);\nconst remainingGeneric = genericSpots.filter(s => !selectedJokeSpots.includes(s));\nconst selectedSnapshotSpots = pickMultiple(remainingGeneric, 8);\nconst selectedFoodSpots = pickMultiple(foodVendors, 2);\nconst reviewSpot = pick(remainingGeneric.filter(s => !selectedSnapshotSpots.includes(s)));\n\n// ==== SELECT OTHER ELEMENTS ====\nconst selectedJokes = jokes.slice(0, 2);\nconst selectedFoods = foods.slice(0, 2);\nconst selectedGeneralActivities = pickMultiple(generalActivities, 8);\nconst selectedFoodActivities = pickMultiple(foodActivities, 2);\n\n// ==== BUILD PROMPT FUNCTION ====\nfunction buildImagePrompt(spot, activity, timeOfDay, aspectRatio) {\n  const time = getTimeSettings(timeOfDay);\n  \n  return `Photorealistic 3D CGI render. ${loc.Name} — ${loc.Description}\n\n${spot.Spot_Description}\n\n${gorb.id} and ${pleck.id}: ${activity.Activity}. ${activity.Framing}.\n\n${time.sky}. ${time.lighting}.\n\nVertical ${aspectRatio} composition.`;\n}\n\n// ==== BUILD CONTENT ITEMS ====\nconst contentItems = [];\n\n// INTRO\nconst introActivity = pick(introActivities);\nconst introTime = pick(timesOfDay.filter(t => !['dusk', 'night'].includes(t)));\nconst introTimeSettings = getTimeSettings(introTime);\n\ncontentItems.push({\n  contentId: `${sanitizedName}_intro`,\n  contentType: 'intro',\n  spotId: landingZone.Spot_ID,\n  foodId: null,\n  jokeId: null,\n  timeOfDay: introTime,\n  imagePrompt: buildImagePrompt(landingZone, introActivity, introTime, '9:16'),\n  aspectRatio: '9:16',\n  videoPrompt1: `Two alien tourists at ${landingZone.Spot_Description}. GORB: ${gorb.description}. Voice: ${gorb.voice}. PLECK: ${pleck.description}. Silent this clip. ${introTimeSettings.lighting}. ${loc.Camera_Angle}.\n\n${introActivity.Activity} Gorb says: \"${dialogue.Arrival_Gorb}\" Pleck stands beside, observing silently.\n\nAudio: ${introTimeSettings.ambient || loc.Ambient_Day}. No subtitles. Buddy-comedy vibe.`,\n  videoPrompt2: `Two alien tourists at ${landingZone.Spot_Description}. GORB: ${gorb.description}. Voice: ${gorb.voice}. PLECK: ${pleck.description}. Voice: ${pleck.voice}. ${introTimeSettings.lighting}. ${loc.Camera_Angle}.\n\nPleck says: \"${dialogue.Arrival_Pleck}\" Gorb looks concerned, then reassuring and says: \"${dialogue.Arrival_Gorb_Response}\" Pleck sighs, reluctantly follows.\n\nAudio: ${introTimeSettings.ambient || loc.Ambient_Day}. No subtitles. Buddy-comedy vibe.`\n});\n\n// JOKES (2)\nfor (let i = 0; i < 2; i++) {\n  const joke = selectedJokes[i];\n  const spot = selectedJokeSpots[i];\n  const activity = pick(jokeActivities);\n  const time = pick(timesOfDay);\n  const timeSettings = getTimeSettings(time);\n  const laugh = pick(laughStyles);\n  const responderLine = getResponderLine(joke.Setup);\n\n  contentItems.push({\n    contentId: `${sanitizedName}_joke_0${i + 1}`,\n    contentType: `joke_0${i + 1}`,\n    spotId: spot.Spot_ID,\n    foodId: null,\n    jokeId: joke.Joke_ID,\n    jokeSetup: joke.Setup,\n    jokePunchline: joke.Punchline,\n    timeOfDay: time,\n    imagePrompt: buildImagePrompt(spot, activity, time, '9:16'),\n    aspectRatio: '9:16',\n    videoPrompt: `Two alien tourists at ${spot.Spot_Description}. GORB: ${gorb.description}. Voice: ${gorb.voice}. PLECK: ${pleck.description}. Voice: ${pleck.voice}. ${timeSettings.lighting}. ${loc.Camera_Angle}.\n\nGorb says: \"${joke.Setup}\" Pleck replies: \"${responderLine}\" Gorb delivers the punchline: \"${joke.Punchline}\" Both aliens ${laugh}.\n\nAudio: ${timeSettings.ambient || loc.Ambient_Day}. No subtitles. Buddy-comedy vibe.`\n  });\n}\n\n// SNAPSHOTS 1-4 (general)\nfor (let i = 0; i < 4; i++) {\n  const spot = selectedSnapshotSpots[i];\n  const activity = selectedGeneralActivities[i];\n  const time = pick(timesOfDay);\n\n  contentItems.push({\n    contentId: `${sanitizedName}_snapshot_0${i + 1}`,\n    contentType: `snapshot_0${i + 1}`,\n    spotId: spot.Spot_ID,\n    foodId: null,\n    jokeId: null,\n    activity: activity.Activity,\n    timeOfDay: time,\n    imagePrompt: buildImagePrompt(spot, activity, time, '4:5'),\n    aspectRatio: '4:5'\n  });\n}\n\n// SNAPSHOT 5 (food)\n{\n  const spot = selectedFoodSpots[0];\n  const food = selectedFoods[0];\n  const activity = selectedFoodActivities[0];\n  const time = pick(timesOfDay);\n\n  const foodActivity = {\n    ...activity,\n    Activity: `${activity.Activity}. They are eating ${food.Food_Name}: ${food.Food_Description}`\n  };\n\n  contentItems.push({\n    contentId: `${sanitizedName}_snapshot_05`,\n    contentType: 'snapshot_05',\n    spotId: spot.Spot_ID,\n    foodId: food.Food_ID,\n    jokeId: null,\n    foodName: food.Food_Name,\n    activity: activity.Activity,\n    timeOfDay: time,\n    imagePrompt: buildImagePrompt(spot, foodActivity, time, '4:5'),\n    aspectRatio: '4:5'\n  });\n}\n\n// SNAPSHOTS 6-9 (general)\nfor (let i = 4; i < 8; i++) {\n  const spot = selectedSnapshotSpots[i];\n  const activity = selectedGeneralActivities[i];\n  const time = pick(timesOfDay);\n  const snapshotNum = i + 2;\n\n  contentItems.push({\n    contentId: `${sanitizedName}_snapshot_0${snapshotNum}`,\n    contentType: `snapshot_0${snapshotNum}`,\n    spotId: spot.Spot_ID,\n    foodId: null,\n    jokeId: null,\n    activity: activity.Activity,\n    timeOfDay: time,\n    imagePrompt: buildImagePrompt(spot, activity, time, '4:5'),\n    aspectRatio: '4:5'\n  });\n}\n\n// SNAPSHOT 10 (food)\n{\n  const spot = selectedFoodSpots[1];\n  const food = selectedFoods[1];\n  const activity = selectedFoodActivities[1];\n  const time = pick(timesOfDay);\n\n  const foodActivity = {\n    ...activity,\n    Activity: `${activity.Activity}. They are eating ${food.Food_Name}: ${food.Food_Description}`\n  };\n\n  contentItems.push({\n    contentId: `${sanitizedName}_snapshot_10`,\n    contentType: 'snapshot_10',\n    spotId: spot.Spot_ID,\n    foodId: food.Food_ID,\n    jokeId: null,\n    foodName: food.Food_Name,\n    activity: activity.Activity,\n    timeOfDay: time,\n    imagePrompt: buildImagePrompt(spot, foodActivity, time, '4:5'),\n    aspectRatio: '4:5'\n  });\n}\n\n// REVIEW\nconst reviewActivity = pick(reviewActivities);\nconst reviewTime = pick(timesOfDay);\nconst reviewTimeSettings = getTimeSettings(reviewTime);\n\ncontentItems.push({\n  contentId: `${sanitizedName}_review`,\n  contentType: 'review',\n  spotId: reviewSpot.Spot_ID,\n  foodId: null,\n  jokeId: null,\n  timeOfDay: reviewTime,\n  imagePrompt: buildImagePrompt(reviewSpot, reviewActivity, reviewTime, '9:16'),\n  aspectRatio: '9:16',\n  videoPromptGorb: `Two alien tourists at ${reviewSpot.Spot_Description}. GORB: ${gorb.description}. Voice: ${gorb.voice}. PLECK: ${pleck.description}. Silent this clip. ${reviewTimeSettings.lighting}. ${loc.Camera_Angle}.\n\nGorb looks at camera enthusiastically and says: \"${dialogue.Review_Gorb}\" Pleck stands beside with arms crossed, rolling eyes.\n\nAudio: ${reviewTimeSettings.ambient || loc.Ambient_Day}. No subtitles. Buddy-comedy vibe.`,\n  videoPromptPleck: `Two alien tourists at ${reviewSpot.Spot_Description}. GORB: ${gorb.description}. Silent this clip. PLECK: ${pleck.description}. Voice: ${pleck.voice}. ${reviewTimeSettings.lighting}. ${loc.Camera_Angle}.\n\nPleck looks at camera with deadpan expression and says: \"${dialogue.Review_Pleck}\" Gorb stands beside, looking disappointed at Pleck's review.\n\nAudio: ${reviewTimeSettings.ambient || loc.Ambient_Day}. No subtitles. Buddy-comedy vibe.`\n});\n\nconst usedSpotIds = [\n  landingZone.Spot_ID,\n  ...selectedJokeSpots.map(s => s.Spot_ID),\n  ...selectedSnapshotSpots.map(s => s.Spot_ID),\n  ...selectedFoodSpots.map(s => s.Spot_ID),\n  reviewSpot.Spot_ID\n];\nconst usedFoodIds = selectedFoods.map(f => f.Food_ID);\nconst usedJokeIds = selectedJokes.map(j => j.Joke_ID);\n\nreturn [{\n  json: {\n    locationId: loc.Location_ID,\n    locationName: loc.Name,\n    sanitizedName: sanitizedName,\n    contentItems: contentItems,\n    usedSpotIds: usedSpotIds,\n    usedFoodIds: usedFoodIds,\n    usedJokeIds: usedJokeIds,\n    totalItems: contentItems.length\n  }\n}];"
+        "jsCode": "// ==== INPUTS ====\nconst evalData = $('IF Initial Run').first().json;\nconst loc = evalData.location;\nconst sanitizedName = evalData.sanitizedName;\nconst spots = $('Get Spots').all().map(item => item.json);\nconst foods = $('Get Foods').all().map(item => item.json);\nconst dialogue = $('Get Dialogue').first().json;\nconst timesOfDay = $('Get Time of Day').all().map(item => item.json.Value);\nconst allActivities = $('Get Photo Activities').all().map(item => item.json);\n\n// ==== HELPERS ====\nfunction pick(arr) {\n  return arr[Math.floor(Math.random() * arr.length)];\n}\n\nfunction pickMultiple(arr, count) {\n  const shuffled = [...arr].sort(() => 0.5 - Math.random());\n  return shuffled.slice(0, count);\n}\n\nfunction getTimeSettings(timeOfDay) {\n  const isNight = ['dusk', 'night'].includes(timeOfDay);\n  return {\n    timeOfDay,\n    isNight,\n    sky: isNight ? loc.Sky_Night : loc.Sky_Day,\n    lighting: isNight ? loc.Lighting_Night : loc.Lighting_Day,\n    ambient: isNight ? loc.Ambient_Night : loc.Ambient_Day\n  };\n}\n\n// ==== FILTER ACTIVITIES BY TYPE ====\nconst introActivities = allActivities.filter(a => a.Activity_Type === 'intro');\nconst gorbStoryActivities = allActivities.filter(a => a.Activity_Type === 'gorb_story');\nconst pleckStoryActivities = allActivities.filter(a => a.Activity_Type === 'pleck_story');\nconst reviewActivities = allActivities.filter(a => a.Activity_Type === 'review');\nconst generalActivities = allActivities.filter(a => a.Activity_Type === 'general');\nconst foodActivities = allActivities.filter(a => a.Activity_Type === 'food');\n\n// ==== CHARACTER DEFINITIONS ====\nconst gorb = {\n  id: 'GORB (grey alien, blue eyes, black \"I love humans\" t-shirt)',\n  videoId: 'Gorb, a grey alien with blue eyes wearing a black \"I love humans\" t-shirt',\n  description: 'a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers',\n  voice: 'Male high-pitched, eager, slightly nasally, speaks with childlike enthusiasm',\n  action: 'looks around excitedly'\n};\n\nconst pleck = {\n  id: 'PLECK (grey-green alien, amber eyes, Hawaiian shirt)',\n  videoId: 'Pleck, a grey-green alien with amber eyes wearing a Hawaiian shirt',\n  description: 'a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers',\n  voice: 'Male low, dry, deadpan delivery, slight exasperation',\n  action: 'looks at camera with deadpan expression'\n};\n\n// ==== BUILD IMAGE PROMPT FUNCTION ====\nfunction buildImagePrompt(spot, activity, timeOfDay, aspectRatio, options = {}) {\n  const time = getTimeSettings(timeOfDay);\n  const { food, soloCharacter } = options;\n  \n  let activityText = activity.Activity;\n  if (food) {\n    activityText += `. They are eating ${food.Food_Name}: ${food.Food_Description}`;\n  }\n  \n  // Character section based on content type (uses description for images)\n  let characterSection;\n  if (soloCharacter === 'gorb') {\n    characterSection = `GORB, ${gorb.description}, in foreground, medium close-up, ${activityText}. ${activity.Framing}.`;\n  } else if (soloCharacter === 'pleck') {\n    characterSection = `PLECK, ${pleck.description}, in foreground, medium close-up, ${activityText}. ${activity.Framing}.`;\n  } else {\n    // Both characters (snapshots)\n    characterSection = `GORB, ${gorb.description}, and PLECK, ${pleck.description}: ${activityText}. ${activity.Framing}.`;\n  }\n  \n  return `Photorealistic 3D CGI render. ${loc.Name} — ${loc.Description}\n\n${spot.Spot_Description}\n\n${characterSection}\n\n${time.sky}. ${time.lighting}.\n\nVertical ${aspectRatio} composition.`;\n}\n\n// ==== FILTER SPOTS BY TYPE ====\nconst landingZone = spots.find(s => s.Spot_Type === 'landing_zone');\nconst foodVendors = spots.filter(s => s.Spot_Type === 'food_vendor');\nconst genericSpots = spots.filter(s => !['landing_zone', 'food_vendor'].includes(s.Spot_Type));\n\n// ==== SELECT SPOTS FOR CONTENT ====\nconst selectedStorySpots = pickMultiple(genericSpots, 2);\nconst remainingGeneric = genericSpots.filter(s => !selectedStorySpots.includes(s));\nconst selectedSnapshotSpots = pickMultiple(remainingGeneric, 8);\nconst selectedFoodSpots = pickMultiple(foodVendors, 2);\nconst reviewSpot = pick(remainingGeneric.filter(s => !selectedSnapshotSpots.includes(s)));\n\n// ==== SELECT OTHER ELEMENTS ====\nconst selectedFoods = foods.slice(0, 2);\nconst selectedGeneralActivities = pickMultiple(generalActivities, 8);\nconst selectedFoodActivities = pickMultiple(foodActivities, 2);\n\n// ==== BUILD CONTENT ITEMS ====\nconst contentItems = [];\n\n// INTRO (Gorb solo)\nconst introActivity = pick(introActivities);\nconst introTime = pick(timesOfDay.filter(t => !['dusk', 'night'].includes(t)));\nconst introAmbient = getTimeSettings(introTime).ambient;\n\ncontentItems.push({\n  contentId: `${sanitizedName}_intro`,\n  contentType: 'intro',\n  spotId: landingZone.Spot_ID,\n  foodId: null,\n  timeOfDay: introTime,\n  imagePrompt: buildImagePrompt(landingZone, introActivity, introTime, '9:16', { soloCharacter: 'gorb' }),\n  aspectRatio: '9:16',\n  videoPrompt: `Static camera, medium close-up. ${gorb.videoId}, ${gorb.action}. Voice: ${gorb.voice}.\n\nGorb: \"${dialogue.Intro_Line}\"\n\nAmbient sounds: ${introAmbient}.`\n});\n\n// GORB STORY (Gorb solo)\nconst gorbStoryActivity = pick(gorbStoryActivities.length ? gorbStoryActivities : introActivities);\nconst gorbStorySpot = selectedStorySpots[0];\nconst gorbStoryTime = pick(timesOfDay);\nconst gorbStoryAmbient = getTimeSettings(gorbStoryTime).ambient;\n\ncontentItems.push({\n  contentId: `${sanitizedName}_gorb_story`,\n  contentType: 'gorb_story',\n  spotId: gorbStorySpot.Spot_ID,\n  foodId: null,\n  timeOfDay: gorbStoryTime,\n  imagePrompt: buildImagePrompt(gorbStorySpot, gorbStoryActivity, gorbStoryTime, '9:16', { soloCharacter: 'gorb' }),\n  aspectRatio: '9:16',\n  videoPrompt: `Static camera, medium close-up. ${gorb.videoId}, ${gorb.action}. Voice: ${gorb.voice}.\n\nGorb: \"${dialogue.Gorb_Story}\"\n\nAmbient sounds: ${gorbStoryAmbient}.`\n});\n\n// PLECK STORY (Pleck solo)\nconst pleckStoryActivity = pick(pleckStoryActivities.length ? pleckStoryActivities : reviewActivities);\nconst pleckStorySpot = selectedStorySpots[1];\nconst pleckStoryTime = pick(timesOfDay);\nconst pleckStoryAmbient = getTimeSettings(pleckStoryTime).ambient;\n\ncontentItems.push({\n  contentId: `${sanitizedName}_pleck_story`,\n  contentType: 'pleck_story',\n  spotId: pleckStorySpot.Spot_ID,\n  foodId: null,\n  timeOfDay: pleckStoryTime,\n  imagePrompt: buildImagePrompt(pleckStorySpot, pleckStoryActivity, pleckStoryTime, '9:16', { soloCharacter: 'pleck' }),\n  aspectRatio: '9:16',\n  videoPrompt: `Static camera, medium close-up. ${pleck.videoId}, ${pleck.action}. Voice: ${pleck.voice}.\n\nPleck: \"${dialogue.Pleck_Story}\"\n\nAmbient sounds: ${pleckStoryAmbient}.`\n});\n\n// SNAPSHOTS 1-4 (general, both characters)\nfor (let i = 0; i < 4; i++) {\n  const spot = selectedSnapshotSpots[i];\n  const activity = selectedGeneralActivities[i];\n  const time = pick(timesOfDay);\n\n  contentItems.push({\n    contentId: `${sanitizedName}_snapshot_0${i + 1}`,\n    contentType: `snapshot_0${i + 1}`,\n    spotId: spot.Spot_ID,\n    foodId: null,\n    activity: activity.Activity,\n    timeOfDay: time,\n    imagePrompt: buildImagePrompt(spot, activity, time, '4:5'),\n    aspectRatio: '4:5'\n  });\n}\n\n// SNAPSHOT 5 (food, both characters)\n{\n  const spot = selectedFoodSpots[0];\n  const food = selectedFoods[0];\n  const activity = selectedFoodActivities[0];\n  const time = pick(timesOfDay);\n\n  contentItems.push({\n    contentId: `${sanitizedName}_snapshot_05`,\n    contentType: 'snapshot_05',\n    spotId: spot.Spot_ID,\n    foodId: food.Food_ID,\n    foodName: food.Food_Name,\n    activity: activity.Activity,\n    timeOfDay: time,\n    imagePrompt: buildImagePrompt(spot, activity, time, '4:5', { food }),\n    aspectRatio: '4:5'\n  });\n}\n\n// SNAPSHOTS 6-9 (general, both characters)\nfor (let i = 4; i < 8; i++) {\n  const spot = selectedSnapshotSpots[i];\n  const activity = selectedGeneralActivities[i];\n  const time = pick(timesOfDay);\n  const snapshotNum = i + 2;\n\n  contentItems.push({\n    contentId: `${sanitizedName}_snapshot_0${snapshotNum}`,\n    contentType: `snapshot_0${snapshotNum}`,\n    spotId: spot.Spot_ID,\n    foodId: null,\n    activity: activity.Activity,\n    timeOfDay: time,\n    imagePrompt: buildImagePrompt(spot, activity, time, '4:5'),\n    aspectRatio: '4:5'\n  });\n}\n\n// SNAPSHOT 10 (food, both characters)\n{\n  const spot = selectedFoodSpots[1];\n  const food = selectedFoods[1];\n  const activity = selectedFoodActivities[1];\n  const time = pick(timesOfDay);\n\n  contentItems.push({\n    contentId: `${sanitizedName}_snapshot_10`,\n    contentType: 'snapshot_10',\n    spotId: spot.Spot_ID,\n    foodId: food.Food_ID,\n    foodName: food.Food_Name,\n    activity: activity.Activity,\n    timeOfDay: time,\n    imagePrompt: buildImagePrompt(spot, activity, time, '4:5', { food }),\n    aspectRatio: '4:5'\n  });\n}\n\n// REVIEW (speaker based on dialogue.Review_Speaker)\nconst reviewActivity = pick(reviewActivities);\nconst reviewTime = pick(timesOfDay);\nconst reviewAmbient = getTimeSettings(reviewTime).ambient;\nconst reviewSpeaker = dialogue.Review_Speaker || 'Gorb';\nconst isGorbReview = reviewSpeaker.toLowerCase() === 'gorb';\n\ncontentItems.push({\n  contentId: `${sanitizedName}_review`,\n  contentType: 'review',\n  spotId: reviewSpot.Spot_ID,\n  foodId: null,\n  timeOfDay: reviewTime,\n  imagePrompt: buildImagePrompt(reviewSpot, reviewActivity, reviewTime, '9:16', { soloCharacter: isGorbReview ? 'gorb' : 'pleck' }),\n  aspectRatio: '9:16',\n  videoPrompt: isGorbReview\n    ? `Static camera, medium close-up. ${gorb.videoId}, ${gorb.action}. Voice: ${gorb.voice}.\n\nGorb: \"${dialogue.Review_Line}\"\n\nAmbient sounds: ${reviewAmbient}.`\n    : `Static camera, medium close-up. ${pleck.videoId}, ${pleck.action}. Voice: ${pleck.voice}.\n\nPleck: \"${dialogue.Review_Line}\"\n\nAmbient sounds: ${reviewAmbient}.`\n});\n\n// ==== COLLECT USED IDS ====\nconst usedSpotIds = [\n  landingZone.Spot_ID,\n  ...selectedStorySpots.map(s => s.Spot_ID),\n  ...selectedSnapshotSpots.map(s => s.Spot_ID),\n  ...selectedFoodSpots.map(s => s.Spot_ID),\n  reviewSpot.Spot_ID\n];\nconst usedFoodIds = selectedFoods.map(f => f.Food_ID);\n\nreturn [{\n  json: {\n    locationId: loc.Location_ID,\n    locationName: loc.Name,\n    sanitizedName: sanitizedName,\n    contentItems: contentItems,\n    usedSpotIds: usedSpotIds,\n    usedFoodIds: usedFoodIds,\n    totalItems: contentItems.length\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2368,
-        976
+        1920,
+        816
       ],
-      "id": "e1077e4e-6324-417d-972c-7683bcc4be7a",
+      "id": "b42503a7-708a-4a1e-b5a4-c4402d1d2d2b",
       "name": "Generate Prompts (Initial)"
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json;\n\nconst snapshotContext = data.contentItems\n  .filter(item => item.contentType.startsWith('snapshot'))\n  .map(item => `- ${item.contentType}: ${item.activity}${item.foodName ? ' with ' + item.foodName : ''}`)\n  .join('\\n');\n\nconst prompt = `Generate titles and captions for these content pieces. Return JSON only, no markdown.\nLocation: ${data.locationName}\nContent items:\n${data.contentItems.map(item => `- ${item.contentId} (${item.contentType})`).join('\\n')}\nFor each item, generate:\n- title: Short, catchy title for video content (intro, jokes, review only - leave blank for snapshots)\n- caption: Instagram caption with personality, 1-2 sentences, include 2-3 relevant hashtags\n\nAlso generate 10 polaroid captions (max 25 chars, casual tourist scribble like \"Wish you were here!\" or \"Pleck almost smiled!\"):\n${snapshotContext}\n\nReturn as JSON array:\n[{\"contentId\": \"...\", \"title\": \"...\", \"caption\": \"...\"}, {\"contentId\": \"polaroid_01\", \"caption\": \"...\"}, {\"contentId\": \"polaroid_02\", \"caption\": \"...\"}, ...]`;\n\nreturn [{\n  json: {\n    ...data,\n    claudePrompt: prompt\n  }\n}];"
+        "jsCode": "const data = $input.first().json;\n\nconst snapshotContext = data.contentItems\n  .filter(item => item.contentType.startsWith('snapshot'))\n  .map(item => `- ${item.contentType}: ${item.activity}${item.foodName ? ' with ' + item.foodName : ''}`)\n  .join('\\n');\n\nconst prompt = `Generate titles and captions for these content pieces. Return JSON only, no markdown.\nLocation: ${data.locationName}\nContent items:\n${data.contentItems.map(item => `- ${item.contentId} (${item.contentType})`).join('\\n')}\nFor each item, generate:\n- title: Short, catchy title for video content (intro, gorb_story, pleck_story, review only - leave blank for snapshots)\n- caption: Instagram caption with personality, 1-2 sentences, include 2-3 relevant hashtags\n\nAlso generate 10 polaroid captions (max 25 chars, casual tourist scribble like \"Wish you were here!\" or \"Pleck almost smiled!\"):\n${snapshotContext}\n\nReturn as JSON array:\n[{\"contentId\": \"...\", \"title\": \"...\", \"caption\": \"...\"}, {\"contentId\": \"polaroid_01\", \"caption\": \"...\"}, {\"contentId\": \"polaroid_02\", \"caption\": \"...\"}, ...]`;\n\nreturn [{\n  json: {\n    ...data,\n    claudePrompt: prompt\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2592,
-        976
+        2144,
+        816
       ],
-      "id": "c060dac6-ba75-4cb7-98dc-ec6ba3b841e6",
+      "id": "3babd125-6fd3-4080-be2a-343745d9459f",
       "name": "Build Claude Prompt"
     },
     {
@@ -492,7 +413,7 @@
           "parameters": [
             {
               "name": "x-api-key",
-              "value": "enter claud api key here"
+              "value": "PLACEHOLDER"
             },
             {
               "name": "anthropic-version",
@@ -512,10 +433,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2816,
-        976
+        2368,
+        816
       ],
-      "id": "3fedfd8e-515d-4127-b040-4f7be563a792",
+      "id": "274feb5f-230b-4aba-a782-719c9bacbcc5",
       "name": "Generate Titles & Captions (Claude)"
     },
     {
@@ -525,10 +446,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3040,
-        976
+        2592,
+        816
       ],
-      "id": "80bc6d41-8805-484d-acb1-ad9e2c86bccc",
+      "id": "79b34a38-5187-4d4f-96f7-4007d6540179",
       "name": "Parse Claude Response"
     },
     {
@@ -550,10 +471,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        2144,
-        976
+        1696,
+        816
       ],
-      "id": "309cc0c1-827a-4cca-9555-7ad0902c1271",
+      "id": "3da302ee-1b99-404f-b1d9-1b8e971c3b0a",
       "name": "Get Photo Activities",
       "executeOnce": true,
       "credentials": {
@@ -565,15 +486,15 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json;\n\nreturn data.contentItems.map(item => ({\n  json: {\n    Content_ID: item.contentId,\n    Location_ID: data.locationId,\n    Content_Type: item.contentType,\n    Spot_ID: item.spotId || '',\n    Food_ID: item.foodId || '',\n    Joke_ID: item.jokeId || '',\n    Title: item.title || '',\n    Caption: item.caption || '',\n    Polaroid_Caption: item.polaroidCaption || '',\n    Video_Prompt_1: item.videoPrompt1 || item.videoPrompt || item.videoPromptGorb || '',\n    Video_Prompt_2: item.videoPrompt2 || item.videoPromptPleck || '',\n    Image_Status: 'Pending',\n    Video_Status: ['intro', 'joke_01', 'joke_02', 'review'].includes(item.contentType) ? 'Pending' : 'N/A',\n    imagePrompt: item.imagePrompt,\n    aspectRatio: item.aspectRatio,\n    usedSpotIds: data.usedSpotIds,\n    usedFoodIds: data.usedFoodIds,\n    usedJokeIds: data.usedJokeIds,\n    locationId: data.locationId,\n    sanitizedName: data.sanitizedName\n  }\n}));"
+        "jsCode": "const data = $input.first().json;\nreturn data.contentItems.map(item => ({\n  json: {\n    Content_ID: item.contentId,\n    Location_ID: data.locationId,\n    Content_Type: item.contentType,\n    Spot_ID: item.spotId || '',\n    Food_ID: item.foodId || '',\n    Time_of_Day: item.timeOfDay,\n    Title: item.title || '',\n    Caption: item.caption || '',\n    Polaroid_Caption: item.polaroidCaption || '',\n    Image_Prompt: item.imagePrompt || '',\n    Video_Prompt: item.videoPrompt || '',\n    Image_Status: 'Pending',\n    Video_Status: ['intro', 'gorb_story', 'pleck_story', 'review'].includes(item.contentType) ? 'Pending' : 'N/A',\n    aspectRatio: item.aspectRatio,\n    usedSpotIds: data.usedSpotIds,\n    usedFoodIds: data.usedFoodIds,\n    locationId: data.locationId,\n    sanitizedName: data.sanitizedName\n  }\n}));"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3264,
-        976
+        2816,
+        816
       ],
-      "id": "aceefee1-254d-4b1b-a892-e49d0a095043",
+      "id": "5094a53b-a5f3-481c-a4f5-56e90bc699c5",
       "name": "Split Content Items"
     },
     {
@@ -600,14 +521,14 @@
             "Content_Type": "={{ $json.Content_Type }}",
             "Spot_ID": "={{ $json.Spot_ID }}",
             "Food_ID": "={{ $json.Food_ID }}",
-            "Joke_ID": "={{ $json.Joke_ID }}",
             "Title": "={{ $json.Title }}",
             "Caption": "={{ $json.Caption }}",
             "Image_Status": "={{ $json.Image_Status }}",
             "Video_Status": "={{ $json.Video_Status }}",
             "Polaroid_Caption": "={{ $json.Polaroid_Caption }}",
-            "Video_Prompt_1": "={{ $json.Video_Prompt_1 }}",
-            "Video_Prompt_2": "={{ $json.Video_Prompt_2 }}"
+            "Time_of_Day": "={{ $json.Time_of_Day }}",
+            "Video_Prompt": "={{ $json.Video_Prompt }}",
+            "Image_Prompt": "={{ $json.Image_Prompt }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -657,13 +578,14 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "Joke_ID",
-              "displayName": "Joke_ID",
+              "id": "Time_of_Day",
+              "displayName": "Time_of_Day",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "Title",
@@ -694,6 +616,26 @@
               "removed": false
             },
             {
+              "id": "Image_Prompt",
+              "displayName": "Image_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt",
+              "displayName": "Video_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "Video_Prompt_1",
               "displayName": "Video_Prompt_1",
               "required": false,
@@ -701,7 +643,7 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Video_Prompt_2",
@@ -711,7 +653,7 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Image_Status",
@@ -740,10 +682,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        3488,
-        976
+        3040,
+        816
       ],
-      "id": "9241fca1-15ef-4d2d-b8fd-d4eb8128be8e",
+      "id": "b887d2bc-ce2e-4bc1-ad1a-b339fbf1afe2",
       "name": "Create Content Rows",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -754,15 +696,15 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = $('Parse Claude Response').first().json;\n\nconst spotUpdates = data.usedSpotIds.map(id => ({\n  json: { Spot_ID: id, Used: 'Yes' }\n}));\n\nconst foodUpdates = data.usedFoodIds.map(id => ({\n  json: { Food_ID: id, Used: 'Yes' }\n}));\n\nconst jokeUpdates = data.usedJokeIds.map(id => ({\n  json: { Joke_ID: id, Posted: 'Yes' }\n}));\n\nreturn [{\n  json: {\n    spotUpdates,\n    foodUpdates,\n    jokeUpdates,\n    contentItems: data.contentItems\n  }\n}];"
+        "jsCode": "const data = $('Parse Claude Response').first().json;\nconst spotUpdates = data.usedSpotIds.map(id => ({\n  json: { Spot_ID: id, Used: 'Yes' }\n}));\nconst foodUpdates = data.usedFoodIds.map(id => ({\n  json: { Food_ID: id, Used: 'Yes' }\n}));\nreturn [{\n  json: {\n    spotUpdates,\n    foodUpdates,\n    contentItems: data.contentItems\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3712,
-        976
+        3264,
+        816
       ],
-      "id": "853d2efd-c7c3-4559-a24a-a913163572bf",
+      "id": "00c5bac2-7c4f-4749-a3c5-f5f914b7c26e",
       "name": "Prepare Used Updates"
     },
     {
@@ -772,10 +714,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3936,
-        688
+        3488,
+        736
       ],
-      "id": "482daf14-fffc-42d1-9e60-1351d8cc13f5",
+      "id": "bee7f217-3bd9-434e-b0bc-3239d07c7e9b",
       "name": "Extract Spot Updates"
     },
     {
@@ -875,10 +817,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        4160,
-        688
+        3712,
+        736
       ],
-      "id": "33525668-8fc8-4042-9c12-bb7ed19994ba",
+      "id": "ccbb9885-2953-48d7-8567-5a7c601e2acd",
       "name": "Mark Spots Used",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -894,10 +836,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3936,
-        976
+        3488,
+        1136
       ],
-      "id": "bb7e7948-d492-4266-9387-983e8a2f10e7",
+      "id": "aed53409-07c0-4c1a-8f4f-9909958f3c86",
       "name": "Extract Food Updates"
     },
     {
@@ -997,10 +939,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        4160,
-        976
+        3712,
+        1136
       ],
-      "id": "6d360bf7-40d0-4870-ac24-16f3fefa0fa2",
+      "id": "2f0fa058-94c2-44d7-ae46-de4cda7f416f",
       "name": "Mark Foods Used",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -1010,129 +952,15 @@
       }
     },
     {
-      "parameters": {
-        "jsCode": "const data = $('Prepare Used Updates').first().json;\nreturn data.jokeUpdates;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        3936,
-        1280
-      ],
-      "id": "702619a5-236a-4de4-afd7-e6b030820a72",
-      "name": "Extract Joke Updates"
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "documentId": {
-          "__rl": true,
-          "value": "1ofrwMwcPpvPZQRab03bcdHGhLWrqcF9cn6FC0p4naGU",
-          "mode": "list",
-          "cachedResultName": "ai_aliens_master"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1443649801,
-          "mode": "list",
-          "cachedResultName": "Jokes"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "Posted": "={{ $json.Posted }}",
-            "row_number": 0,
-            "Joke_ID": "={{ $json.Joke_ID }}"
-          },
-          "matchingColumns": [
-            "Joke_ID"
-          ],
-          "schema": [
-            {
-              "id": "Joke_ID",
-              "displayName": "Joke_ID",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Setup",
-              "displayName": "Setup",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "Punchline",
-              "displayName": "Punchline",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "Posted",
-              "displayName": "Posted",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "row_number",
-              "displayName": "row_number",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "readOnly": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {
-          "cellFormat": "USER_ENTERED"
-        }
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        4160,
-        1280
-      ],
-      "id": "9db567ef-e1a4-40d9-8a9d-340029b7a113",
-      "name": "Mark Jokes Posted",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "RbV7nYKHgNGjsvXM",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "numberInputs": 3
-      },
+      "parameters": {},
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        4384,
-        960
+        3936,
+        816
       ],
       "name": "Wait for Marks",
-      "id": "ef69999b-9660-4fca-ae1f-3f8d6899153f"
+      "id": "05961586-6933-44f0-b895-8a952211f67c"
     },
     {
       "parameters": {
@@ -1152,12 +980,12 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        4608,
-        976
+        4160,
+        816
       ],
       "name": "Search Location Folder",
       "alwaysOutputData": true,
-      "id": "efd06a6a-51b3-4f55-a6bd-b681c98ee214",
+      "id": "310ce3d7-b8a3-40b1-9ee6-a8e541d09877",
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "hv4DRx5bzGlEDlfc",
@@ -1167,16 +995,16 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = $('Parse Claude Response').first().json;\n\nconst contentItems = data.contentItems.map(item => ({\n  contentType: item.contentType,\n  contentId: item.contentId,\n  filename: `${item.contentId}.png`,\n  spotId: item.spotId || null,\n  foodId: item.foodId || null,\n  jokeId: item.jokeId || null,\n  prompt: item.imagePrompt,\n  aspectRatio: item.aspectRatio,\n  nanoBananaPayload: {\n    model: 'nano-banana-pro',\n    input: {\n      prompt: item.imagePrompt,\n      image_input: [\n        'https://drive.google.com/uc?export=view&id=1pH63y7S_m9n7VW0xgV-_9KQ7Bbgt0acy',\n        'https://drive.google.com/uc?export=view&id=1fTadAxxCe8Oz2z4OHRrMxOr6-hUHUD-z'\n      ],\n      aspect_ratio: item.aspectRatio,\n      resolution: '1K',\n      output_format: 'png'\n    }\n  }\n}));\n\nreturn [{\n  json: {\n    locationId: data.locationId,\n    locationName: data.locationName,\n    sanitizedName: data.sanitizedName,\n    contentItems: contentItems,\n    totalImages: contentItems.length\n  }\n}];"
+        "jsCode": "const data = $('Parse Claude Response').first().json;\n\nconst gorbRef = 'https://drive.google.com/uc?export=view&id=1pH63y7S_m9n7VW0xgV-_9KQ7Bbgt0acy';\nconst pleckRef = 'https://drive.google.com/uc?export=view&id=1fTadAxxCe8Oz2z4OHRrMxOr6-hUHUD-z';\n\nconst contentItems = data.contentItems.map(item => {\n  // Determine which character references to use\n  let imageRefs;\n  if (item.contentType === 'intro' || item.contentType === 'gorb_story') {\n    imageRefs = [gorbRef];\n  } else if (item.contentType === 'pleck_story') {\n    imageRefs = [pleckRef];\n  } else if (item.contentType === 'review') {\n    // Review speaker determined by dialogue - check the video prompt for which character\n    imageRefs = item.videoPrompt && item.videoPrompt.includes('Pleck:') ? [pleckRef] : [gorbRef];\n  } else {\n    // Snapshots use both\n    imageRefs = [gorbRef, pleckRef];\n  }\n\n  return {\n    contentType: item.contentType,\n    contentId: item.contentId,\n    filename: `${item.contentId}.png`,\n    spotId: item.spotId || null,\n    foodId: item.foodId || null,\n    prompt: item.imagePrompt,\n    aspectRatio: item.aspectRatio,\n    nanoBananaPayload: {\n      model: 'nano-banana-pro',\n      input: {\n        prompt: item.imagePrompt,\n        image_input: imageRefs,\n        aspect_ratio: item.aspectRatio,\n        resolution: '1K',\n        output_format: 'png'\n      }\n    }\n  };\n});\n\nreturn [{\n  json: {\n    locationId: data.locationId,\n    locationName: data.locationName,\n    sanitizedName: data.sanitizedName,\n    contentItems: contentItems,\n    totalImages: contentItems.length\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4832,
-        976
+        4384,
+        816
       ],
       "name": "Prepare Image Generation",
-      "id": "380d8c14-3cd5-4e54-90e8-634304667dc0"
+      "id": "460bc780-fda4-4142-a765-c14d94422c96"
     },
     {
       "parameters": {
@@ -1187,11 +1015,11 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        5056,
-        976
+        4608,
+        816
       ],
       "name": "Split Images",
-      "id": "4b10f37c-9f74-4667-852a-a0742ac4c4ed"
+      "id": "62468d4a-728e-412d-b74c-d5af57e5aa35"
     },
     {
       "parameters": {
@@ -1207,11 +1035,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        5280,
-        976
+        4832,
+        816
       ],
       "name": "Generate Image",
-      "id": "29560563-db46-41e8-8089-34da5e1296cf",
+      "id": "04a7b0d6-c317-4fdf-922c-4e5f0f9e192c",
       "credentials": {
         "httpHeaderAuth": {
           "id": "cvwEzZ8bMz0qcuom",
@@ -1227,11 +1055,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5504,
-        976
+        5056,
+        816
       ],
       "name": "Set Image Start Time",
-      "id": "2f3b367f-32e2-4858-b3e8-226d433edf31"
+      "id": "9e88d663-dfd3-4390-839b-e074fa0e588e"
     },
     {
       "parameters": {
@@ -1241,11 +1069,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5728,
-        976
+        5280,
+        816
       ],
       "name": "Prep Status Check",
-      "id": "d094e584-8902-4ec8-9891-29ef32f6668d"
+      "id": "e86a8267-f861-4198-a7ab-313a69166c96"
     },
     {
       "parameters": {
@@ -1257,11 +1085,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        5952,
-        832
+        5504,
+        736
       ],
       "name": "Check Image Status",
-      "id": "c0f8d038-dce3-4d61-911c-fdf152f2caf8",
+      "id": "e2ff1fa7-cfd4-4ab1-ae70-ebee3fd9d697",
       "credentials": {
         "httpHeaderAuth": {
           "id": "cvwEzZ8bMz0qcuom",
@@ -1277,11 +1105,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6176,
-        832
+        5728,
+        736
       ],
       "name": "Merge Status Data",
-      "id": "28ed019d-8fa6-4a7a-88a1-dbb561a831b4"
+      "id": "c7e86a0a-d6eb-4cde-a13b-34993d53cef5"
     },
     {
       "parameters": {
@@ -1292,11 +1120,11 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        6400,
-        832
+        5952,
+        736
       ],
       "name": "Aggregate Status Results",
-      "id": "70fb3ead-ca3e-48b9-bda5-e098da6338a1"
+      "id": "a131e063-cf50-45da-b632-fd245de383ac"
     },
     {
       "parameters": {
@@ -1305,11 +1133,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6624,
-        832
+        6176,
+        736
       ],
       "name": "Evaluate All Statuses",
-      "id": "f2b197af-051c-4485-99aa-f844c3a0ef19"
+      "id": "6a3a2ba6-f58c-4519-ab66-11e5c3ce4a6a"
     },
     {
       "parameters": {
@@ -1319,11 +1147,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7744,
-        1008
+        7296,
+        928
       ],
       "name": "Prep Download",
-      "id": "0e859b2e-7edf-4bc0-a206-6050891c4f7c"
+      "id": "44d42a86-2616-4e00-b86f-d08bc64aa71f"
     },
     {
       "parameters": {
@@ -1339,11 +1167,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        7968,
-        1008
+        7520,
+        928
       ],
       "name": "Download Image",
-      "id": "a6f41661-adde-4103-a401-d0b199bd4840"
+      "id": "c5113ca0-a972-44c6-8a3c-87f72c5a2a9b"
     },
     {
       "parameters": {
@@ -1363,11 +1191,11 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        8192,
-        1008
+        7744,
+        928
       ],
       "name": "Upload Image to Drive",
-      "id": "c2496e8e-ea9b-48cb-834b-41bf08400a53",
+      "id": "a38bd993-dccf-41f4-9aa4-e0449e57a7e1",
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "hv4DRx5bzGlEDlfc",
@@ -1378,30 +1206,30 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const imageData = $('Prep Download').item.json;\nconst uploadResult = $json;\n\nreturn {\n  json: {\n    contentId: imageData.contentId,\n    contentType: imageData.contentType,\n    filename: imageData.filename,\n    spotId: imageData.spotId || null,\n    foodId: imageData.foodId || null,\n    jokeId: imageData.jokeId || null,\n    driveId: uploadResult.id,\n    driveUrl: `https://drive.google.com/uc?export=view&id=${uploadResult.id}`,\n    webViewLink: uploadResult.webViewLink\n  }\n};"
+        "jsCode": "const imageData = $('Prep Download').item.json;\nconst uploadResult = $json;\nreturn {\n  json: {\n    contentId: imageData.contentId,\n    contentType: imageData.contentType,\n    filename: imageData.filename,\n    spotId: imageData.spotId || null,\n    foodId: imageData.foodId || null,\n    driveId: uploadResult.id,\n    driveUrl: `https://drive.google.com/uc?export=view&id=${uploadResult.id}`,\n    webViewLink: uploadResult.webViewLink\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8416,
-        1008
+        7968,
+        928
       ],
       "name": "Collect Image Result",
-      "id": "70471f9c-4ad0-4554-b556-ff0481a0403e"
+      "id": "e2a4cd9e-3a1c-4aaf-903a-c474edf4ac5c"
     },
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const item = $json;\nreturn {\n  json: {\n    Content_ID: item.contentId,\n    Image_Status: 'Review',\n    Drive_ID: item.driveId\n  }\n};"
+        "jsCode": "const item = $json;\nreturn {\n  json: {\n    Content_ID: item.contentId,\n    Image_Status: 'Review'\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8640,
-        1008
+        8192,
+        928
       ],
       "name": "Prep Content Update",
-      "id": "5f664470-f305-4d0c-a274-ad89df1a2b50"
+      "id": "439b7294-7d4e-4c8a-b3af-9f944f603eb9"
     },
     {
       "parameters": {
@@ -1480,14 +1308,14 @@
               "removed": true
             },
             {
-              "id": "Joke_ID",
-              "displayName": "Joke_ID",
+              "id": "Time_of_Day",
+              "displayName": "Time_of_Day",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true,
-              "removed": true
+              "removed": false
             },
             {
               "id": "Title",
@@ -1518,6 +1346,46 @@
               "type": "string",
               "canBeUsedToMatch": true,
               "removed": true
+            },
+            {
+              "id": "Image_Prompt",
+              "displayName": "Image_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt",
+              "displayName": "Video_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt_1",
+              "displayName": "Video_Prompt_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt_2",
+              "displayName": "Video_Prompt_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "Image_Status",
@@ -1558,11 +1426,11 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        8864,
-        1008
+        8416,
+        928
       ],
       "name": "Update Content - Review",
-      "id": "535271d4-e0a2-40c2-9808-8fc5c9575b3f",
+      "id": "6591393e-22e1-4a1c-9246-9709d6c52307",
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "RbV7nYKHgNGjsvXM",
@@ -1577,11 +1445,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        9312,
-        1008
+        8864,
+        928
       ],
       "name": "Prep Location Update",
-      "id": "290b23d2-97b9-41e9-b365-3fc79fc18aa4"
+      "id": "b93859f6-ff7c-4cc9-be48-f5d63bde6688"
     },
     {
       "parameters": {
@@ -1768,11 +1636,11 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        9536,
-        1008
+        9088,
+        928
       ],
       "name": "Update Location - Images_Review",
-      "id": "4b73c9a0-3a7c-416d-a318-376fdbeb586f",
+      "id": "8c15010d-db6e-4539-98a4-4da3fb9c2e7b",
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "RbV7nYKHgNGjsvXM",
@@ -1791,12 +1659,12 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        9760,
-        1008
+        9312,
+        928
       ],
       "name": "Email - Images Ready",
-      "id": "6538cb33-dc9e-4255-ac1e-e34f8f9021e9",
-      "webhookId": "6ff82fbf-df90-4b87-a2d2-110339f2c095",
+      "id": "b5f90d80-86d1-444e-9d17-043aec81326a",
+      "webhookId": "02013396-e27c-4b21-8c56-822da04b6b83",
       "credentials": {
         "smtp": {
           "id": "8alovuwdyCQhOA4Q",
@@ -1831,11 +1699,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        6848,
-        832
+        6400,
+        736
       ],
       "name": "IF (Still Pending)",
-      "id": "da353497-6f5e-435e-8677-50865e43be37"
+      "id": "a29d75ac-ff3f-4fea-b77f-d90198659d84"
     },
     {
       "parameters": {
@@ -1844,11 +1712,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7072,
+        6624,
         640
       ],
       "name": "Extract All Items",
-      "id": "e409888b-8a05-4c12-84de-45e20473b6ed"
+      "id": "8bed26d9-878b-4ff0-81b6-1145451c6d41"
     },
     {
       "parameters": {
@@ -1857,12 +1725,12 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        7296,
-        816
+        6848,
+        736
       ],
       "name": "Wait 30s",
-      "webhookId": "batch-wait-webhook",
-      "id": "8f4f021b-7187-4918-97cd-e3883f0ae0fd"
+      "webhookId": "b45b94af-2fce-435a-b39e-6d499500434b",
+      "id": "1b2524be-aed9-4b12-8d1c-08d950223682"
     },
     {
       "parameters": {
@@ -1871,11 +1739,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7072,
-        832
+        6624,
+        896
       ],
       "name": "Split by Success",
-      "id": "484a1a33-eda3-4fda-8f44-2f8f8b6d0b84"
+      "id": "7bbf83bf-a02a-4066-8594-33fe525ec547"
     },
     {
       "parameters": {
@@ -1904,11 +1772,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        7296,
-        1008
+        6848,
+        928
       ],
       "name": "IF (Any Successful)",
-      "id": "69bf4dfd-d168-4bcc-853c-bc7cdbfb1f5d"
+      "id": "60cca48f-497b-4856-9e01-4669099e3656"
     },
     {
       "parameters": {
@@ -1917,11 +1785,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7520,
-        1008
+        7072,
+        928
       ],
       "name": "Extract Successful",
-      "id": "ae73c4d2-0e36-4592-a80f-1027e949cc7f"
+      "id": "a9f7605b-ab9e-4fd5-9a0b-efa073173502"
     },
     {
       "parameters": {
@@ -1950,11 +1818,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        7296,
-        1328
+        6848,
+        1248
       ],
       "name": "IF (Any Failed)",
-      "id": "95acf237-a639-4b82-9f2f-0d43a86d48b0"
+      "id": "f9fab2bd-afb5-464b-9755-7b9a230bc60a"
     },
     {
       "parameters": {
@@ -1963,11 +1831,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7520,
-        1328
+        7072,
+        1216
       ],
       "name": "Prep Failed Updates",
-      "id": "aba37b9c-5a45-4267-ab5f-64e10968d1ba"
+      "id": "9b7d8c1d-06b9-4edf-9976-5bbeec5f257a"
     },
     {
       "parameters": {
@@ -2046,8 +1914,8 @@
               "removed": false
             },
             {
-              "id": "Joke_ID",
-              "displayName": "Joke_ID",
+              "id": "Time_of_Day",
+              "displayName": "Time_of_Day",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -2068,6 +1936,56 @@
             {
               "id": "Caption",
               "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Polaroid_Caption",
+              "displayName": "Polaroid_Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Image_Prompt",
+              "displayName": "Image_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt",
+              "displayName": "Video_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt_1",
+              "displayName": "Video_Prompt_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt_2",
+              "displayName": "Video_Prompt_2",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -2114,11 +2032,11 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        7744,
-        1328
+        7296,
+        1216
       ],
       "name": "Update Content - Redo",
-      "id": "1a2bdc56-d64e-4a0f-8621-9e4ba71e3cc5",
+      "id": "4ce0718a-5cf8-4e11-8cec-733f3c28c26f",
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "RbV7nYKHgNGjsvXM",
@@ -2133,10 +2051,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        7968,
-        1232
+        7520,
+        1168
       ],
-      "id": "026c107e-e520-48fd-ba50-65d5b04c18cd",
+      "id": "55f5a3c2-af87-4d20-820d-a7f05647d6de",
       "name": "Merge"
     },
     {
@@ -2144,10 +2062,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        9088,
-        1008
+        8640,
+        928
       ],
-      "id": "262ad111-6a6f-48e2-96d1-1867289ff684",
+      "id": "b244f52d-195c-4a36-a106-346d7518cc57",
       "name": "Merge1"
     },
     {
@@ -2182,10 +2100,10 @@
       "typeVersion": 4.7,
       "position": [
         800,
-        1952
+        1984
       ],
       "name": "Get Redo Content",
-      "id": "17f1c079-57d1-4dc0-82be-b4fb1130c4cd",
+      "id": "d8150418-12dd-4f25-b666-fe326bd76b9d",
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "RbV7nYKHgNGjsvXM",
@@ -2221,10 +2139,10 @@
       "typeVersion": 4.7,
       "position": [
         1024,
-        1952
+        1984
       ],
       "name": "Get Location (Redo)",
-      "id": "eeb4b6e5-6394-4bce-ab0d-cc815664d1c5",
+      "id": "7e7539f0-7ad0-4371-86db-8526c8268f54",
       "executeOnce": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -2261,10 +2179,10 @@
       "typeVersion": 4.7,
       "position": [
         1248,
-        1952
+        1984
       ],
       "name": "Get Spots (Redo)",
-      "id": "02e28500-f814-45a7-8116-301052d95ffb",
+      "id": "ac0adab8-67b6-44bb-8d0d-ba3eb32443a1",
       "executeOnce": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -2301,10 +2219,10 @@
       "typeVersion": 4.7,
       "position": [
         1472,
-        1952
+        1984
       ],
       "name": "Get Foods (Redo)",
-      "id": "24da945b-0e71-4f31-85c7-58fd6e90b11f",
+      "id": "26ee89a1-ec73-467e-8c3e-c4358c84490c",
       "executeOnce": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -2333,10 +2251,10 @@
       "typeVersion": 4.7,
       "position": [
         1696,
-        1952
+        1984
       ],
       "name": "Get Photo Activities (Redo)",
-      "id": "062d3f7c-5cdd-4407-8b7f-abb828f53159",
+      "id": "f2e25c86-0d3a-4cac-80c3-664cdb38ba9f",
       "executeOnce": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -2373,10 +2291,10 @@
       "typeVersion": 4.7,
       "position": [
         1920,
-        1952
+        1984
       ],
       "name": "Get Time of Day (Redo)",
-      "id": "a53ffa62-8631-4ce6-9594-53a71afbe89f",
+      "id": "8a12f6c9-1a74-4a24-a14a-4a43cf3021f7",
       "executeOnce": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -2387,29 +2305,29 @@
     },
     {
       "parameters": {
-        "jsCode": "// ==== INPUTS ====\nconst redoContent = $('Get Redo Content').all().map(item => item.json);\nconst loc = $('Get Location (Redo)').first().json;\nconst spots = $('Get Spots (Redo)').all().map(item => item.json);\nconst foods = $('Get Foods (Redo)').all().map(item => item.json);\nconst allActivities = $('Get Photo Activities (Redo)').all().map(item => item.json);\nconst timesOfDay = $('Get Time of Day (Redo)').all().map(item => item.json.Value);\n\nconst sanitizedName = loc.Name.replace(/\\s+/g, '_');\n\n// ==== HELPERS ====\nfunction pick(arr) {\n  return arr[Math.floor(Math.random() * arr.length)];\n}\n\nfunction getTimeSettings(timeOfDay) {\n  const isNight = ['dusk', 'night'].includes(timeOfDay);\n  return {\n    timeOfDay,\n    isNight,\n    sky: isNight ? loc.Sky_Night : loc.Sky_Day,\n    lighting: isNight ? loc.Lighting_Night : loc.Lighting_Day\n  };\n}\n\n// ==== FILTER ACTIVITIES BY TYPE ====\nconst introActivities = allActivities.filter(a => a.Activity_Type === 'intro');\nconst jokeActivities = allActivities.filter(a => a.Activity_Type === 'joke');\nconst reviewActivities = allActivities.filter(a => a.Activity_Type === 'review');\nconst generalActivities = allActivities.filter(a => a.Activity_Type === 'general');\nconst foodActivities = allActivities.filter(a => a.Activity_Type === 'food');\n\n// ==== CHARACTER DEFINITIONS ====\nconst gorbId = 'GORB (grey alien, blue eyes, black \"I love humans\" t-shirt)';\nconst pleckId = 'PLECK (grey-green alien, amber eyes, Hawaiian shirt)';\n\n// ==== BUILD PROMPT FUNCTION ====\nfunction buildImagePrompt(spot, activity, timeOfDay, aspectRatio, food = null) {\n  const time = getTimeSettings(timeOfDay);\n  \n  let activityText = activity.Activity;\n  if (food) {\n    activityText += `. They are eating ${food.Food_Name}: ${food.Food_Description}`;\n  }\n  \n  return `Photorealistic 3D CGI render. ${loc.Name} — ${loc.Description}\n\n${spot.Spot_Description}\n\n${gorbId} and ${pleckId}: ${activityText}. ${activity.Framing}.\n\n${time.sky}. ${time.lighting}.\n\nVertical ${aspectRatio} composition.`;\n}\n\n// ==== REBUILD PROMPTS FOR REDO ITEMS ====\nconst contentItems = redoContent.map(item => {\n  const spot = spots.find(s => s.Spot_ID === item.Spot_ID);\n  const food = item.Food_ID ? foods.find(f => f.Food_ID === item.Food_ID) : null;\n  \n  // Pick activity based on content type\n  let activity;\n  let aspectRatio;\n  \n  if (item.Content_Type === 'intro') {\n    activity = pick(introActivities);\n    aspectRatio = '9:16';\n  } else if (item.Content_Type.startsWith('joke')) {\n    activity = pick(jokeActivities);\n    aspectRatio = '9:16';\n  } else if (item.Content_Type === 'review') {\n    activity = pick(reviewActivities);\n    aspectRatio = '9:16';\n  } else if (item.Content_Type === 'snapshot_05' || item.Content_Type === 'snapshot_10') {\n    activity = pick(foodActivities);\n    aspectRatio = '4:5';\n  } else {\n    activity = pick(generalActivities);\n    aspectRatio = '4:5';\n  }\n  \n  // Pick fresh time of day (daytime only for intro)\n  const timeOptions = item.Content_Type === 'intro' \n    ? timesOfDay.filter(t => !['dusk', 'night'].includes(t))\n    : timesOfDay;\n  const timeOfDay = pick(timeOptions);\n  \n  return {\n    contentId: item.Content_ID,\n    contentType: item.Content_Type,\n    spotId: item.Spot_ID,\n    foodId: item.Food_ID || null,\n    jokeId: item.Joke_ID || null,\n    timeOfDay: timeOfDay,\n    imagePrompt: buildImagePrompt(spot, activity, timeOfDay, aspectRatio, food),\n    aspectRatio: aspectRatio\n  };\n});\n\nreturn [{\n  json: {\n    locationId: loc.Location_ID,\n    locationName: loc.Name,\n    sanitizedName: sanitizedName,\n    contentItems: contentItems,\n    totalItems: contentItems.length\n  }\n}];"
+        "jsCode": "// ==== INPUTS ====\nconst redoContent = $('Get Redo Content').all().map(item => item.json);\nconst loc = $('Get Location (Redo)').first().json;\nconst spots = $('Get Spots (Redo)').all().map(item => item.json);\nconst foods = $('Get Foods (Redo)').all().map(item => item.json);\nconst allActivities = $('Get Photo Activities (Redo)').all().map(item => item.json);\nconst timesOfDay = $('Get Time of Day (Redo)').all().map(item => item.json.Value);\nconst sanitizedName = loc.Name.replace(/\\s+/g, '_');\n\n// ==== HELPERS ====\nfunction pick(arr) {\n  return arr[Math.floor(Math.random() * arr.length)];\n}\n\nfunction getTimeSettings(timeOfDay) {\n  const isNight = ['dusk', 'night'].includes(timeOfDay);\n  return {\n    timeOfDay,\n    isNight,\n    sky: isNight ? loc.Sky_Night : loc.Sky_Day,\n    lighting: isNight ? loc.Lighting_Night : loc.Lighting_Day\n  };\n}\n\n// ==== FILTER ACTIVITIES BY TYPE ====\nconst introActivities = allActivities.filter(a => a.Activity_Type === 'intro');\nconst gorbStoryActivities = allActivities.filter(a => a.Activity_Type === 'gorb_story');\nconst pleckStoryActivities = allActivities.filter(a => a.Activity_Type === 'pleck_story');\nconst reviewActivities = allActivities.filter(a => a.Activity_Type === 'review');\nconst generalActivities = allActivities.filter(a => a.Activity_Type === 'general');\nconst foodActivities = allActivities.filter(a => a.Activity_Type === 'food');\n\n// ==== CHARACTER DEFINITIONS ====\nconst gorb = {\n  id: 'GORB (grey alien, blue eyes, black \"I love humans\" t-shirt)',\n  description: 'a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers'\n};\n\nconst pleck = {\n  id: 'PLECK (grey-green alien, amber eyes, Hawaiian shirt)',\n  description: 'a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers'\n};\n\n// ==== BUILD PROMPT FUNCTION ====\nfunction buildImagePrompt(spot, activity, timeOfDay, aspectRatio, options = {}) {\n  const time = getTimeSettings(timeOfDay);\n  const { food, soloCharacter } = options;\n  \n  let activityText = activity.Activity;\n  if (food) {\n    activityText += `. They are eating ${food.Food_Name}: ${food.Food_Description}`;\n  }\n  \n  // Character section based on content type (uses description for images)\n  let characterSection;\n  if (soloCharacter === 'gorb') {\n    characterSection = `GORB, ${gorb.description}, in foreground, medium close-up, ${activityText}. ${activity.Framing}.`;\n  } else if (soloCharacter === 'pleck') {\n    characterSection = `PLECK, ${pleck.description}, in foreground, medium close-up, ${activityText}. ${activity.Framing}.`;\n  } else {\n    // Both characters (snapshots)\n    characterSection = `GORB, ${gorb.description}, and PLECK, ${pleck.description}: ${activityText}. ${activity.Framing}.`;\n  }\n  \n  return `Photorealistic 3D CGI render. ${loc.Name} — ${loc.Description}\n\n${spot.Spot_Description}\n\n${characterSection}\n\n${time.sky}. ${time.lighting}.\n\nVertical ${aspectRatio} composition.`;\n}\n\n// ==== REBUILD PROMPTS FOR REDO ITEMS ====\nconst contentItems = redoContent.map(item => {\n  const spot = spots.find(s => s.Spot_ID === item.Spot_ID);\n  const food = item.Food_ID ? foods.find(f => f.Food_ID === item.Food_ID) : null;\n  \n  // Pick activity and determine solo character based on content type\n  let activity;\n  let aspectRatio;\n  let soloCharacter = null;\n  \n  if (item.Content_Type === 'intro') {\n    activity = pick(introActivities);\n    aspectRatio = '9:16';\n    soloCharacter = 'gorb';\n  } else if (item.Content_Type === 'gorb_story') {\n    activity = pick(gorbStoryActivities.length ? gorbStoryActivities : introActivities);\n    aspectRatio = '9:16';\n    soloCharacter = 'gorb';\n  } else if (item.Content_Type === 'pleck_story') {\n    activity = pick(pleckStoryActivities.length ? pleckStoryActivities : reviewActivities);\n    aspectRatio = '9:16';\n    soloCharacter = 'pleck';\n  } else if (item.Content_Type === 'review') {\n    activity = pick(reviewActivities);\n    aspectRatio = '9:16';\n    // Determine review speaker from existing video prompt\n    soloCharacter = item.Video_Prompt && item.Video_Prompt.includes('Pleck:') ? 'pleck' : 'gorb';\n  } else if (item.Content_Type === 'snapshot_05' || item.Content_Type === 'snapshot_10') {\n    activity = pick(foodActivities);\n    aspectRatio = '4:5';\n  } else {\n    activity = pick(generalActivities);\n    aspectRatio = '4:5';\n  }\n  \n  // Pick fresh time of day (daytime only for intro)\n  const timeOptions = item.Content_Type === 'intro' \n    ? timesOfDay.filter(t => !['dusk', 'night'].includes(t))\n    : timesOfDay;\n  const timeOfDay = pick(timeOptions);\n  \n  return {\n    contentId: item.Content_ID,\n    contentType: item.Content_Type,\n    spotId: item.Spot_ID,\n    foodId: item.Food_ID || null,\n    timeOfDay: timeOfDay,\n    imagePrompt: buildImagePrompt(spot, activity, timeOfDay, aspectRatio, { food, soloCharacter }),\n    aspectRatio: aspectRatio\n  };\n});\n\nreturn [{\n  json: {\n    locationId: loc.Location_ID,\n    locationName: loc.Name,\n    sanitizedName: sanitizedName,\n    contentItems: contentItems,\n    totalItems: contentItems.length\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         2144,
-        1952
+        1984
       ],
       "name": "Generate Prompts (Redo)",
-      "id": "c38bd362-2845-4b63-b050-93b1cbd101fd"
+      "id": "f9ce1d05-87d7-4eda-8758-d0c7a34dd513"
     },
     {
       "parameters": {
-        "jsCode": "const data = $('Generate Prompts (Redo)').first().json;\n\nconst contentItems = data.contentItems.map(item => ({\n  contentType: item.contentType,\n  contentId: item.contentId,\n  filename: `${item.contentId}.png`,\n  spotId: item.spotId || null,\n  foodId: item.foodId || null,\n  jokeId: item.jokeId || null,\n  prompt: item.imagePrompt,\n  aspectRatio: item.aspectRatio,\n  nanoBananaPayload: {\n    model: 'nano-banana-pro',\n    input: {\n      prompt: item.imagePrompt,\n      image_input: [\n        'https://drive.google.com/uc?export=view&id=1pH63y7S_m9n7VW0xgV-_9KQ7Bbgt0acy',\n        'https://drive.google.com/uc?export=view&id=1fTadAxxCe8Oz2z4OHRrMxOr6-hUHUD-z'\n      ],\n      aspect_ratio: item.aspectRatio,\n      resolution: '1K',\n      output_format: 'png'\n    }\n  }\n}));\n\nreturn [{\n  json: {\n    locationId: data.locationId,\n    locationName: data.locationName,\n    sanitizedName: data.sanitizedName,\n    contentItems: contentItems,\n    totalImages: contentItems.length,\n    isRedo: true\n  }\n}];"
+        "jsCode": "const data = $('Generate Prompts (Redo)').first().json;\n\nconst gorbRef = 'https://drive.google.com/uc?export=view&id=1pH63y7S_m9n7VW0xgV-_9KQ7Bbgt0acy';\nconst pleckRef = 'https://drive.google.com/uc?export=view&id=1fTadAxxCe8Oz2z4OHRrMxOr6-hUHUD-z';\n\nconst contentItems = data.contentItems.map(item => {\n  // Determine which character references to use\n  let imageRefs;\n  if (item.contentType === 'intro' || item.contentType === 'gorb_story') {\n    imageRefs = [gorbRef];\n  } else if (item.contentType === 'pleck_story') {\n    imageRefs = [pleckRef];\n  } else if (item.contentType === 'review') {\n    // Review speaker determined by checking which character is solo in the prompt\n    imageRefs = item.imagePrompt && item.imagePrompt.includes('PLECK,') && !item.imagePrompt.includes('GORB,') ? [pleckRef] : [gorbRef];\n  } else {\n    // Snapshots use both\n    imageRefs = [gorbRef, pleckRef];\n  }\n\n  return {\n    contentType: item.contentType,\n    contentId: item.contentId,\n    filename: `${item.contentId}.png`,\n    spotId: item.spotId || null,\n    foodId: item.foodId || null,\n    prompt: item.imagePrompt,\n    aspectRatio: item.aspectRatio,\n    nanoBananaPayload: {\n      model: 'nano-banana-pro',\n      input: {\n        prompt: item.imagePrompt,\n        image_input: imageRefs,\n        aspect_ratio: item.aspectRatio,\n        resolution: '1K',\n        output_format: 'png'\n      }\n    }\n  };\n});\n\nreturn [{\n  json: {\n    locationId: data.locationId,\n    locationName: data.locationName,\n    sanitizedName: data.sanitizedName,\n    contentItems: contentItems,\n    totalImages: contentItems.length,\n    isRedo: true\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         2592,
-        1952
+        1984
       ],
       "name": "Prepare Image Generation (Redo)",
-      "id": "180607d1-29db-4638-8777-c25df0ab8197"
+      "id": "8ba39031-6c8b-4a4d-87d8-da410a5c9825"
     },
     {
       "parameters": {
@@ -2430,11 +2348,11 @@
       "typeVersion": 3,
       "position": [
         2368,
-        1952
+        1984
       ],
       "name": "Search Location Folder (Redo)",
       "alwaysOutputData": true,
-      "id": "dd92085a-72c5-4136-9a0f-dc2bc0a91f5e",
+      "id": "1569a350-992d-4475-ad71-79cf5fd1009b",
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "hv4DRx5bzGlEDlfc",
@@ -2452,10 +2370,10 @@
       "typeVersion": 1,
       "position": [
         2816,
-        1952
+        1984
       ],
       "name": "Split Images (Redo)",
-      "id": "6ca76b5a-a405-478c-82ef-fe2b5eae97fd"
+      "id": "c1b9ff45-cbda-4a28-b387-1bff1ee46f98"
     },
     {
       "parameters": {
@@ -2472,10 +2390,10 @@
       "typeVersion": 4.3,
       "position": [
         3040,
-        1952
+        1984
       ],
       "name": "Generate Image (Redo)",
-      "id": "30130d2e-3209-4655-8022-7ad453a28d9f",
+      "id": "ccf147e3-1cd9-43a0-a6eb-5249bc6db099",
       "credentials": {
         "httpHeaderAuth": {
           "id": "cvwEzZ8bMz0qcuom",
@@ -2492,10 +2410,10 @@
       "typeVersion": 2,
       "position": [
         3264,
-        1952
+        1984
       ],
       "name": "Set Image Start Time (Redo)",
-      "id": "2e2e5405-3cba-4300-9dc9-4e43af273459"
+      "id": "fe70620e-9d84-4379-8e13-5919e2cf564c"
     },
     {
       "parameters": {
@@ -2506,10 +2424,10 @@
       "typeVersion": 2,
       "position": [
         3488,
-        1952
+        1984
       ],
       "name": "Prep Status Check (Redo)",
-      "id": "69f382c6-dec8-43d2-816f-7b6d16c52f1d"
+      "id": "9ea4712e-4cad-4767-be0a-7c1cab473a64"
     },
     {
       "parameters": {
@@ -2522,10 +2440,10 @@
       "typeVersion": 4.3,
       "position": [
         3712,
-        1888
+        1904
       ],
       "name": "Check Image Status (Redo)",
-      "id": "569346ac-11e1-4cbe-956f-d597283ea766",
+      "id": "83f1ceb0-23c3-4ffc-8875-dca742f5d334",
       "credentials": {
         "httpHeaderAuth": {
           "id": "cvwEzZ8bMz0qcuom",
@@ -2542,10 +2460,10 @@
       "typeVersion": 2,
       "position": [
         3936,
-        1888
+        1904
       ],
       "name": "Merge Status Data (Redo)",
-      "id": "0f006b1c-849e-4ed3-9c17-f393e5de1b3d"
+      "id": "e31c3100-5ffe-41e3-8dc4-94379f7e0b9f"
     },
     {
       "parameters": {
@@ -2557,10 +2475,10 @@
       "typeVersion": 1,
       "position": [
         4160,
-        1888
+        1904
       ],
       "name": "Aggregate Status Results (Redo)",
-      "id": "0db14722-a918-4dc9-99a6-e95f9c60c66d"
+      "id": "8316c9e8-5d89-43f6-b94e-108846192d8e"
     },
     {
       "parameters": {
@@ -2570,10 +2488,10 @@
       "typeVersion": 2,
       "position": [
         4384,
-        1888
+        1904
       ],
       "name": "Evaluate All Statuses (Redo)",
-      "id": "915a9d7c-4609-4feb-b899-438f56474b90"
+      "id": "8d97c178-14c0-4e11-b142-a4143bcdec98"
     },
     {
       "parameters": {
@@ -2603,10 +2521,10 @@
       "typeVersion": 2.3,
       "position": [
         4608,
-        1888
+        1904
       ],
       "name": "IF (Still Pending) (Redo)",
-      "id": "3b93bcd0-ad2f-4557-9168-c53f42d71cd7"
+      "id": "aa2636d8-e23b-4188-8e96-72118bd720db"
     },
     {
       "parameters": {
@@ -2616,10 +2534,10 @@
       "typeVersion": 2,
       "position": [
         4832,
-        2096
+        2144
       ],
       "name": "Extract All Items (Redo)",
-      "id": "cdfa6137-7247-4595-9032-55a59a163780"
+      "id": "c2ad429b-720f-4235-a877-e37dd152afc2"
     },
     {
       "parameters": {
@@ -2629,11 +2547,11 @@
       "typeVersion": 1.1,
       "position": [
         5056,
-        2192
+        2224
       ],
       "name": "Wait 30s (Redo)",
-      "webhookId": "redo-wait-webhook",
-      "id": "d6bc70ea-49b6-4503-958a-d8fa1a77f0a9"
+      "webhookId": "a2a0bf9e-cdd8-409d-b9cb-37d13ecd7576",
+      "id": "2113a21e-e205-4a5d-8fff-7d2f4d32909b"
     },
     {
       "parameters": {
@@ -2643,10 +2561,10 @@
       "typeVersion": 2,
       "position": [
         4832,
-        1792
+        1808
       ],
       "name": "Split by Success (Redo)",
-      "id": "dfcffd1e-4cd2-4f5e-a05d-c527c2a14073"
+      "id": "bdfd24b7-eac9-45f6-a3a9-ede134bc5047"
     },
     {
       "parameters": {
@@ -2676,10 +2594,10 @@
       "typeVersion": 2.3,
       "position": [
         5056,
-        1616
+        1648
       ],
       "name": "IF (Any Successful) (Redo)",
-      "id": "98a09def-f89e-49d9-9801-4db450c29723"
+      "id": "a9e9673f-82d2-4a02-abab-910534b0d53d"
     },
     {
       "parameters": {
@@ -2689,10 +2607,10 @@
       "typeVersion": 2,
       "position": [
         5280,
-        1536
+        1488
       ],
       "name": "Extract Successful (Redo)",
-      "id": "a9d1a303-5fd4-4a4f-919b-33aa5751ae47"
+      "id": "486bef11-c5ae-4244-acca-881d68a70143"
     },
     {
       "parameters": {
@@ -2722,10 +2640,10 @@
       "typeVersion": 2.3,
       "position": [
         5952,
-        1936
+        1984
       ],
       "name": "IF (Any Failed) (Redo)",
-      "id": "8f3cf269-b1f1-4224-b41a-7cf314277e3a"
+      "id": "b036640c-0670-458d-a75e-7dcf3c36d073"
     },
     {
       "parameters": {
@@ -2735,10 +2653,10 @@
       "typeVersion": 2,
       "position": [
         6176,
-        2000
+        2048
       ],
       "name": "Prep Failed Updates (Redo)",
-      "id": "b8a51af7-5535-420e-aa5f-50371b7c17fb"
+      "id": "b47314dd-9c99-4c19-b72c-f379022284e9"
     },
     {
       "parameters": {
@@ -2817,8 +2735,8 @@
               "removed": false
             },
             {
-              "id": "Joke_ID",
-              "displayName": "Joke_ID",
+              "id": "Time_of_Day",
+              "displayName": "Time_of_Day",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -2839,6 +2757,56 @@
             {
               "id": "Caption",
               "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Polaroid_Caption",
+              "displayName": "Polaroid_Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Image_Prompt",
+              "displayName": "Image_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt",
+              "displayName": "Video_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt_1",
+              "displayName": "Video_Prompt_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt_2",
+              "displayName": "Video_Prompt_2",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -2886,10 +2854,10 @@
       "typeVersion": 4.7,
       "position": [
         6400,
-        2000
+        2048
       ],
       "name": "Update Content - Redo (Redo)",
-      "id": "08a2eb9c-0da4-415d-94c6-a753cf038945",
+      "id": "660cfaa3-47f9-47e5-8b64-7eb160b0e32e",
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "RbV7nYKHgNGjsvXM",
@@ -2906,10 +2874,10 @@
       "typeVersion": 2,
       "position": [
         5504,
-        1536
+        1488
       ],
       "name": "Prep Download (Redo)",
-      "id": "09764cc2-3b2d-481d-9692-10af6b0ffc8d"
+      "id": "9dc7fd82-0b30-412c-ad12-26e16798e270"
     },
     {
       "parameters": {
@@ -2926,10 +2894,10 @@
       "typeVersion": 4.3,
       "position": [
         5952,
-        1280
+        1296
       ],
       "name": "Download Image (Redo)",
-      "id": "194b04fa-46a4-4d84-bdcf-db5bf34bc356"
+      "id": "347b0350-f074-4c82-ab8a-fccccc8a498d"
     },
     {
       "parameters": {
@@ -2950,10 +2918,10 @@
       "typeVersion": 3,
       "position": [
         6848,
-        1456
+        1488
       ],
       "name": "Upload Image to Drive (Redo)",
-      "id": "25397d6e-34b1-4818-bc57-a3631d6ff71d",
+      "id": "0fcd9f92-9a77-41d9-8b1f-3ba14f0d82f3",
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "hv4DRx5bzGlEDlfc",
@@ -2964,30 +2932,30 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const imageData = $('Prep Download (Redo)').item.json;\nconst uploadResult = $json;\n\nreturn {\n  json: {\n    contentId: imageData.contentId,\n    contentType: imageData.contentType,\n    filename: imageData.filename,\n    spotId: imageData.spotId || null,\n    foodId: imageData.foodId || null,\n    jokeId: imageData.jokeId || null,\n    driveId: uploadResult.id,\n    driveUrl: `https://drive.google.com/uc?export=view&id=${uploadResult.id}`,\n    webViewLink: uploadResult.webViewLink\n  }\n};"
+        "jsCode": "const imageData = $('Prep Download (Redo)').item.json;\nconst uploadResult = $json;\nreturn {\n  json: {\n    contentId: imageData.contentId,\n    contentType: imageData.contentType,\n    filename: imageData.filename,\n    spotId: imageData.spotId || null,\n    foodId: imageData.foodId || null,\n    prompt: imageData.prompt || null,\n    driveUrl: `https://drive.google.com/uc?export=view&id=${uploadResult.id}`,\n    webViewLink: uploadResult.webViewLink\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         5952,
-        1488
+        1504
       ],
       "name": "Collect Image Result (Redo)",
-      "id": "d54d4ebc-97b1-437c-912a-17ccd8dbdd7f"
+      "id": "642b40c6-3649-43fa-89d7-8540067c0f50"
     },
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const item = $json;\n\nreturn {\n  json: {\n    Content_ID: item.contentId,\n    Image_Status: 'Review',\n    Drive_ID: item.driveId\n  }\n};"
+        "jsCode": "const item = $json;\nreturn {\n  json: {\n    Content_ID: item.contentId,\n    Image_Status: 'Review',\n    Image_Prompt: item.prompt || ''\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         6176,
-        1488
+        1504
       ],
       "name": "Prep Content Update (Redo)",
-      "id": "e8d9472b-1550-4a1f-a347-346d111bdffd"
+      "id": "0090305b-eb3d-4fdb-a05a-89a9a92f1953"
     },
     {
       "parameters": {
@@ -3009,7 +2977,8 @@
           "value": {
             "Content_ID": "={{ $json.Content_ID }}",
             "Image_Status": "={{ $json.Image_Status }}",
-            "row_number": 0
+            "row_number": 0,
+            "Image_Prompt": "={{ $json.Image_Prompt }}"
           },
           "matchingColumns": [
             "Content_ID"
@@ -3066,8 +3035,8 @@
               "removed": false
             },
             {
-              "id": "Joke_ID",
-              "displayName": "Joke_ID",
+              "id": "Time_of_Day",
+              "displayName": "Time_of_Day",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -3088,6 +3057,56 @@
             {
               "id": "Caption",
               "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Polaroid_Caption",
+              "displayName": "Polaroid_Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Image_Prompt",
+              "displayName": "Image_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt",
+              "displayName": "Video_Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt_1",
+              "displayName": "Video_Prompt_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Video_Prompt_2",
+              "displayName": "Video_Prompt_2",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -3135,10 +3154,10 @@
       "typeVersion": 4.7,
       "position": [
         6400,
-        1488
+        1504
       ],
       "name": "Update Content - Review (Redo)",
-      "id": "4246b443-1dc6-40c2-bc34-07cfc47c91e4",
+      "id": "e8563fc1-5287-42cf-9a5c-fc7474b14624",
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "RbV7nYKHgNGjsvXM",
@@ -3154,10 +3173,10 @@
       "typeVersion": 3.1,
       "position": [
         6624,
-        1472
+        1488
       ],
       "name": "Merge Success and Failed (Redo)",
-      "id": "56d08350-6689-4d6b-a10b-a8fdfd017891"
+      "id": "6898b7a9-8dcc-4fc6-8526-e9826dbc5e89"
     },
     {
       "parameters": {
@@ -3167,10 +3186,10 @@
       "typeVersion": 2,
       "position": [
         6848,
-        1776
+        1696
       ],
       "name": "Prep Location Update (Redo)",
-      "id": "358bbc57-6889-4975-a0e2-df71c94ed7a0"
+      "id": "416fda18-9089-4b03-836c-c66b56e8960e"
     },
     {
       "parameters": {
@@ -3358,10 +3377,10 @@
       "typeVersion": 4.7,
       "position": [
         7072,
-        1776
+        1696
       ],
       "name": "Update Location - Images_Review (Redo)",
-      "id": "d0fd804b-22a9-43ba-b6cb-118a85ecd60c",
+      "id": "10a41cbd-d4d5-463f-8965-af9cc4c15c5a",
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "RbV7nYKHgNGjsvXM",
@@ -3381,11 +3400,11 @@
       "typeVersion": 2.1,
       "position": [
         7296,
-        1776
+        1696
       ],
       "name": "Email - Redo Images Ready",
-      "id": "2021dc97-4648-4098-80ca-d4b6dd9fe0f7",
-      "webhookId": "cea599e4-18bc-4abb-b5fb-01cebc19ec55",
+      "id": "becaf770-d0f1-4b89-8f0d-9cd93f92c692",
+      "webhookId": "bf4c7d60-16c8-4d5d-b668-d1bfcf042310",
       "credentials": {
         "smtp": {
           "id": "8alovuwdyCQhOA4Q",
@@ -3410,11 +3429,11 @@
       "typeVersion": 3,
       "position": [
         6176,
-        1280
+        1296
       ],
       "name": "Find Existing File (Redo)",
       "alwaysOutputData": true,
-      "id": "dee2e3d5-2e52-414d-81d6-bba7acfa51a6",
+      "id": "dd2e2b7a-f41c-4568-97d1-7fbbe81e41c7",
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "hv4DRx5bzGlEDlfc",
@@ -3436,10 +3455,10 @@
       "typeVersion": 3,
       "position": [
         6400,
-        1280
+        1296
       ],
       "name": "Delete Existing File (Redo)",
-      "id": "b1de315e-1f53-4874-bac1-c36d6141dcba",
+      "id": "5e73516a-b030-4a9c-94c5-b095cffb1cee",
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "hv4DRx5bzGlEDlfc",
@@ -3457,10 +3476,10 @@
       "typeVersion": 2,
       "position": [
         6624,
-        1280
+        1296
       ],
       "name": "Restore Binary (Redo)",
-      "id": "a918db69-a2b0-4adf-bfea-fe11636d143f"
+      "id": "ca5afd7c-a2fb-4859-9230-9349f5219f26"
     },
     {
       "parameters": {
@@ -3470,13 +3489,12 @@
       "typeVersion": 3,
       "position": [
         5728,
-        1536
+        1488
       ],
-      "id": "28f5aca1-05c1-41d9-9078-94fceb572e06",
+      "id": "8a5ba29e-77f0-4529-a6d1-e9975ee9de42",
       "name": "Loop Over Items"
     }
   ],
-  "pinData": {},
   "connections": {
     "Manual Trigger": {
       "main": [
@@ -3600,17 +3618,6 @@
       "main": [
         [
           {
-            "node": "Get Jokes",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Jokes": {
-      "main": [
-        [
-          {
             "node": "Get Time of Day",
             "type": "main",
             "index": 0
@@ -3619,17 +3626,6 @@
       ]
     },
     "Get Time of Day": {
-      "main": [
-        [
-          {
-            "node": "Get Laugh Styles",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Laugh Styles": {
       "main": [
         [
           {
@@ -3673,6 +3669,17 @@
         ]
       ]
     },
+    "Parse Claude Response": {
+      "main": [
+        [
+          {
+            "node": "Split Content Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Get Photo Activities": {
       "main": [
         [
@@ -3695,11 +3702,11 @@
         ]
       ]
     },
-    "Parse Claude Response": {
+    "Create Content Rows": {
       "main": [
         [
           {
-            "node": "Split Content Items",
+            "node": "Prepare Used Updates",
             "type": "main",
             "index": 0
           }
@@ -3718,11 +3725,6 @@
             "node": "Extract Food Updates",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Extract Joke Updates",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -3732,39 +3734,6 @@
         [
           {
             "node": "Mark Spots Used",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract Food Updates": {
-      "main": [
-        [
-          {
-            "node": "Mark Foods Used",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract Joke Updates": {
-      "main": [
-        [
-          {
-            "node": "Mark Jokes Posted",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Content Rows": {
-      "main": [
-        [
-          {
-            "node": "Prepare Used Updates",
             "type": "main",
             "index": 0
           }
@@ -3782,6 +3751,17 @@
         ]
       ]
     },
+    "Extract Food Updates": {
+      "main": [
+        [
+          {
+            "node": "Mark Foods Used",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Mark Foods Used": {
       "main": [
         [
@@ -3789,17 +3769,6 @@
             "node": "Wait for Marks",
             "type": "main",
             "index": 1
-          }
-        ]
-      ]
-    },
-    "Mark Jokes Posted": {
-      "main": [
-        [
-          {
-            "node": "Wait for Marks",
-            "type": "main",
-            "index": 2
           }
         ]
       ]
@@ -3853,6 +3822,17 @@
         [
           {
             "node": "Set Image Start Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Image Start Time": {
+      "main": [
+        [
+          {
+            "node": "Prep Status Check",
             "type": "main",
             "index": 0
           }
@@ -3914,17 +3894,6 @@
         ]
       ]
     },
-    "Set Image Start Time": {
-      "main": [
-        [
-          {
-            "node": "Prep Status Check",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Prep Download": {
       "main": [
         [
@@ -3952,6 +3921,17 @@
         [
           {
             "node": "Collect Image Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect Image Result": {
+      "main": [
+        [
+          {
+            "node": "Prep Content Update",
             "type": "main",
             "index": 0
           }
@@ -4002,17 +3982,6 @@
         ]
       ]
     },
-    "Collect Image Result": {
-      "main": [
-        [
-          {
-            "node": "Prep Content Update",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "IF (Still Pending)": {
       "main": [
         [
@@ -4036,6 +4005,17 @@
         [
           {
             "node": "Wait 30s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30s": {
+      "main": [
+        [
+          {
+            "node": "Prep Status Check",
             "type": "main",
             "index": 0
           }
@@ -4076,6 +4056,17 @@
         ]
       ]
     },
+    "Extract Successful": {
+      "main": [
+        [
+          {
+            "node": "Prep Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "IF (Any Failed)": {
       "main": [
         [
@@ -4099,28 +4090,6 @@
         [
           {
             "node": "Update Content - Redo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait 30s": {
-      "main": [
-        [
-          {
-            "node": "Prep Status Check",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract Successful": {
-      "main": [
-        [
-          {
-            "node": "Prep Download",
             "type": "main",
             "index": 0
           }
@@ -4432,6 +4401,46 @@
         ]
       ]
     },
+    "IF (Any Failed) (Redo)": {
+      "main": [
+        [
+          {
+            "node": "Prep Failed Updates (Redo)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Success and Failed (Redo)",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Prep Failed Updates (Redo)": {
+      "main": [
+        [
+          {
+            "node": "Update Content - Redo (Redo)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Content - Redo (Redo)": {
+      "main": [
+        [
+          {
+            "node": "Merge Success and Failed (Redo)",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
     "Prep Download (Redo)": {
       "main": [
         [
@@ -4494,46 +4503,6 @@
             "node": "Merge Success and Failed (Redo)",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "IF (Any Failed) (Redo)": {
-      "main": [
-        [
-          {
-            "node": "Prep Failed Updates (Redo)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Merge Success and Failed (Redo)",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Prep Failed Updates (Redo)": {
-      "main": [
-        [
-          {
-            "node": "Update Content - Redo (Redo)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update Content - Redo (Redo)": {
-      "main": [
-        [
-          {
-            "node": "Merge Success and Failed (Redo)",
-            "type": "main",
-            "index": 2
           }
         ]
       ]
@@ -4623,28 +4592,89 @@
       ]
     }
   },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1",
-    "availableInMCP": false
+  "pinData": {
+    "Generate Prompts (Redo)": [
+      {
+        "locationId": "LOC_001",
+        "locationName": "Coppervale",
+        "sanitizedName": "Coppervale",
+        "contentItems": [
+          {
+            "contentId": "Coppervale_intro",
+            "contentType": "intro",
+            "spotId": "SPT001",
+            "foodId": null,
+            "timeOfDay": "golden_hour",
+            "imagePrompt": "Photorealistic 3D CGI render. Coppervale — A Victorian steampunk city with cramped half-timbered buildings, exposed copper pipes and fittings accenting the architecture, cobblestone streets, ornate wrought-iron gas lamp posts, airships drifting overhead, and one giant clock tower rising above the city.\n\nDirigible dock with brass mooring posts and steam-powered cargo cranes, porters wheeling trunks across riveted iron platforms, arriving passengers stepping off gangplanks\n\nGORB, a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers, in foreground, medium close-up, Gorb looking around in wonder, eyes wide. medium shot.\n\nAmber-tinted sky with a pale sun, scattered dirigibles drifting between distant clock towers. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes.\n\nVertical 9:16 composition.",
+            "aspectRatio": "9:16"
+          },
+          {
+            "contentId": "Coppervale_gorb_story",
+            "contentType": "gorb_story",
+            "spotId": "SPT013",
+            "foodId": null,
+            "timeOfDay": "afternoon",
+            "imagePrompt": "Photorealistic 3D CGI render. Coppervale — A Victorian steampunk city with cramped half-timbered buildings, exposed copper pipes and fittings accenting the architecture, cobblestone streets, ornate wrought-iron gas lamp posts, airships drifting overhead, and one giant clock tower rising above the city.\n\nSmall iron balcony at the end of a dead-end lane, single wooden bench, unobstructed view across the rooftops and distant platforms\n\nGORB, a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers, in foreground, medium close-up, Gorb grinning at camera. medium shot.\n\nAmber-tinted sky with a pale sun, scattered dirigibles drifting between distant clock towers. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes.\n\nVertical 9:16 composition.",
+            "aspectRatio": "9:16"
+          },
+          {
+            "contentId": "Coppervale_pleck_story",
+            "contentType": "pleck_story",
+            "spotId": "SPT010",
+            "foodId": null,
+            "timeOfDay": "dusk",
+            "imagePrompt": "Photorealistic 3D CGI render. Coppervale — A Victorian steampunk city with cramped half-timbered buildings, exposed copper pipes and fittings accenting the architecture, cobblestone streets, ornate wrought-iron gas lamp posts, airships drifting overhead, and one giant clock tower rising above the city.\n\nInside the municipal steam baths — a tiled hall with sunken pools fed by the city's boiler system, condensation dripping from copper pipes overhead, locals soaking in the warmth, arched windows fogged with steam\n\nPLECK, a grey-green alien with a large bulbous head, big expressive amber-orange eyes, wearing a dark tropical Hawaiian shirt with pink and green floral pattern, dark grey jeans, and black Converse-style sneakers, in foreground, medium close-up, Pleck arms crossed, looking unimpressed. medium shot.\n\nDeep indigo sky with a bright copper-colored moon and faint stars. Warm amber pools from gas lamps, brass and copper surfaces glowing softly, deep shadows between lamp posts.\n\nVertical 9:16 composition.",
+            "aspectRatio": "9:16"
+          },
+          {
+            "contentId": "Coppervale_review",
+            "contentType": "review",
+            "spotId": "SPT009",
+            "foodId": null,
+            "timeOfDay": "dawn",
+            "imagePrompt": "Photorealistic 3D CGI render. Coppervale — A Victorian steampunk city with cramped half-timbered buildings, exposed copper pipes and fittings accenting the architecture, cobblestone streets, ornate wrought-iron gas lamp posts, airships drifting overhead, and one giant clock tower rising above the city.\n\nObservation deck with wrought-iron railings and coin-operated brass telescopes, the city's platforms spreading out below\n\nGORB, a grey alien with a large bulbous head, big expressive blue eyes, wearing a black t-shirt with \"I love humans\" text and a red heart, khaki cargo shorts, white crew socks, and worn grey sneakers, in foreground, medium close-up, Standing confidently, addressing camera. medium shot.\n\nAmber-tinted sky with a pale sun, scattered dirigibles drifting between distant clock towers. Warm golden light catching brass fixtures and copper pipes, sharp shadows cutting across narrow lanes.\n\nVertical 9:16 composition.",
+            "aspectRatio": "9:16"
+          }
+        ],
+        "totalItems": 4
+      }
+    ],
+    "Generate Image (Redo)": [
+      {
+        "code": 200,
+        "msg": "success",
+        "data": {
+          "taskId": "85d960cf9c50018af1556fd72cade0d1",
+          "recordId": "85d960cf9c50018af1556fd72cade0d1"
+        }
+      },
+      {
+        "code": 200,
+        "msg": "success",
+        "data": {
+          "taskId": "e975ee86b56b1f60c4be0703bfaa099a",
+          "recordId": "e975ee86b56b1f60c4be0703bfaa099a"
+        }
+      },
+      {
+        "code": 200,
+        "msg": "success",
+        "data": {
+          "taskId": "14224452840933951947a2e3a40a8085",
+          "recordId": "14224452840933951947a2e3a40a8085"
+        }
+      },
+      {
+        "code": 200,
+        "msg": "success",
+        "data": {
+          "taskId": "501c5c66458642129752880353c382af",
+          "recordId": "501c5c66458642129752880353c382af"
+        }
+      }
+    ]
   },
-  "versionId": "eddfaeac-34d0-46c3-8456-fd2c2f69fe23",
   "meta": {
     "instanceId": "daba14a88550d0304eb819e927ffe087dff267675394753b32278f2dd7342718"
-  },
-  "id": "3XUTJ1yCtS-YxuZ9XRO5P",
-  "tags": [
-    {
-      "updatedAt": "2026-01-26T00:07:29.173Z",
-      "createdAt": "2026-01-26T00:07:29.173Z",
-      "id": "37EoA9uWEU2xtfjr",
-      "name": "V2"
-    },
-    {
-      "updatedAt": "2026-01-21T17:38:45.151Z",
-      "createdAt": "2026-01-21T17:38:45.151Z",
-      "id": "CEWpWHWat0OoEcmi",
-      "name": "Gorb & Pleck"
-    }
-  ]
+  }
 }
