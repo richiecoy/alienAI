@@ -10,15 +10,15 @@ Each location runs for **1 week** (Sunday to Friday), with Saturday off. New loc
 
 ## Weekly Schedule
 
-| Day | Content | Time | Platforms | Workflow |
-|-----|---------|------|-----------|----------|
-| **Sun** | Intro Video | 8pm | Instagram, TikTok, YouTube | AI Aliens - Intro |
-| **Mon** | Photos 1-5 | 5pm | Instagram (carousel + stories), TikTok, YouTube (slideshow) | AI Aliens - Snapshots |
-| **Tue** | Dad Joke 1 | 5pm | Instagram, TikTok, YouTube | AI Aliens - Dad Jokes |
-| **Wed** | Photos 6-10 | 5pm | Instagram (carousel + stories), TikTok, YouTube (slideshow) | AI Aliens - Snapshots |
-| **Thu** | Dad Joke 2 | 5pm | Instagram, TikTok, YouTube | AI Aliens - Dad Jokes |
-| **Fri** | Review Video | 5pm | Instagram, TikTok, YouTube | AI Aliens - Review |
-| **Sat** | â€” | â€” | â€” | â€” |
+| Day | Content | Time | Platforms | Character |
+|-----|---------|------|-----------|-----------|
+| **Sun** | Intro Video | 8pm | Instagram, TikTok, YouTube | Gorb solo |
+| **Mon** | Photos 1-5 | 5pm | Instagram (carousel + stories), TikTok, YouTube (slideshow) | Both |
+| **Tue** | Gorb's Story | 5pm | Instagram, TikTok, YouTube | Gorb solo |
+| **Wed** | Photos 6-10 | 5pm | Instagram (carousel + stories), TikTok, YouTube (slideshow) | Both |
+| **Thu** | Pleck's Story | 5pm | Instagram, TikTok, YouTube | Pleck solo |
+| **Fri** | Review Video | 5pm | Instagram, TikTok, YouTube | Gorb or Pleck solo |
+| **Sat** | — | — | — | — |
 
 ---
 
@@ -26,10 +26,24 @@ Each location runs for **1 week** (Sunday to Friday), with Saturday off. New loc
 
 | Content Type | Count | Notes |
 |--------------|-------|-------|
-| Intro Video | 1 | Landing zone spot |
-| Photo Carousels | 2 | 5 photos each (4 generic + 1 food per carousel) |
-| Dad Jokes | 2 | Pulled from global jokes pool |
-| Review Video | 1 | Generic spot |
+| Intro Video | 1 | Landing zone spot, Gorb solo |
+| Photo Carousels | 2 | 5 photos each (4 generic + 1 food per carousel), both characters |
+| Gorb Story | 1 | Generic spot, Gorb solo — enthusiastic anecdote |
+| Pleck Story | 1 | Generic spot, Pleck solo — grumpy complaint |
+| Review Video | 1 | Generic spot, solo speaker based on Review_Speaker field |
+
+---
+
+## Video Content Structure
+
+All videos are **single-clip, single-character monologues** (8 seconds, ~5-6 seconds of dialogue).
+
+| Video Type | Speaker | Tone |
+|------------|---------|------|
+| Intro | Gorb | Excited, enthusiastic arrival |
+| Gorb Story | Gorb | Enthusiastic anecdote about location |
+| Pleck Story | Pleck | Grumpy complaint about Gorb or location |
+| Review | Gorb OR Pleck | Glowing (Gorb) or critical (Pleck) based on Review_Speaker |
 
 ---
 
@@ -39,7 +53,7 @@ Each location runs for **1 week** (Sunday to Friday), with Saturday off. New loc
 |-----------|-------|---------|
 | landing_zone | 1 | Intro |
 | food_vendor | 2 | Snapshots (1 Mon, 1 Wed) |
-| generic | 12 | Dad Jokes (2) + Snapshots (8) + Review (1) + buffer |
+| generic | 12 | Stories (2) + Snapshots (8) + Review (1) + buffer |
 
 **Total: 15 spots per location**
 
@@ -50,7 +64,7 @@ Each location runs for **1 week** (Sunday to Friday), with Saturday off. New loc
 | Tab | Count | Notes |
 |-----|-------|-------|
 | Foods | 2 | 1 per snapshot day |
-| Dialogue | 1 row | Intro + Review dialogue |
+| Dialogue | 1 row | Intro_Line, Gorb_Story, Pleck_Story, Review_Line, Review_Speaker |
 
 ---
 
@@ -58,13 +72,15 @@ Each location runs for **1 week** (Sunday to Friday), with Saturday off. New loc
 
 | Pool | Current Count | Weekly Usage | Runway |
 |------|---------------|--------------|--------|
-| Jokes | 89 | 2 | ~44 weeks |
+| Photo Activities (intro) | ~3 | 1 | Reusable |
+| Photo Activities (gorb_story) | ~3 | 1 | Reusable |
+| Photo Activities (pleck_story) | ~3 | 1 | Reusable |
+| Photo Activities (review) | ~2 | 1 | Reusable |
 | Photo Activities (general) | ~20 | 8 | Reusable |
 | Photo Activities (food) | ~5 | 2 | Reusable |
-| Positions | 6 | Varies | Reusable |
-| Poses | 6 | Varies | Reusable |
-| Actions | 6 | Varies | Reusable |
-| Laugh Styles | 5 | Varies | Reusable |
+| Time of Day | 5 | Varies | Reusable |
+
+**Note:** Jokes tab is no longer used.
 
 ---
 
@@ -72,10 +88,10 @@ Each location runs for **1 week** (Sunday to Friday), with Saturday off. New loc
 
 | Platform | Posts/Week | Recommended Range |
 |----------|------------|-------------------|
-| Instagram Feed | 6 | 3-7 âœ“ |
-| Instagram Stories | 6 days | Daily âœ“ |
-| TikTok | 6 videos | 2-5 (slightly over) âœ“ |
-| YouTube | 6 videos | 2-5 (slightly over) âœ“ |
+| Instagram Feed | 6 | 3-7 ✓ |
+| Instagram Stories | 6 days | Daily ✓ |
+| TikTok | 6 videos | 2-5 (slightly over) ✓ |
+| YouTube | 6 videos | 2-5 (slightly over) ✓ |
 
 ---
 
@@ -83,7 +99,6 @@ Each location runs for **1 week** (Sunday to Friday), with Saturday off. New loc
 
 | Workflow | Status |
 |----------|--------|
-| AI Aliens - Intro | âœ… Built |
-| AI Aliens - Dad Jokes | âœ… Built |
-| AI Aliens - Snapshots | ðŸ”¨ In Progress |
-| AI Aliens - Review | â³ Not Started |
+| Style Generation | ✅ Built |
+| Image Pipeline v3 | ✅ Built |
+| Video Pipeline | ✅ Built |
