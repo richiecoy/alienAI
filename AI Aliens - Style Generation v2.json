@@ -1,5 +1,4 @@
 {
-  "name": "AI Aliens - Style Generation v2",
   "nodes": [
     {
       "parameters": {},
@@ -432,7 +431,7 @@
     {
       "parameters": {
         "resource": "folder",
-        "name": "={{ $('Generate Prompt').first().json.locationId.replace('LOC', 'LOC_') }}",
+        "name": "={{ $('Generate Prompt').first().json.locationId",
         "driveId": {
           "__rl": true,
           "mode": "list",
@@ -617,13 +616,24 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "Joke_ID",
-              "displayName": "Joke_ID",
+              "id": "Blotato_ID",
+              "displayName": "Blotato_ID",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Time_of_Day",
+              "displayName": "Time_of_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "Title",
@@ -654,8 +664,8 @@
               "removed": false
             },
             {
-              "id": "Video_Prompt_1",
-              "displayName": "Video_Prompt_1",
+              "id": "Image_Prompt",
+              "displayName": "Image_Prompt",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -664,8 +674,8 @@
               "removed": false
             },
             {
-              "id": "Video_Prompt_2",
-              "displayName": "Video_Prompt_2",
+              "id": "Video_Prompt",
+              "displayName": "Video_Prompt",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -690,6 +700,16 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "Post_Status",
+              "displayName": "Post_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -733,7 +753,8 @@
           "mappingMode": "defineBelow",
           "value": {
             "Location_ID": "={{ $('Generate Prompt').first().json.locationId }}",
-            "Status": "Style_Pending"
+            "Status": "Style_Pending",
+            "row_number": 0
           },
           "matchingColumns": [
             "Location_ID"
@@ -749,6 +770,126 @@
               "canBeUsedToMatch": true
             },
             {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Weather",
+              "displayName": "Weather",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Color_Palette",
+              "displayName": "Color_Palette",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Camera_Angle",
+              "displayName": "Camera_Angle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Sky_Day",
+              "displayName": "Sky_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Sky_Night",
+              "displayName": "Sky_Night",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Lighting_Day",
+              "displayName": "Lighting_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Lighting_Night",
+              "displayName": "Lighting_Night",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ambient_Day",
+              "displayName": "Ambient_Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ambient_Night",
+              "displayName": "Ambient_Night",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Music",
+              "displayName": "Music",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "Status",
               "displayName": "Status",
               "required": false,
@@ -756,6 +897,17 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -803,7 +955,6 @@
       }
     }
   ],
-  "pinData": {},
   "connections": {
     "Manual Trigger": {
       "main": [
@@ -1079,28 +1230,8 @@
       ]
     }
   },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1",
-    "availableInMCP": false
-  },
-  "versionId": "74df8bab-d38f-49e7-b9b4-366bbf20b60a",
+  "pinData": {},
   "meta": {
     "instanceId": "daba14a88550d0304eb819e927ffe087dff267675394753b32278f2dd7342718"
-  },
-  "id": "wfqIROPzRG2stMYkqPk9p",
-  "tags": [
-    {
-      "updatedAt": "2026-01-26T00:07:29.173Z",
-      "createdAt": "2026-01-26T00:07:29.173Z",
-      "id": "37EoA9uWEU2xtfjr",
-      "name": "V2"
-    },
-    {
-      "updatedAt": "2026-01-21T17:38:45.151Z",
-      "createdAt": "2026-01-21T17:38:45.151Z",
-      "id": "CEWpWHWat0OoEcmi",
-      "name": "Gorb & Pleck"
-    }
-  ]
+  }
 }
