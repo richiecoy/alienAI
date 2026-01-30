@@ -2,7 +2,7 @@
 
 ## Overview
 
-Three workflows handle all content generation for the AI Aliens project. Each workflow is triggered manually and handles both initial runs and redo runs based on spreadsheet state.
+Four workflows handle all content generation for the AI Aliens project. Each workflow is triggered manually and handles both initial runs and redo runs based on spreadsheet state.
 
 ---
 
@@ -204,30 +204,117 @@ Manual (after all images approved)
 
 ### Writes
 - **Content tab**: 3 new rows (postcard, slideshow_01, slideshow_02) + updated Video_Status
-- **Locations tab**: Status → Videos_Review (or Ready when all approved)
+- **Locations tab**: Status → Videos_Review
 - **Google Drive**: postcard, 2 slideshows, 4 videos
 
 ### After Running
 - You review each video
 - If approved: Set Content.Video_Status = Approved
 - If redo needed: Set Content.Video_Status = Redo, run workflow again
-- When all 4 videos Approved: Set Location.Status = Ready
+- When all 4 videos Approved: Ready for Audio Post-Process
+
+---
+
+## Workflow 4: Audio Post-Process
+
+### Purpose
+Replaces Veo3 audio with consistent character voices via ElevenLabs Speech-to-Speech and adds generated ambient audio. Processes approved videos after Video Pipeline.
+
+### Trigger
+Manual (after all videos approved)
+
+### Reads
+- **Locations tab**: Row where `Status = Videos_Review`
+- **Content tab**: Video rows where `Video_Status = Approved` AND `Audio_Status = (blank)`
+- **Dialogue tab**: Row for this location (for Review_Speaker)
+- **Google Drive**: Approved video files
+
+### Voice IDs
+| Character | ElevenLabs Voice ID |
+|-----------|---------------------|
+| Gorb | `nNXPmxHfg9PtGzFxr9Zd` |
+| Pleck | `zYcjlYFOd3taleS0gkk3` |
+
+### Voice Routing
+| Content_Type | Voice |
+|--------------|-------|
+| intro | Gorb |
+| gorb_story | Gorb |
+| pleck_story | Pleck |
+| review | Based on Dialogue.Review_Speaker |
+
+### Ambient Routing
+- Uses `Time_of_Day` from Content row
+- Night/dusk/dawn → Location.Ambient_Night
+- Otherwise → Location.Ambient_Day
+
+### Logic
+```
+For each video (intro, gorb_story, pleck_story, review):
+
+1. Download video from Drive
+
+2. Write video to disk (/mnt/data/tmp/)
+
+3. Extract audio from video (ffmpeg → mp3)
+
+4. Send audio to ElevenLabs Speech-to-Speech:
+   - voice_id based on content type
+   - remove_background_noise: true
+   - Batching: 1 item at a time, 10s interval (rate limit protection)
+
+5. Write converted voice audio to disk (_voice.mp3)
+
+6. Generate ambient audio via ElevenLabs Sound Effects:
+   - text: Location ambient description
+   - duration_seconds: 8
+   - Batching: 1 item at a time, 10s interval
+
+7. Write ambient audio to disk (_ambient.mp3)
+
+8. Mix voice + ambient (ffmpeg):
+   - Voice at 100% volume
+   - Ambient at 30% volume
+   - Output duration matches voice track
+
+9. Merge mixed audio back to original video (ffmpeg):
+   - Copy video stream (no re-encoding)
+   - Replace audio with mixed track
+
+10. Upload final video to Drive (overwrites original)
+
+11. Clean up temp files
+
+12. Set Content.Audio_Status = Processed
+
+13. Update Location.Status = Audio_Review
+```
+
+### Writes
+- **Content tab**: Audio_Status → Processed (for each video)
+- **Locations tab**: Status → Audio_Review
+- **Google Drive**: Overwrites 4 video files with processed versions
+
+### After Running
+- You review each video's audio
+- If good: Manually set Location.Status = Ready
+- If redo needed: Clear Audio_Status for that video, run workflow again
 
 ---
 
 ## Content Type Reference
 
-| Content_Type | Has Image | Has Video | Image Approval | Video Approval | Character |
-|--------------|-----------|-----------|----------------|----------------|-----------|
-| style | Yes | No | NO (auto) | — | None |
-| postcard | Yes | No | NO (auto) | — | None |
-| intro | Yes | Yes | YES | YES | Gorb solo |
-| gorb_story | Yes | Yes | YES | YES | Gorb solo |
-| pleck_story | Yes | Yes | YES | YES | Pleck solo |
-| snapshot_01-10 | Yes | No | YES | — | Both |
-| slideshow_01 | No | Yes | — | NO (auto) | Both |
-| slideshow_02 | No | Yes | — | NO (auto) | Both |
-| review | Yes | Yes | YES | YES | Solo (Review_Speaker) |
+| Content_Type | Has Image | Has Video | Image Approval | Video Approval | Audio Approval | Character |
+|--------------|-----------|-----------|----------------|----------------|----------------|-----------|
+| style | Yes | No | NO (auto) | — | — | None |
+| postcard | Yes | No | NO (auto) | — | — | None |
+| intro | Yes | Yes | YES | YES | YES | Gorb solo |
+| gorb_story | Yes | Yes | YES | YES | YES | Gorb solo |
+| pleck_story | Yes | Yes | YES | YES | YES | Pleck solo |
+| snapshot_01-10 | Yes | No | YES | — | — | Both |
+| slideshow_01 | No | Yes | — | NO (auto) | — | Both |
+| slideshow_02 | No | Yes | — | NO (auto) | — | Both |
+| review | Yes | Yes | YES | YES | YES | Solo (Review_Speaker) |
 
 ---
 
@@ -240,11 +327,11 @@ All files stored in Google Drive under: `Content/LOC_XXX/`
 | {Location_Name}_style.png | Style Generation |
 | {Location_ID}_postcard.png | Video Pipeline |
 | {Location_ID}_intro.png | Image Pipeline |
-| {Location_ID}_intro.mp4 | Video Pipeline |
+| {Location_ID}_intro.mp4 | Video Pipeline → Audio Post-Process |
 | {Location_ID}_gorb_story.png | Image Pipeline |
-| {Location_ID}_gorb_story.mp4 | Video Pipeline |
+| {Location_ID}_gorb_story.mp4 | Video Pipeline → Audio Post-Process |
 | {Location_ID}_pleck_story.png | Image Pipeline |
-| {Location_ID}_pleck_story.mp4 | Video Pipeline |
+| {Location_ID}_pleck_story.mp4 | Video Pipeline → Audio Post-Process |
 | {Location_ID}_snapshot_01.png | Image Pipeline |
 | {Location_ID}_snapshot_02.png | Image Pipeline |
 | {Location_ID}_snapshot_03.png | Image Pipeline |
@@ -258,7 +345,7 @@ All files stored in Google Drive under: `Content/LOC_XXX/`
 | {Location_ID}_slideshow_01.mp4 | Video Pipeline |
 | {Location_ID}_slideshow_02.mp4 | Video Pipeline |
 | {Location_ID}_review.png | Image Pipeline |
-| {Location_ID}_review.mp4 | Video Pipeline |
+| {Location_ID}_review.mp4 | Video Pipeline → Audio Post-Process |
 
 ---
 
@@ -269,6 +356,7 @@ All files stored in Google Drive under: `Content/LOC_XXX/`
 | Nano Banana | Image generation with character references |
 | Veo3 (via kie.ai) | Video generation |
 | kie.ai | Music generation for slideshows |
+| ElevenLabs | Speech-to-Speech voice conversion, Sound Effects generation |
 | Claude | Title and caption generation |
 | Google Drive | File storage |
 | Google Sheets | Data storage |
@@ -281,6 +369,15 @@ All files stored in Google Drive under: `Content/LOC_XXX/`
 Gorb: `https://drive.google.com/uc?export=view&id=1pH63y7S_m9n7VW0xgV-_9KQ7Bbgt0acy`
 
 Pleck: `https://drive.google.com/uc?export=view&id=1fTadAxxCe8Oz2z4OHRrMxOr6-hUHUD-z`
+
+---
+
+## Character Voices (ElevenLabs)
+
+| Character | Voice ID | Description |
+|-----------|----------|-------------|
+| Gorb | `nNXPmxHfg9PtGzFxr9Zd` | Young adult male, American neutral, higher pitch with pre-pubescent quality, light nasal tone, childlike enthusiasm and wonder |
+| Pleck | `zYcjlYFOd3taleS0gkk3` | Middle-aged male, American neutral, deep voice (not baritone), dry deadpan delivery, slightly clipped pace, weary dad energy |
 
 ---
 
@@ -325,3 +422,14 @@ ${time.sky}. ${time.lighting}.
 
 Vertical 4:5 composition.
 ```
+
+---
+
+## Workflow Status
+
+| Workflow | Status |
+|----------|--------|
+| Style Generation | ✅ Built |
+| Image Pipeline v3 | ✅ Built |
+| Video Pipeline | ✅ Built |
+| Audio Post-Process | ✅ Built |
